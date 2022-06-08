@@ -79,5 +79,30 @@ public class MeetingSelectController {
 		
 		return "redirect:/reserve/meeting/list";
 	}
-
+	
+	@GetMapping("date")
+	public ModelAndView selectMeetingListByDate(@RequestParam String resDate, ModelAndView mv, @AuthenticationPrincipal UserImpl user) {
+		List<MeetingRoomDTO> locationList = meetingService.selectAllLocation();
+		List<MeetingRoomDTO> roomList = meetingService.selectRoomList();
+		
+		mv.addObject("locationList", locationList);
+		mv.addObject("roomList", roomList);
+		
+		log.info("resDate : {}", resDate);
+		
+		List<ResMeetingDTO> resList = meetingService.dateSearch(resDate);
+		
+		log.info("그날의 예약 리스트 : {}", resList);
+		
+		mv.addObject("resList", resList);
+		
+		mv.setViewName("reserve/meeting/date");
+		
+		return mv;
+		
+	}
+	
+	
+	
+	
 }

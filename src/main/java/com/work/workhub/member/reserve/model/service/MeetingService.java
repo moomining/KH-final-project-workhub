@@ -20,6 +20,8 @@ public interface MeetingService {
 	/* 미팅 예약 삭제 메소드 */
 	boolean updateMeetingStatus(ResMeetingDTO meeting) throws Exception;
 
+	List<ResMeetingDTO> dateSearch(String resDate);
+
 
 	
 	

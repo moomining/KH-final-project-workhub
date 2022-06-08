@@ -17,10 +17,14 @@ public interface MeetingMapper {
 	int reserveRoom(ResMeetingDTO resRoom);
 
 	List<ResMeetingDTO> selectAllResMeeting();
+	
+	List<ResMeetingDTO> selectMeetingByDate(String resDate);
 
 	int modifyMeeting(ResMeetingDTO meeting);
 
 	int updateMeetingStatus(ResMeetingDTO meeting);
+
+	
 
 
 
