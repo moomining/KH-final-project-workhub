@@ -79,7 +79,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
             <!-- moveDate script -->
             <script>
             /* 기본값 오늘 날짜 지정 */
-            document.getElementById('booking_date').valueAsDate = new Date();
+            //document.getElementById('booking_date').valueAsDate = new Date();
 
             /* Date Format 지정 */    
             function formatDate(date) {
@@ -264,13 +264,6 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
                                     <tr class="tbl-dotted-line">
                                         <td class="after time-td" data-bs-toggle="modal" data-bs-target="#inlineForm">
                                         	<input type="hidden" class="time" value="08:30">
-                                        	
-                                        	<th:block th:if="${ not resMeetingList.?[roomNo == room.roomNo].isEmpty() }">
-                                        		<span th:each="resMeeting : ${ resMeetingList }">
-                                        		<input type="hidden" class="startTime" th:value="${ resMeeting.startTime }">
-                                        		<input type="hidden" class="endTime" th:value="${ resMeeting.endTime }">
-                                        		</span>
-                                        	</th:block>
                                         	
                                         </td>
                                     </tr>

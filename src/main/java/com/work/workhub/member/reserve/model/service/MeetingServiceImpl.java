@@ -45,6 +45,11 @@ public class MeetingServiceImpl implements MeetingService {
 	public List<ResMeetingDTO> selectAllResMeeting() {
 		return meetingMapper.selectAllResMeeting();
 	}
+	
+	@Override
+	public List<ResMeetingDTO> dateSearch(String resDate) {
+		return meetingMapper.selectMeetingByDate(resDate);
+	}
 
 	@Override
 	public boolean modifyMeetingRes(ResMeetingDTO meeting) throws Exception {
@@ -70,6 +75,8 @@ public class MeetingServiceImpl implements MeetingService {
 		
 		return result > 0 ? true : false;
 	}
+
+	
 
 
 }
