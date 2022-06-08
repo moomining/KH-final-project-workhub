@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>캘린더 - 일정등록</title>
+
+    <!-- fonts -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="/assets/css/bootstrapforCalendar.css">
+    <link rel="stylesheet" href="/assets/vendors/choices.js/choices.min.css" />
+
+    <link rel="stylesheet" href="/assets/vendors/iconly/bold.css">
+
+    <link rel="stylesheet" href="/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/src/plugins/fullcalendar/fullcalendar.css">
+    <link rel="stylesheet" href="/assets/css/pages/calendar.css">
+
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="shortcut icon" href="/assets/images/favicon.svg" type="image/x-icon">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script> 
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+
+</head>
+
+<body>
+    <div id="app">
+        <div id="sidebar" class="active">
+            <div class="sidebar-wrapper active">
+                <div class="sidebar-header">
+                    <div class="d-flex justify-content-between">
+                        
+                        <div class="logo">
+                            <a href="index.html"><img src="src/images/logo-workhub.png" alt="Logo" srcset=""></a>
+                            
+                        </div>
+                        <div class="toggler">
+                            <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar-menu">
+                    <ul class="menu">
+                        <li class="sidebar-title">Menu</li>
+
+                        <li class="sidebar-item active ">
+                            <a href="index.html" class='sidebar-link'>
+                                <i class="bi bi-grid-fill"></i>
+                                <span>홈</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item  has-sub">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-stack"></i>
+                                <span>전자결재</span>
+                            </a>
+                            <ul class="submenu ">
+                                <li class="submenu-item ">
+                                    <a href="extra-component-avatar.html">결재 문서 생성</a>
+                                </li>
+                                <li class="submenu-item ">
+                                    <a href="extra-component-sweetalert.html">개인 결재함</a>
+                                </li>
+                                <li class="submenu-item ">
+                                    <a href="extra-component-sweetalert.html">부서 결재함</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-item  has-sub">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-collection-fill"></i>
+                                <span>근태관리</span>
+                            </a>
+                            <ul class="submenu ">
+                                <li class="submenu-item ">
+                                    <a href="extra-component-avatar.html">내 근태 현황</a>
+                                </li>
+                                <li class="submenu-item ">
+                                    <a href="extra-component-sweetalert.html">내 연차 내역</a>
+                                </li>
+                               
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-item  has-sub">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-alarm-fill"></i>
+                                <span>예약</span>
+                            </a>
+                            <ul class="submenu ">
+                                <li class="submenu-item ">
+                                    <a href="layout-default.html">회의실 예약</a>
+                                </li>
+                                <li class="submenu-item ">
+                                    <a href="layout-vertical-1-column.html">차량 예약</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-calendar-fill"></i>
+                                <span>캘린더</span>
+                            </a>
+                            
+                        </li>
+
+                        <li class="sidebar-item  ">
+                            <a href="form-layout.html" class='sidebar-link'>
+                                <i class="bi bi-file-earmark-medical-fill"></i>
+                                <span>보고서</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item  has-sub">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-pen-fill"></i>
+                                <span>게시판</span>
+                            </a>
+                            <ul class="submenu ">
+                                <li class="submenu-item ">
+                                    <a href="form-editor-quill.html">글쓰기</a>
+                                </li>
+                                <li class="submenu-item ">
+                                    <a href="form-editor-ckeditor.html">공지사항</a>
+                                </li>
+                                <li class="submenu-item ">
+                                    <a href="form-editor-summernote.html">자유게시판</a>
+                                </li>
+                                
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-item  has-sub">
+                            <a href="table.html" class='sidebar-link'>
+                                <i class="bi bi-bar-chart-fill"></i>
+                                <span>설문</span>
+                            </a>
+                            <ul class="submenu ">
+                                <li class="submenu-item ">
+                                    <a href="form-editor-quill.html">설문 작성</a>
+                                </li>
+                                <li class="submenu-item ">
+                                    <a href="form-editor-ckeditor.html">진행 중인 설문</a>
+                                </li>
+                                <li class="submenu-item ">
+                                    <a href="form-editor-summernote.html">마감된 설문</a>
+                                </li>
+                                <li class="submenu-item ">
+                                    <a href="form-editor-summernote.html">내가 만든 설문</a>
+                                </li>
+                                
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-item  ">
+                            <a href="table-datatable.html" class='sidebar-link'>
+                                <i class="bi bi-chat-dots-fill"></i>
+                                <span>쪽지</span>
+                            </a>
+                        </li>
+                        <br><br><br><br>
+                        
+
+                        
+
+                        <li class="sidebar-item ">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-person-circle"></i>
+                                <span>내 정보 관리</span>
+                            </a>
+                            
+                        </li>
+
+                        <li class="sidebar-item  ">
+                            <a href="ui-file-uploader.html" class='sidebar-link'>
+                                <img src="src/images/logout.png" alt="logout">
+                                <span>Logout</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+            </div>
+        </div>
+
+        <div id="main">
+            <header class="mb-3">
+                <a href="#" class="burger-btn d-block d-xl-none">
+                    <i class="bi bi-justify fs-3"></i>
+                </a>
+            </header>
+
+            <div class="page-heading calendar-application">
+                <div class="page-title">
+                    <div class="row">
+                        <div class="col-12 col-md-6 order-md-1 order-last">
+                            <h3 class="ps-3">캘린더</h3>
+                            <p class="text-subtitle text-muted ps-3">일정 등록</p>
+                        </div>
+                        <div class="col-12 col-md-6 order-md-2 order-first">
+                            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="index.html">일정 등록</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">캘린더 </li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <section class="section content-area-wrapper">
+                    <div class="sidebar-left">
+                        <div class="sidebar">
+                            <div class="sidebar-content calendar-app-sidebar d-flex">
+                                <!-- sidebar close icon -->
+                                <span class="sidebar-close-icon">
+                                    <i class="bx bx-x"></i>
+                                </span>
+                                <!-- sidebar close icon -->
+                                <div class="calendar-app-menu">
+                                    <div class="form-group form-group-compose">
+                                        <!-- compose button  -->
+                                        <a href="application-regist-schedule.html" type="button" class="btn btn-primary btn-block my-4 compose-btn active">
+                                            <i class="bi bi-plus"></i>
+                                            일정 등록
+                                        </a>
+                                    </div>
+                                    <div class="sidebar-menu-list ps">
+                                        <!-- sidebar menu  -->
+                                        <div class="list-group list-group-messages">
+                                            <ul style="list-style:none; float:left;">
+                                                <li>
+                                                    <a href="application-inbox.html" class="list-group-item pt-0 ps-0" id="inbox-menu">
+                                                    <div class="fonticon-wrap d-inline">
+                                                        <i class="bi bi-calendar"></i>
+                                                    </div>
+                                                    내 캘린더
+                                                    </a>
+                                                    <ul>
+                                                        <li style="list-style:none; ">
+                                                            <div class="checkbox-con" style="float:left;">
+                                                                <div class="checkbox checkbox-shadow checkbox-sm">
+                                                                <input type="checkbox" id="checkboxsmall1"
+                                                                    class='form-check-input'>
+                                                                <label for="checkboxsmall1"></label>
+                                                                </div>
+                                                            </div>
+                                                            <span>내 일정</span>
+                                                        </li>
+                                                        <li style="list-style:none;">
+                                                            <div class="checkbox-con" style="float:left;">
+                                                                <div class="checkbox checkbox-shadow checkbox-sm">
+                                                                <input type="checkbox" id="checkboxsmall1"
+                                                                    class='form-check-input'>
+                                                                <label for="checkboxsmall1"></label>
+                                                                </div>
+                                                            </div>
+                                                            <span>연차</span>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                            <ul style="list-style:none;">
+                                                <li>
+                                                    <a href="application-inbox.html" class="list-group-item pt-0" id="inbox-menu">
+                                                    <div class="fonticon-wrap d-inline">
+                                                        <i class="bi bi-calendar"></i>
+                                                    </div>
+                                                    전체 캘린더
+                                                    </a>
+                                                    <ul>
+                                                        <li style="list-style:none;">
+                                                            <div class="checkbox-con" style="float:left;">
+                                                                <div class="checkbox checkbox-shadow checkbox-sm">
+                                                                <input type="checkbox" id="checkboxsmall1"
+                                                                    class='form-check-input'>
+                                                                <label for="checkboxsmall1"></label>
+                                                                </div>
+                                                            </div>
+                                                            <span>전체</span>
+                                                        </li>
+                                                        <li style="list-style:none;">
+                                                            <div class="checkbox-con" style="float:left;">
+                                                                <div class="checkbox checkbox-shadow checkbox-sm">
+                                                                <input type="checkbox" id="checkboxsmall1"
+                                                                    class='form-check-input'>
+                                                                <label for="checkboxsmall1"></label>
+                                                                </div>
+                                                            </div>
+                                                            <span>전사 일정</span>
+                                                        </li>
+                                                        <li style="list-style:none;">
+                                                            <div class="checkbox-con" style="float:left;">
+                                                                <div class="checkbox checkbox-shadow checkbox-sm">
+                                                                <input type="checkbox" id="checkboxsmall1"
+                                                                    class='form-check-input'>
+                                                                <label for="checkboxsmall1"></label>
+                                                                </div>
+                                                            </div>
+                                                            <span>부서 일정</span>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <!-- sidebar menu  end-->
+            
+                                        
+                                        <!-- sidebar label end -->
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- User new mail right area -->
+                            
+                            <!--/ User Chat profile right area -->
+                        </div>
+                    </div>
+                    <div class="content-right">
+                        <div class="content-overlay"></div>
+                        <div class="content-wrapper">
+                            <div class="content-header row">
+                            </div>
+                            <div class="content-body">
+                                <!-- email app overlay -->
+                                <div class="app-content-overlay"></div>
+                                <div class="email-app-area">
+                                    <!-- Email list Area -->
+                                    <div class="compose-new-mail-sidebar ps">
+                                        <div class="card shadow-none quill-wrapper p-0">
+                                            <div class="card-header">
+                                                <h3 class="card-title" id="emailCompose">일정 등록</h3>
+                                            </div>
+                                            <!-- form start -->
+                                            <form th:action="@{/calendar/regist}" method="post" id="compose-form">
+                                                <div class="card-content">
+                                                    <div class="card-body pt-0">
+                                                        <div class="form-group pb-50">
+                                                            <input type="text" id="calTitle" name="calTitle" class="form-control form-control-lg" placeholder="일정 제목" required=""><br>
+                                                            <input type="hidden" id="calWriterNo" name="calWriterNo" th:value="${#authentication.principal.no}">
+                                                            <input type="hidden" id="writerName" name="writerName" th:value="${#authentication.principal.name}">
+                                                            <input type="hidden" id="writerDepNo" name="writerDepNo" th:value="${#authentication.principal.depName}">
+                                                        </div>
+                                                        <div>
+                                                        </div>
+                                                        <div class="form-group pb-50">
+                                                        	<div class="form-label-group">
+                                                          	  <div class="col-md-100 mb-1">
+                                                               	 <div class="input-group">
+                                                                        <div class="container">
+											                                <div class="row">
+												                                    <div class="col">
+												                                        <label for="exampleFormControlInput1" class="form-label">시작일</label><br>
+												                                        <input type="datetime-local" class="form-control" name="calStart" id="calStart">
+												                                    </div>
+												                                    <div class="col">
+												                                        <label for="exampleFormControlInput1" class="form-label">종료일</label><br>
+												                                        <input type="datetime-local" class="form-control" name="calEnd" id="calEnd">
+												                                    </div>
+			                                                                        &nbsp;&nbsp;&nbsp;&nbsp;
+			                                                                        <div class='col-sm-2'>
+			                                                                        	<label></label><br>
+			                                                                            <input type="checkbox"
+			                                                                            class="form-check-input form-check-primary form-check-glow"
+			                                                                            name="calAlldayStatus" id="checkbox1" checked="1" unchecked="0">
+			                                                                            <label class="form-check-label" for="customColorCheck6">&nbsp하루 종일</label>
+			                                                                            &nbsp;
+			                                                                        </div>
+                                                                            </div>
+                                                                	   </div>
+                                                                 </div>
+                                                          	 </div>
+                                                          </div>
+                                                        </div>
+                                                        	<br>
+                                                        <div class="form-group pb-50">
+                                                                <label for="calendarCategory">카테고리</label><br>
+                                                                <select class="choices form-select" name="calCategoryCode" id="calCategoryCode"></select>
+                                                        </div>
+                                                        <br>
+                                                        <div class="form-group pb-50">
+                                                                <label for="messageContent">내용</label><br>
+                                                                    <div class="snow-container border rounded p-50">
+                                                                        <div class="compose-editor mx-75 ql-container ql-snow">
+                                                                            <div class="ql-editor ql-blank" data-gramm="false" contenteditable="true">
+                                                                            <input type="text" class="contextInput" name="calContent" id="calContent"><br>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                        <!-- Compose mail Quill editor -->
+                                                        <br>
+                                               			 <div class="card-footer d-flex justify-content-end pt-3">
+                                                    <button type="reset" class="btn btn-light-secondary cancel-btn mr-1 me-2">
+                                                        <span class="d-sm-inline d-none">취소</span>
+                                                    </button>
+                                                    <button type="submit" class="btn-send btn btn-primary">
+                                                        <i class="bi bi-send-fill"></i>
+                                                        <span class="d-sm-inline d-none">저장</span>
+                                                    </button>
+                                                </div>
+                                            </form>
+                                            <!-- form start end-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <script>
+    	$(function(){
+    		$.ajax({
+    			url : "/calendar/category",
+    			success : function(data) {
+    				const $calCategoryCode = $("#calCategoryCode");
+    				
+    				for(let index in data){
+    					$calCategoryCode.append($("<option>").val(data[index].code).text(data[index].name));
+    				}
+    			},
+    			error : function(xhr) {
+    				console.log(xhr);
+    			}
+    		});
+    	});
+    	
+    	$("#checkbox1").is(':checked', function(){
+    		  $("#checkbox1").prop('checked', true);
+    		});
+    	
+    	document.getElementById('calStart').value= new Date().toISOString().slice(0, 16);
+    	document.getElementById('calEnd').value= new Date().toISOString().slice(0, 16);
+
+    </script>
+    <script src="/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+
+    <script src="/assets/vendors/apexcharts/apexcharts.js"></script>
+    <script src="/assets/js/pages/dashboard.js"></script>
+
+    <script src="/assets/js/main.js"></script>
+    <script src="/vendors/scripts/core.js"></script>
+	<script src="/vendors/scripts/script.min.js"></script>
+	<script src="/vendors/scripts/process.js"></script>
+	<script src="/vendors/scripts/layout-settings.js"></script>
+	<script src="/src/plugins/fullcalendar/fullcalendar.min.js"></script>
+	<script src="/vendors/scripts/calendar-setting.js"></script>
+</body>
+
+</html>

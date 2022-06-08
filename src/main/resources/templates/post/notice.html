@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WorkHub | 공지사항</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/bootstrap2.css">
+
+    <link rel="stylesheet" href="/assets/vendors/simple-datatables/style2.css">
+
+    <link rel="stylesheet" href="/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/assets/css/app2.css">
+    <link rel="stylesheet" href="/assets/css/com-surv.css">
+    <link rel="shortcut icon" th:href="@{/assets/images/images/favicon-workHub.ico}" type="image/x-icon">
+    <script>
+		const successMessage = '[[${successMessage}]]';
+		
+		if(successMessage) {
+			alert(successMessage);
+		}
+	</script>
+</head>
+
+<body>
+    <div id="app">
+        <div th:include="sidebar/sidebar-com" th:remove="tag"/>
+        <div id="main">
+            <header class="mb-3">
+                <a href="#" class="burger-btn d-block d-xl-none">
+                    <i class="bi bi-justify fs-3"></i>
+                </a>
+            </header>
+
+            <div class="page-heading">
+                <div class="page-title">
+                    <div class="row">
+                        <div class="col-12 col-md-6 order-md-1 order-last">
+                            <h3>공지사항</h3><br>
+                        </div>
+                        <div class="col-12 col-md-6 order-md-2 order-first">
+                            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="#">게시판</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page"><a th:href="@{/post/notice}">공지사항</a></li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <section class="section">
+                    <div class="card">
+                        <div class="card-header">
+                       		<!-- post/notice/write ? -->
+                            <a th:href="@{/post/write}" class="btn btn-outline-primary">새글쓰기</a>
+                            <a th:href="@{/post/delete}" class="btn btn-outline-primary">삭제하기</a>
+                            <a th:href="@{/post/noticeRegist}" class="btn btn-outline-primary">공지등록</a>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-borderless" id="table1">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div class="checkbox checkbox-shadow">
+                                                <input type="checkbox" class="form-check-input" id="checkbox1">
+                                                <label for="checkbox1"></label>
+                                            </div>
+                                        </th>
+                                        <th>번호</th>
+                                        <th>제목</th>
+                                        <th>작성자</th>
+                                        <th>작성일</th>
+                                        <th>조회</th>
+                                        <th>추천</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="notice:${noticeList}">
+                                        <td>
+                                            <div class="checkbox checkbox-shadow">
+                                                <input type="checkbox" class="form-check-input" id="checkbox1">
+                                                <label for="checkbox1"></label>
+                                            </div>
+                                        </td>
+                                        <td th:text="${notice.postNo}">글번호</td>
+                                        <td><a th:href="@{/post/detail/no/{postNo}(postNo=${notice.postNo})}" th:text="${notice.postTitle}" class="post-title">게시글 제목</a></td>
+                                        <td th:text="${notice.member.name}">작성자</td>
+                                        <td th:text="${notice.postDate}">작성 날짜</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <script src="/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="/assets/js/bootstrap.bundle.min2.js"></script>
+
+    <script src="/assets/vendors/simple-datatables/simple-datatables2.js"></script>
+    <script>
+        // Simple Datatable
+        let table1 = document.querySelector('#table1');
+        let dataTable = new simpleDatatables.DataTable(table1);
+    </script>
+
+    <script src="/assets/js/main.js"></script>
+</body>
+
+</html>

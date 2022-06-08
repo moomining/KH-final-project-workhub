@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WorkHub | 게시글 상세조회</title>
+
+    <!-- fonts -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="/assets/css/bootstrap2.css">
+
+    <link rel="stylesheet" href="/assets/vendors/iconly/bold.css">
+
+    <link rel="stylesheet" href="/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/assets/css/app2.css">
+    <link rel="stylesheet" href="/assets/css/com-surv.css">
+    <link rel="shortcut icon" th:href="@{/assets/images/images/favicon-workHub.ico}" type="image/x-icon">
+
+</head>
+
+
+<body>
+    <div id="app">
+        <div th:include="sidebar/sidebar-com" th:remove="tag"/>
+        <div id="main">
+            <header class="mb-3">
+                <a href="#" class="burger-btn d-block d-xl-none">
+                    <i class="bi bi-justify fs-3"></i>
+                </a>
+            </header>
+
+            <div class="page-heading">
+                <div class="page-title">
+                    <div class="row">
+                        <div class="col-12 col-md-6 order-md-1 order-last">
+                            <h3>자유게시판</h3><br>
+                        </div>
+                        <div class="col-12 col-md-6 order-md-2 order-first">
+                            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="#">게시판</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page"><a th:href="@{/post/list}">자유게시판</a></li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <section class="section">
+                    <div class="card">
+                        <div class="card-header">
+                            <a th:href="@{/post/write}" class="btn btn-outline-primary">새글쓰기</a>
+	                        <a th:href="@{'/post/update/no/' + ${ post.postNo }}" class="btn btn-outline-primary">수정하기</a>
+	                        <a th:href="@{'/post/delete/no/' + ${ post.postNo }}" class="btn btn-outline-primary" onclick="removeCheck()">삭제하기</a>
+                            <a th:href="@{/post/list}" class="btn btn-outline-primary" id="btn-list">목록보기</a>
+                        </div>
+                        <hr><br>
+                        <div class="card-body">
+                            <div class="com-detail-title">
+                                <div class="detail-title">
+                                    <h4 th:text="${ post.postTitle }">제목</h4>
+<!--                                     <div class="com-detail-messenger"> -->
+<!--                                         <img src="/assets/images/post-surv/messenger.png" class="icon-messenger"> -->
+<!--                                         <span>1</span> -->
+<!--                                     </div> -->
+                                </div>
+                                <div class="com-detail-heart">
+                                    <span>0</span>
+                                    <img src="/assets/images/post-surv/emptyHeart.png" class="icon-emptyHeart">
+                                </div>
+                            </div>
+                            <div class="com-detail-writer">
+                                <img src="/assets/images/post-surv/grey.png" alt="profile" class="profile-photo">
+                                <p th:text="${ post.member.name }">작성자</p><br>
+								<p th:text="${ post.postDate }" class="com-detail-date">날짜</p>
+                            </div>
+                            <div class="com-detail-body">
+                                <div th:utext="${ post.postContent }" class="com-detail-content">
+                                    내용
+                                </div>
+                                <div class="detail-body-footer">
+<!--                                     <p> <img src="/assets/images/post-surv/messenger.png" class="icon-messenger"> 댓글 1개 | 조회 1 |   -->
+                                        <img src="/assets/images/post-surv/emptyHeart.png" class="icon-heart"> 추천 누른 사람 0명</p>
+                                </div>
+                            </div><hr>
+                            
+                            <!-- reply -->
+                            <ul class="reply-ul">
+                                <li style="list-style: none;" th:each="reply: ${ reply }">
+                                    <div class="com-detail-reply">
+                                        <div class="com-reply-writer">
+                                            <img src="/assets/images/post-surv/grey.png" alt="profile" class="profile-photo">
+                                            <span th:text="${ reply.member.name }" class="com-reply-writer">작성자</span>
+                                            <span th:text="${ reply.replyDate }" class="com-reply-date">댓글 작성일</span>
+                                            <div class="reply-btn" style="cursor:pointer;">
+                                                <img src="/assets/images/post-surv/reply.png" class="icon-reply" alt="답글">
+                                                <span>답글</span>
+                                            </div>
+                                            <div class="reply-btn-ud">
+		                                    	<a data-toggle="collapse" href="#updateReply" role="button" aria-expanded="false" aria-controls="updateReply">수정</a>
+		                                    	<a th:href="@{'/reply/delete/' + ${ reply.replyNo }}" onclick="removeCheck2();">삭제</a>
+		                                    </div>
+                                        </div>
+                                        <div class="reply-content">
+                                            <p th:text="${ reply.replyContent }">댓글 내용</p>
+                                        </div>
+                                        <!-- 댓글 수정란 (토글 기능 안됨) -->
+                                        <div id="updateReply" class="collapse multi-collapse">
+											<form th:action="@{|/reply/update/no/${ reply.replyNo }|}" method="post">
+												<input type="text" name="refReplyContent" size="70"> &nbsp; 
+												<input type="submit" value="수정">
+											</form>
+										</div>                                    
+                                    </div>
+                                </li>
+                            </ul>
+                            
+                            <form action="/reply/write" method="post" class="com-insert-reply">
+                                <img src="/assets/images/post-surv/grey.png" alt="profile" class="profile-photo">
+                                <input type="text" class="text-reply" name="replyContent" required>
+                                <!-- hidden 타입으로 postNo 전달 -->
+                                <input type="hidden" name="postNo" th:value="${ post.postNo }">
+                                <!-- 이미지 댓글 -->
+<!--                                 <input type="file" class="btn btn-outline-secondary me-1 mb-1 btn-sm"">첨부</button> -->
+                                <input type="submit" class="btn btn-secondary me-1 mb-1 btn-sm" value="등록">
+                            </form>
+<!--                             <hr> -->
+                            
+
+<!--                             <div class="post-detail-list"> -->
+<!--                                 <table class="table table-borderless" id="table1"> -->
+<!--                                 <thead> -->
+<!--                                     <tr> -->
+<!--                                         <th> -->
+<!--                                             <div class="checkbox checkbox-shadow"> -->
+<!--                                                 <input type="checkbox" class="form-check-input" id="checkbox1"> -->
+<!--                                                 <label for="checkbox1"></label> -->
+<!--                                             </div> -->
+<!--                                         </th> -->
+<!--                                         <th>번호</th> -->
+<!--                                         <th>제목</th> -->
+<!--                                         <th>작성자</th> -->
+<!--                                         <th>작성일</th> -->
+<!--                                         <th>조회</th> -->
+<!--                                         <th>추천</th> -->
+<!--                                     </tr> -->
+<!--                                 </thead> -->
+<!--                                 <tbody> -->
+<!--                                     <tr th:each="post:${postList}"> -->
+<!--                                         <td> -->
+<!--                                             <div class="checkbox checkbox-shadow"> -->
+<!--                                                 <input type="checkbox" class="form-check-input" id="checkbox1"> -->
+<!--                                                 <label for="checkbox1"></label> -->
+<!--                                             </div> -->
+<!--                                         </td> -->
+<!--                                         <td th:text="${post.postNo}">글번호</td> -->
+<!--                                         <td><a th:href="@{/post/detail/no/{postNo}(postNo=${post.postNo})}" th:text="${post.postTitle}" class="post-title">게시글 제목</a></td> -->
+<!--                                         <td th:text="${post.member.name}">작성자</td> -->
+<!--                                         <td th:text="${post.postDate}">작성 날짜</td> -->
+<!--                                         <td>0</td> -->
+<!--                                         <td>0</td> -->
+<!--                                     </tr> -->
+<!--                                 </tbody> -->
+<!--                             </table> -->
+<!--                             </div> -->
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <script src="/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="/assets/js/bootstrap.bundle.min2.js"></script>
+
+    <script src="/assets/vendors/apexcharts/apexcharts.js"></script>
+    <script src="/assets/js/pages/dashboard.js"></script>
+
+    <script src="/assets/js/main.js"></script>
+    
+    <script>
+    function removeCheck(){
+    	if(confirm("게시글을 삭제하시겠습니까?")==true){
+    		document.submit();
+    	} else{
+    		return false;
+    	}
+    }
+    
+    function removeCheck2(){
+    	if(confirm("댓글을 삭제하시겠습니까?")==true){
+    		document.submit();
+    	} else{
+    		return false;
+    	}
+    }
+    
+    </script>
+
+</body>
+
+</html>

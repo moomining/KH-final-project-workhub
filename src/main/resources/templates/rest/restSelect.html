@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>workGroupSelect</title>
+    <!-- fonts -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+   
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.css">
+
+    <link rel="stylesheet" href="/assets/vendors/iconly/bold.css">
+
+    <link rel="stylesheet" href="/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="shortcut icon" href="/assets/images/favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="/assets/css/memberyj.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>        
+    <link rel="shortcut icon" th:href="@{/assets/images/images/favicon-workHub.ico}" type="image/x-icon">
+    <script>
+	const successMessage = '[[${successMessage}]]';
+	
+	if(successMessage) {
+		alert(successMessage);
+	}
+</script>
+   
+</head>
+<body>
+   		
+		<div th:include="sidebar/sidebar" th:remove="tag"/></div>
+        
+        
+         <!-- 타이머와 출근시간 퇴근시간 주간 누적근무시간-->
+                <div class="djdji"></div>
+            <div class="wrapper">
+                <div><p class="hatta">근태관리</p></div>
+                <div id="clock" class="clocka">clock</div>
+                <div id="digital_clock" class="glow">00:00:00</div>
+                
+              </div>
+        
+        
+        <!--출근하기 버튼-->
+        <a onclick="location.href='/employ/in'" class="buttons">출근하기</a>
+        <!--퇴근하기 버튼-->
+        <a onclick="location.href='/employ/out'" class="buttonsa">퇴근하기</a>
+        
+        <!-- 근무 유형-->
+        
+        
+        <form action="/employ/other" method="post">
+        <select name="workNo" class="worksss">
+            <option th:each="atts : ${attsList}" th:value="${atts.workNo}" th:utext="${atts.workName}">업무</option>
+       </select>
+      <input type="submit" class="chec" value="✓">
+       </form>
+       
+       
+       <!-- 연차 신청 -->
+       <a onclick="location.href='/rest/restWrite'" class="dgsaujjk">연차 신청</a>
+       
+       <p class="hattsd">내 연차 내역</p>
+      
+    
+    <!--날짜 필터-->
+   <!--   <form class="oopo">
+    <label for="rest_fir" class="asss">시작 날짜 : </label>
+   <input type="date" class="asss" id="rest_fir">
+   <label for="rest_fir" class="assss">종료 날짜 : </label>
+   <input type="date" class="assss" id="rest_end">
+   <input type="submit" value="조회" class="sds">     
+</form>
+-->
+
+                <!-- 사용한 연차 조회 시작-->
+                
+                    <div class="row tgts" id="table-hover-row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">사용 내역</h4>
+                                </div>
+                                <div class="card-content">
+          
+                                    <!-- table hover -->
+                                    <div class="table-responsive">
+                                        <table class="table table-hover mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th class="qqq">이름</th>
+                                                    <th class="qqq">부서명</th>
+                                                    <th class="qqq">휴가 종류</th>
+                                                    <th class="qqqs">연차 시작</th>
+                                                    <th class="qqqs">연차 끝</th>
+                                                    <th class="qqqs">연차일</th>
+                                                    <th class="qqqs">내용</th>
+                                                    <th class="qqqs">수정</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr th:each="ho : ${ resList }">
+                                                    <td th:text="${ ho.name }">김땡땡</td>
+                                                    <td th:text="${ ho.depName }">워크허브</td>
+                                                    <td th:text="${ ho.restName }">연차</td>
+                                                    <td th:text="${ ho.porestFir }">2022-04-02</td>
+                                                    <td th:text="${ ho.porestEnd }">2022-05-01</td>
+                                                    <td th:text="${ ho.porestDay }">4</td>
+                                                    <td th:text="${ ho.porestReason }">너무너무 피곤해서</td>
+                                                    <td>
+                                    					<span class="badge bg-success" style="cursor:pointer;" th:onclick="|javascript:porestModify('${ ho.porestNo }')|">수정</span>
+                                				   </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                <!-- 연차 사용 내역 끝 -->
+
+
+                                <!-- 신청한 연차 조회 시작-->
+                               
+                                    <div class="rows tgtss" id="table-hover-row">
+                                        <div class="col-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h4 class="card-title">생성 내역</h4>
+                                                </div>
+                                                <div class="card-content">
+                          
+                                                    <!-- table hover -->
+                                                    <div class="table-responsive">
+                                                        <table class="table table-hover mb-0">
+                                                            <thead>
+                                                <tr>
+                                                    <th class="qqq">이름</th>
+                                                    <th class="qqq">부서명</th>
+                                                    <th class="qqq">휴가 종류</th>
+                                                    <th class="qqqs">연차 시작</th>
+                                                    <th class="qqqs">연차 끝</th>
+                                                    <th class="qqqs">연차일</th>
+                                                    <th class="qqqs">내용</th>
+                                                    <th class="qqqs">수정</th>
+                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                			<tr th:each="hos : ${ ressList }">
+                                                   				<td th:text="${ hos.name }"></td>
+                                                   			    <td th:text="${ hos.depName }"></td>
+                                                  		 	    <td th:text="${ hos.restName }"></td>
+                                                    			<td th:text="${ hos.porestFir }"></td>
+                                                    			<td th:text="${ hos.porestEnd }"></td>
+                                                    			<td th:text="${ hos.porestDay }"></td>
+                                                    			<td th:text="${ hos.porestReason }"></td>
+                                             					<td>
+                                    								<span class="badge bg-success" style="cursor:pointer;" th:onclick="|javascript:porestModify('${ hos.porestNo }')|">수정</span>
+                                				   				</td>
+                                                			</tr>                                                                
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                <!-- 신청한 연차 사용 내역 끝 -->
+
+
+       <!-- 수정하기 버튼을 눌렀을 때 게시글 번호 넘기는 것 -->
+    <script type="text/javascript">
+    function porestModify(porestNo) { 
+    	// 근무그룹  번호 확인용
+    	//alert(porestNo); 
+    	var porestNo = porestNo; 
+        location.href='/rest/restModify?porestNo='+porestNo; }
+    </script> 
+
+
+
+
+
+    <script>
+        setInterval(showTime, 1000);
+  
+        function showTime(){
+          let time = new Date();
+          let hr = time.getHours();
+          let min = time.getMinutes();
+          let sec = time.getSeconds();
+          AMPM = 'AM'; 
+  
+        if(hr > 12) {
+          hr -= 12;
+          AMPM = "PM";
+        }
+        if(hr == 0) {
+          hr = 12;
+          AMPM = "AM";
+        }
+  
+        hr = hr < 10 ? "0" + hr : hr;
+        min = min < 10 ? "0" + min : min;
+        sec = sec < 10 ? "0" + sec : sec;
+  
+        let curentTime = hr + ":" + min + ":" + sec + AMPM; 
+  
+        document.getElementById('digital_clock').innerHTML = curentTime;
+  
+      }
+      showTime();
+      </script>
+
+
+        <script>
+        var Target = document.getElementById("clock");
+        function clock() {
+            var time = new Date();
+
+            var month = time.getMonth();
+            var date = time.getDate();
+            var day = time.getDay();
+            var week = ['일', '월', '화', '수', '목', '금', '토'];
+
+            Target.innerText = 
+            `${month + 1}월 ${date}일 ${week[day]}요일 ` ;
+                
+        }
+        clock();
+        setInterval(clock, 1000); // 1초마다 실행
+    </script>
+
+
+
+
+
+   
+    <script src="assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+
+    <script src="assets/vendors/apexcharts/apexcharts.js"></script>
+    <script src="assets/js/pages/dashboard.js"></script>
+
+    <script src="assets/js/main.js"></script>
+   		
+</body>
+</html>

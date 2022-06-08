@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WorkHub | 내가 만든 설문</title>
+
+    <!-- fonts -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+
+    <link rel="stylesheet" href="assets/vendors/iconly/bold.css">
+
+    <link rel="stylesheet" href="assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+    <link rel="stylesheet" href="assets/css/com-surv.css">
+    <link rel="shortcut icon" th:href="@{/assets/images/images/favicon-workHub.ico}" type="image/x-icon">
+</head>
+
+<body>
+    <div id="app">
+    	<div th:include="sidebar/sidebar-surv" th:remove="tag"/>
+        <div id="main">
+            <header class="mb-3">
+                <a href="#" class="burger-btn d-block d-xl-none">
+                    <i class="bi bi-justify fs-3"></i>
+                </a>
+            </header>
+
+            <div class="page-heading">
+                <div class="page-title">
+                    <div class="row">
+                        <div class="col-12 col-md-6 order-md-1 order-last">
+                            <h3>내가 만든 설문</h3><br>
+                        </div>
+                        <div class="col-12 col-md-6 order-md-2 order-first">
+                            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="#">설문</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">내가 만든 설문</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <section class="section">
+                    <div class="card">
+                        <div class="card-header">
+                            <a href="#" class="btn btn-outline-primary">마감하기</a>
+                            <a href="#" class="btn btn-outline-primary">삭제하기</a>
+                        </div>
+                        <div class="card-body-surv-ing">
+                            <table class="table table-borderless" id="table1">
+                                <thead>
+                                    <tr class="surv-tr">
+                                        <th>
+                                            <div class="checkbox checkbox-shadow">
+                                                <input type="checkbox" class="form-check-input" id="checkbox1">
+                                                <label for="checkbox1"></label>
+                                            </div>
+                                        </th>
+                                        <th>상태</th>
+                                        <th>설문 제목</th>
+                                        <th>설문 기간</th>
+                                        <th>작성자</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="checkbox checkbox-shadow">
+                                                <input type="checkbox" class="form-check-input" id="checkbox1">
+                                                <label for="checkbox1"></label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-danger">미참여</span>
+                                        </td>
+                                        <td>설문 제목 들어갈 위치</td>
+                                        <td>2022-04-14 ~ 2022-04-22</td>
+                                        <td>김허브 대표이사</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="checkbox checkbox-shadow">
+                                                <input type="checkbox" class="form-check-input" id="checkbox1">
+                                                <label for="checkbox1"></label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-success">진행 중</span>
+                                        </td>
+                                        <td>설문 제목 들어갈 위치</td>
+                                        <td>2022-04-14 ~ 2022-04-22</td>
+                                        <td>김허브 대표이사</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="checkbox checkbox-shadow">
+                                                <input type="checkbox" class="form-check-input" id="checkbox1">
+                                                <label for="checkbox1"></label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-secondary">참여완료</span>
+                                        </td>
+                                        <td>설문 제목 들어갈 위치</td>
+                                        <td>2022-04-14 ~ 2022-04-22</td>
+                                        <td>김허브 대표이사</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <script src="assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+
+    <script src="assets/vendors/apexcharts/apexcharts.js"></script>
+    <script src="assets/js/pages/dashboard.js"></script>
+
+    <script src="assets/js/main.js"></script>
+</body>
+
+</html>

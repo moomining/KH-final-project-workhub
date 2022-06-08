@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.work.workhub.member.reserve.model.dao.CarResMapper">
+	<resultMap id="carResResultMap" type="com.work.workhub.member.reserve.model.dto.ResCarDTO">
+		
+		<id property="resNo" column="RES_NO"/>
+		<result property="memberNo" column="NO"/>
+		<result property="carNo" column="CAR_NO"/>
+		<result property="startTime" column="START_TIME"/>
+		<result property="endTime" column="END_TIME"/>
+		<result property="carPurpose" column="CAR_PURPOSE"/>
+		<result property="delYn" column="DEL_YN"/>
+		
+		<association property="member" resultMap="loginMemberResultMap"/>
+		<association property="car" resultMap="carResultMap"/>
+	</resultMap>
+	
+	<resultMap id="carResultMap" type="com.work.workhub.admin.reserve.model.dto.CarDTO">
+	
+		<id property="carNo" column="CAR_NO"/>
+		<result property="carName" column="CAR_NAME"/>
+		<result property="carNumber" column="CAR_NUMBER"/>
+		<result property="carYn" column="CAR_YN"/>
+		<result property="delYn" column="DEL_YN"/>
+		
+	</resultMap>
+	
+	<resultMap id="carResultMap2" type="com.work.workhub.admin.reserve.model.dto.CarDTO">
+	
+		<id property="carNo" column="CAR_NO"/>
+		<result property="carName" column="CAR_NAME"/>
+		<result property="carNumber" column="CAR_NUMBER"/>
+		<result property="carYn" column="CAR_YN"/>
+		<result property="delYn" column="CAR_DEL_YN"/>
+		
+		<association property="carRes" javaType="com.work.workhub.member.reserve.model.dto.ResCarDTO">
+			<id property="resNo" column="RES_NO"/>
+			<result property="memberNo" column="NO"/>
+			<result property="carNo" column="CAR_NO"/>
+			<result property="startTime" column="START_TIME"/>
+			<result property="endTime" column="END_TIME"/>
+			<result property="carPurpose" column="CAR_PURPOSE"/>
+			<result property="delYn" column="RES_DEL_YN"/>
+		</association>
+		
+	</resultMap>
+	
+	<resultMap id="loginMemberResultMap" type="com.work.workhub.member.member.dto.MemberDTO">
+		<id property="no" column="NO"/>
+		<result property="id" column="ID"/>
+		<result property="pwd" column="PWD"/>
+		<result property="depNo" column="DEP_NO"/>
+		<result property="positionNo" column="POSITION_NO"/>
+		<result property="groupNo" column="GROUP_NO"/>
+		<result property="name" column="NAME"/>
+		<result property="email" column="EMAIL"/>
+		<result property="phone" column="PHONE"/>
+		<result property="status" column="STATUS"/>
+		
+		<collection property="memberRoleList" resultMap="memberRoleResultMap"/>
+	</resultMap>
+	
+	<resultMap id="memberRoleResultMap" type="com.work.workhub.member.member.dto.MemberRoleDTO">
+		<id property="memberNo" column="REF_NO"/>
+		<id property="authNo" column="REF_AUTH_NO"/>
+		
+		<association property="authority" resultMap="authorityResultMap"/>
+	</resultMap>
+	
+	<resultMap id="authorityResultMap" type="com.work.workhub.member.member.dto.AuthorityDTO">
+		<id property="authNo" column="REF_AUTH_NO2"/>
+		<result property="authName" column="AUTH_NAME"/>
+	</resultMap>
+	
+	
+	<select id="selectCarList" resultMap="carResultMap">
+		SELECT
+		*
+		FROM COM_CAR
+		WHERE DEL_YN = 'N'
+		  AND CAR_YN = 'Y'
+		ORDER BY CAR_NO
+	</select>
+	
+	<select id="selectAllResCarList" resultMap="carResResultMap">
+		SELECT
+		*
+		FROM RES_CAR A
+		JOIN COM_CAR B ON (A.CAR_NO = B.CAR_NO)
+		WHERE A.END_TIME > SYSDATE
+		<![CDATA[AND A.START_TIME < SYSDATE]]>         
+          AND A.DEL_YN = 'N'
+        ORDER BY A.START_TIME DESC
+	</select>
+	<!-- AND TO_CHAR(A.START_TIME, 'yyyy-MM-dd') = TO_CHAR(SYSDATE, 'yyyy-MM-dd') -->
+	
+	<select id="selectResCarList" resultMap="carResResultMap">
+		SELECT
+		*
+		FROM RES_CAR A
+		JOIN COM_CAR B ON (A.CAR_NO = B.CAR_NO)
+		WHERE A.END_TIME > SYSDATE
+          AND A.DEL_YN = 'N'
+        ORDER BY A.CAR_NO ASC
+	</select>
+
+	<select id="selectReservableCar" resultMap="carResultMap2">
+		SELECT
+			CAR_NO, CAR_NAME, CAR_NUMBER, CAR_YN, CAR_DEL_YN, RES_NO,
+			NO, START_TIME, END_TIME, CAR_PURPOSE, RES_DEL_YN
+		FROM (
+		SELECT
+			A.CAR_NO, A.CAR_NAME, A.CAR_NUMBER, A.CAR_YN, A.DEL_YN AS CAR_DEL_YN, B.RES_NO,
+			B.NO, B.START_TIME, B.END_TIME, B.CAR_PURPOSE, B.DEL_YN AS RES_DEL_YN
+		FROM COM_CAR A
+		LEFT JOIN RES_CAR B ON(A.CAR_NO = B.CAR_NO)
+		WHERE A.DEL_YN = 'N'
+	  	AND A.CAR_YN = 'Y'
+		AND B.DEL_YN = 'N'
+		<![CDATA[AND B.START_TIME <= SYSDATE]]>  
+		AND B.END_TIME >= SYSDATE
+
+		UNION
+
+		SELECT
+			A.*, NULL, NULL, NULL, NULL, NULL, NULL
+		FROM COM_CAR A
+		WHERE A.DEL_YN = 'N'
+		)
+		ORDER BY CAR_NO ASC, RES_NO DESC
+	</select>
+
+<!-- 	<select id="selectReservableCar" resultMap="carResResultMap">
+		SELECT
+        *
+        FROM COM_CAR A 
+        WHERE A.CAR_NO NOT IN (SELECT B.CAR_NO
+		FROM RES_CAR B
+		WHERE B.END_TIME > SYSDATE
+          AND B.DEL_YN = 'N')
+        ORDER BY A.CAR_NO ASC
+	</select> -->
+	
+	<select id="selectedCar" resultMap="carResultMap">
+		SELECT
+		*
+		FROM COM_CAR
+		WHERE DEL_YN='N'
+		  AND CAR_NO = #{ carIndex }
+	</select>
+	
+	<insert id="reserveCar">
+		INSERT INTO RES_CAR
+		VALUES
+		(
+			SEQ_CAR_RES_NO.NEXTVAL,
+			#{ memberNo },
+			#{ carNo },
+			#{ startTime },
+			#{ endTime },
+			#{ carPurpose },
+			DEFAULT
+		)
+	</insert>
+	
+	<!-- 예약 중인 차량을 반납 상태로 바꾸는 쿼리문 -->
+	<update id="updateCarStatus">
+		UPDATE RES_CAR
+		SET
+		DEL_YN = 'Y'
+		WHERE RES_NO = #{ resNo }
+	</update>
+	
+	<!-- 차량 예약 수정 쿼리문 -->
+	<update id="modifyCarRes">
+		UPDATE RES_CAR
+		SET
+		START_TIME = #{ startTime },
+		END_TIME = #{ endTime },
+		CAR_PURPOSE = #{ carPurpose, jdbcType=VARCHAR}
+		WHERE RES_NO = #{ resNo }
+	
+	</update>
+	
+		
+</mapper>

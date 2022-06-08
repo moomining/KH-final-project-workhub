@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>workGroupSelect</title>
+    <!-- fonts -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+   
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.css">
+
+    <link rel="stylesheet" href="/assets/vendors/iconly/bold.css">
+
+    <link rel="stylesheet" href="/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="shortcut icon" href="/assets/images/favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="/assets/css/memberyj.css">
+    <link rel="stylesheet" href="/assets/css/att.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>        
+     <link rel="shortcut icon" th:href="@{/assets/images/images/favicon-workHub.ico}" type="image/x-icon">
+    <!--캘린더-->    
+    <link href='/assets/css/calendar/core.css' rel='stylesheet' />
+<link href='/assets/css/calendar/daygrid.css' rel='stylesheet' />
+<link href='/assets/css/calendar/list.css' rel='stylesheet' />
+<link href='/assets/css/calendar/timegrid.css' rel='stylesheet' />
+<script src='/assets/js/calendar/core.js'></script>
+<script src='/assets/js/calendar/daygrid.js'></script>
+<script src='/assets/js/calendar/interaction.js'></script>
+<script src='/assets/js/calendar/list.js'></script>
+<script src='/assets/js/calendar/timegrid.js'></script>
+    <script>
+	const successMessage = '[[${successMessage}]]';
+	
+	if(successMessage) {
+		alert(successMessage);
+	}
+</script>
+<style>
+
+
+  
+  </style>    
+</head>
+<body style="width: 1920px; height: 1080px;">
+   		
+		<div th:include="sidebar/sidebar" th:remove="tag"/></div>
+        
+        
+         
+                <!-- 타이머와 출근시간 퇴근시간 주간 누적근무시간-->
+        <div class="djdji"></div>
+            <div class="wrapper">
+                <div><p class="hatta">근태관리</p></div>
+                <div id="clock" class="clocka">clock</div>
+                <div id="digital_clock" class="glow">00:00:00</div>
+                
+              </div>
+        
+        
+        <!--출근하기 버튼-->
+        <a onclick="location.href='/employ/in'" class="buttons">출근하기</a>
+        <!--퇴근하기 버튼-->
+        <a onclick="location.href='/employ/out'" class="buttonsa">퇴근하기</a>
+        
+        <!-- 근무 유형-->
+        
+        <form action="/employ/other" method="post">
+        <select name="workNo" class="workss">
+            <option th:each="att : ${attList}" th:value="${att.workNo}" th:utext="${att.workName}">업무</option>
+       </select>
+      <input type="submit" class="chec" value="✓">
+       </form>
+       
+       <p class="hattsd">내 근태 내역</p>
+      
+       
+    
+    
+    <a onclick="location.href='/employ/excelDown'" style="cursor:pointer;"  class="ppo">목록 다운로드</a>
+   
+    </div>
+   
+
+	<!-- 캘린더 시작 -->
+	<div class="huyyy">
+  <ul id="accordion" class="accordion">    
+        <!--여기부터-->
+    <li class="show" style="padding-right: 30px;">
+        <div class="menu"><i class="fa fa-code"></i>1주차<i class="fa fa-chevron-down"></i></div>
+        <ul class="fyy">
+          <table class="table table-striped" id="table1">
+              <thead>
+                  <tr>
+                      <th class="dhjji">근무 상태</th>
+                      <th class="dhjji">시간</th>
+                      <th class="dhjji">수정이유</th>
+                      <th class="dhjji">작성일</th>
+                      <th class="dhjji">수정일</th>
+                      <th class="dhjji">수정</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr th:each="my : ${ myList }" th:if="${#strings.equals(my.attDateSub, '01')} or ${#strings.equals(my.attDateSub, '02')} or
+                  ${#strings.equals(my.attDateSub, '03')} or ${#strings.equals(my.attDateSub, '04')} or ${#strings.equals(my.attDateSub, '05')} or
+                  ${#strings.equals(my.attDateSub, '06')} or ${#strings.equals(my.attDateSub, '07')}" >
+                      <td th:text="${ my.workName }">출근</td>
+                      <td th:text="${ my.attGo }">22-04-12</td>
+                      <td th:text="${ my.attReason }">이러이러해서</td>
+                      <td th:text="${ my.attDate }">22-04-12</td>
+                      <td th:text="${ my.attModdate }">22-04-14</td>
+                      <td>
+                          <span class="badge bg-success" style="cursor:pointer;" th:onclick="|javascript:employModify('${ my.attNo }')|">수정</span>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+        </ul>
+      </li>
+      <!--여기까지-->
+        <!--여기부터-->
+    <li class="show" style="padding-right: 30px;">
+        <div class="menu"><i class="fa fa-code"></i>2주차<i class="fa fa-chevron-down"></i></div>
+        <ul class="fyy">
+          <table class="table table-striped" id="table1">
+              <thead>
+                  <tr>
+                      <th class="dhjji">근무 상태</th>
+                      <th class="dhjji">시간</th>
+                      <th class="dhjji">수정이유</th>
+                      <th class="dhjji">작성일</th>
+                      <th class="dhjji">수정일</th>
+                      <th class="dhjji">수정</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr th:each="my : ${ myList }" th:if="${#strings.equals(my.attDateSub, '08')} or ${#strings.equals(my.attDateSub, '09')} or
+                  ${#strings.equals(my.attDateSub, '10')} or ${#strings.equals(my.attDateSub, '11')} or ${#strings.equals(my.attDateSub, '12')} or
+                  ${#strings.equals(my.attDateSub, '13')} or ${#strings.equals(my.attDateSub, '14')}" >
+                      <td th:text="${ my.workName }">출근</td>
+                      <td th:text="${ my.attGo }">22-04-12</td>
+                      <td th:text="${ my.attReason }">이러이러해서</td>
+                      <td th:text="${ my.attDate }">22-04-12</td>
+                      <td th:text="${ my.attModdate }">22-04-14</td>
+                      <td>
+                          <span class="badge bg-success" style="cursor:pointer;" th:onclick="|javascript:employModify('${ my.attNo }')|">수정</span>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+        </ul>
+      </li>
+      <!--여기까지-->
+        <!--여기부터-->
+    <li class="show" style="padding-right: 30px;">
+        <div class="menu"><i class="fa fa-code"></i>3주차<i class="fa fa-chevron-down"></i></div>
+        <ul class="fyy">
+          <table class="table table-striped" id="table1">
+              <thead>
+                  <tr>
+                      <th class="dhjji">근무 상태</th>
+                      <th class="dhjji">시간</th>
+                      <th class="dhjji">수정이유</th>
+                      <th class="dhjji">작성일</th>
+                      <th class="dhjji">수정일</th>
+                      <th class="dhjji">수정</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr th:each="my : ${ myList }" th:if="${#strings.equals(my.attDateSub, '15')} or ${#strings.equals(my.attDateSub, '16')} or
+                  ${#strings.equals(my.attDateSub, '17')} or ${#strings.equals(my.attDateSub, '18')} or ${#strings.equals(my.attDateSub, '20')} or
+                  ${#strings.equals(my.attDateSub, '21')}" >
+                      <td th:text="${ my.workName }">출근</td>
+                      <td th:text="${ my.attGo }">22-04-12</td>
+                      <td th:text="${ my.attReason }">이러이러해서</td>
+                      <td th:text="${ my.attDate }">22-04-12</td>
+                      <td th:text="${ my.attModdate }">22-04-14</td>
+                      <td>
+                          <span class="badge bg-success" style="cursor:pointer;" th:onclick="|javascript:employModify('${ my.attNo }')|">수정</span>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+        </ul>
+      </li>
+      <!--여기까지-->
+        <!--여기부터-->
+    <li class="show" style="padding-right: 30px;">
+        <div class="menu"><i class="fa fa-code"></i>4주차<i class="fa fa-chevron-down"></i></div>
+        <ul class="fyy">
+          <table class="table table-striped" id="table1">
+              <thead>
+                  <tr>
+                      <th class="dhjji">근무 상태</th>
+                      <th class="dhjji">시간</th>
+                      <th class="dhjji">수정이유</th>
+                      <th class="dhjji">작성일</th>
+                      <th class="dhjji">수정일</th>
+                      <th class="dhjji">수정</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr th:each="my : ${ myList }" th:if="${#strings.equals(my.attDateSub, '22')} or ${#strings.equals(my.attDateSub, '23')} or
+                  ${#strings.equals(my.attDateSub, '24')} or ${#strings.equals(my.attDateSub, '25')} or ${#strings.equals(my.attDateSub, '26')} or
+                  ${#strings.equals(my.attDateSub, '27')} or ${#strings.equals(my.attDateSub, '28')}" >
+                      <td th:text="${ my.workName }">출근</td>
+                      <td th:text="${ my.attGo }">22-04-12</td>
+                      <td th:text="${ my.attReason }">이러이러해서</td>
+                      <td th:text="${ my.attDate }">22-04-12</td>
+                      <td th:text="${ my.attModdate }">22-04-14</td>
+                      <td>
+                          <span class="badge bg-success" style="cursor:pointer;" th:onclick="|javascript:employModify('${ my.attNo }')|">수정</span>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+        </ul>
+      </li>
+      <!--여기까지-->
+        <!--여기부터-->
+    <li class="show" style="padding-right: 30px;">
+        <div class="menu"><i class="fa fa-code"></i>5주차<i class="fa fa-chevron-down"></i></div>
+        <ul class="fyy">
+          <table class="table table-striped" id="table1">
+              <thead>
+                  <tr>
+                      <th class="dhjji">근무 상태</th>
+                      <th class="dhjji">시간</th>
+                      <th class="dhjji">수정이유</th>
+                      <th class="dhjji">작성일</th>
+                      <th class="dhjji">수정일</th>
+                      <th class="dhjji">수정</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr th:each="my : ${ myList }" th:if="${#strings.equals(my.attDateSub, '29')} or ${#strings.equals(my.attDateSub, '30')} or
+                  ${#strings.equals(my.attDateSub, '31')} or ${#strings.equals(my.attDateSub, '32')}" >
+                      <td th:text="${ my.workName }">출근</td>
+                      <td th:text="${ my.attGo }">22-04-12</td>
+                      <td th:text="${ my.attReason }">이러이러해서</td>
+                      <td th:text="${ my.attDate }">22-04-12</td>
+                      <td th:text="${ my.attModdate }">22-04-14</td>
+                      <td>
+                          <span class="badge bg-success" style="cursor:pointer;" th:onclick="|javascript:employModify('${ my.attNo }')|">수정</span>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+        </ul>
+      </li>
+      <!--여기까지-->
+
+  </ul>
+</div>
+	<!-- 캘린더 끝 -->
+	
+	       <!-- 수정하기 버튼을 눌렀을 때 게시글 번호 넘기는 것 -->
+    <script type="text/javascript">
+    function employModify(attNo) { 
+    	// 근무그룹  번호 확인용
+    	//alert(attNo); 
+    	var attNo = attNo; 
+        location.href='/employ/employmentModify?attNo='+attNo; }
+    </script> 
+
+    <script>
+        setInterval(showTime, 1000);
+  
+        function showTime(){
+          let time = new Date();
+          let hr = time.getHours();
+          let min = time.getMinutes();
+          let sec = time.getSeconds();
+          AMPM = 'AM'; 
+  
+        if(hr > 12) {
+          hr -= 12;
+          AMPM = "PM";
+        }
+        if(hr == 0) {
+          hr = 12;
+          AMPM = "AM";
+        }
+  
+        hr = hr < 10 ? "0" + hr : hr;
+        min = min < 10 ? "0" + min : min;
+        sec = sec < 10 ? "0" + sec : sec;
+  
+        let curentTime = hr + ":" + min + ":" + sec + AMPM; 
+  
+        document.getElementById('digital_clock').innerHTML = curentTime;
+  
+      }
+      showTime();
+      </script>
+
+
+        <script>
+        var Target = document.getElementById("clock");
+        function clock() {
+            var time = new Date();
+
+            var month = time.getMonth();
+            var date = time.getDate();
+            var day = time.getDay();
+            var week = ['일', '월', '화', '수', '목', '금', '토'];
+
+            Target.innerText = 
+            `${month + 1}월 ${date}일 ${week[day]}요일 ` ;
+                
+        }
+        clock();
+        setInterval(clock, 1000); // 1초마다 실행
+    </script>
+
+   <script>
+  class Accordion {
+    constructor(options) {
+      // 기본 옵션과 사용자 지정 옵션을 병합
+      this.config = Accordion.mergeConfig(options);
+      this.accordion = document.querySelector(this.config.selector);
+      // 이벤트 핸들러 내부의 this는 currentTartget
+      this.accordion.addEventListener('click', this.toogle.bind(this));
+    }
+
+    static mergeConfig(options) {
+      // 기본 옵션
+      const config = {
+        selector: '#accordion',
+        multi: true
+      };
+
+      return { ...config, ...options };
+    }
+
+    toogle(event) {
+      if (!event.target.classList.contains('menu')) return;
+      // click 이벤트를 발생시킨 <div class="menu"> 요소의 부모 요소인 li 요소
+      const targetLi = event.target.parentNode;
+
+      // 멀티 오픈을 허용하지 않으면 타깃 이외의 모든 서브메뉴를 클로즈한다.
+      if (!this.config.multi) {
+        [].filter.call(
+          this.accordion.childNodes,
+          li => li.nodeType === Node.ELEMENT_NODE && li !== targetLi
+        ).forEach(li => li.classList.remove('show'));
+      }
+
+      // li 요소의 class에 "show"가 있으면 제거하고 없으면 추가한다.
+      targetLi.classList.toggle('show');
+    }
+  }
+
+  window.onload = function () {
+    const accordion = new Accordion({ multi: false });
+    // const accordion = new Accordion();
+  };
+
+
+    </script>
+
+
+
+   
+    <script src="assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+
+    <script src="assets/vendors/apexcharts/apexcharts.js"></script>
+    <script src="assets/js/pages/dashboard.js"></script>
+
+    <script src="assets/js/main.js"></script>
+   		
+</body>
+</html>

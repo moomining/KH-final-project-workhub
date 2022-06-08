@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>workWrite</title>
+    <!-- fonts -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="/assets/vendors/iconly/bold.css">
+    <link rel="stylesheet" href="/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="shortcut icon" href="/assets/images/favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="/assets/css/adminyj.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>    
+	<link rel="shortcut icon" th:href="@{/assets/images/images/favicon-workHub.ico}" type="image/x-icon">
+<script>
+	const successMessage = '[[${successMessage}]]';
+	
+	if(successMessage) {
+		alert(successMessage);
+	}
+</script>
+</head>
+<body>
+   
+		<div th:include="sidebar/sidebar-admin" th:remove="tag"></div>    
+        
+        
+        <!--모든 근무 그룹 시작-->
+        <h3 class="fdawr sdfgfsfdwq">연차 유형</h3>
+        <section class="section olggogo dhdgdg">
+            <div class="card">
+                <input type="button" value="신규 추가" class="gttt" onclick="location.href='/restcate/restCateWrite'">
+                <div class="card-body">
+                    <table class="table table-striped" id="table1">
+                        <thead>
+                            <tr>
+                                <th class="erre">코드</th>
+                                <th class="erff">휴가종류</th>
+                                <th class="sds">유/무급</th>
+                                <th class="deaf">연차 차감</th>
+                                <th class="deaf">공휴일 포함 여부</th>
+                                <th class="sds">작성일</th>                               
+                                <th class="deaf">작성자</th>
+                                <th class="deaf">사용여부</th>
+                                <th class="deaf">수정</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="restcate : ${ restcateList }">
+                                <td th:text="${ restcate.restNo }"></td>  <!-- 코드 -->
+                                <td th:text="${ restcate.restName }"></td> <!-- 휴가종류 -->
+                                <td th:text="${ restcate.restMoney }"></td> <!-- 유/무급 -->
+                                <td th:text="${ restcate.restDed }"></td> <!-- 연차차감 -->
+                                <td th:text="${ restcate.restInclude }"></td> <!-- 공휴일 포함 여부 -->
+                                <td th:text="${ restcate.restDate }"></td> <!-- 작성일 -->
+                                <td th:text="${ restcate.name }"></td> <!-- 사용여부 -->
+                                <td>   
+                                    <span th:text="${ restcate.restUse }" class="badge bg-success">설정</span>  <!-- 설정 -->
+                                </td>
+                                <td>   
+                                    <span class="badge bg-success" style="cursor:pointer;" th:onclick="|javascript:restCateModify('${ restcate.restNo }')|">수정</span>  <!-- 설정 -->
+                                </td>
+                            </tr>          
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <!--모든 근무 그룹 끝-->
+       
+        <!-- 수정하기 버튼을 눌렀을 때 게시글 번호 넘기는 것 -->
+    <script type="text/javascript">
+    function restCateModify(restNo) { 
+    	// 근무그룹  번호 확인용
+    	//alert(restNo); 
+    	var restNo = restNo; 
+        location.href='/restcate/restCateModify?restNo='+restNo; }
+    </script>   
+       
+    
+    <script src="assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+
+    <script src="assets/vendors/apexcharts/apexcharts.js"></script>
+    <script src="assets/js/pages/dashboard.js"></script>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

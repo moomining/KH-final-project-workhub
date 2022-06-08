@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>차량 수정 - workhub</title>
+
+    <!-- fonts -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="/assets/css/bootstrap-ar.css">
+
+    <link rel="stylesheet" href="/assets/vendors/iconly/bold.css">
+
+    <link rel="stylesheet" href="/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/assets/css/app-ar.css">
+    <link rel="stylesheet" href="/assets/css/admin-ar.css">
+    <link rel="shortcut icon" th:href="@{/assets/images/images/favicon-workHub.ico}" type="image/x-icon">
+</head>
+
+<body>
+    <div th:include="sidebar/sidebar-admin-asset" th:remove="tag"></div>
+    <div id="main">
+        <header class="mb-3">
+            <a href="#" class="burger-btn d-block d-xl-none">
+                <i class="bi bi-justify fs-3"></i>
+            </a>
+        </header>
+        <!-- 상단 horizontal nav-->
+        <div class="page-heading">
+			<ul class="nav nav-tabs" id="myTab">
+				<li class="nav-item">
+				<a class="nav-link" id="home-tab" th:href="@{/asset/room/list}">
+						<h5>회의실 관리</h5>
+				</a>
+				</li>
+				<li class="nav-item">
+				<a class="nav-link active" id="profile-tab" th:href="@{/asset/car/list}">
+						<h5>차량 관리</h5>
+				</a>
+				</li>
+
+			</ul>
+		</div>
+
+        <div class="page-heading border-bottom">
+            
+        </div>
+
+        <div class="content-area card-rev">
+            <div class="content-ttl">
+                <h5>차량 정보 수정</h5>
+            </div>
+            <div class="card-body">
+                
+                <form class="form form-horizontal" method="post" th:action="@{/asset/car/modify}">
+                    <div class="form-body modal-body">
+                        <div class="row res-row">
+                            <div class="col-md-4 row-margin col-label">
+                                <label class="label-size">차종명</label>
+                            </div>
+                            <div class="col-md-8 form-group row-margin col-input">
+                                <input type="text" class="form-control input-margin" name="carName" th:value="${ carInfo.carName }">
+                            </div>
+                            <div class="col-md-4 row-margin col-label">
+                                <label class="label-size">차량번호</label>
+                            </div>
+                            <div class="col-md-8 form-group row-margin col-input">
+                                <input type="text" class="form-control input-margin" name="carNumber" th:value="${ carInfo.carNumber }">
+                            </div>
+                            
+                            <div class="col-md-4 row-margin col-label">
+                                <label class="label-size" for="flexRadioDefault1">사용 가능 여부</label>
+                            </div>
+                            <div class="col-md-8 form-group row-margin col-input">
+                                <div class="possible">
+                                    <input type="radio" class="form-check-input" name="carYn" id="carY" value="Y" checked>
+                                    <label class="form-check-label possi-size" for="carYn">
+                                        사용 가능
+                                    </label>
+                                    <input type="radio" class="form-check-input" name="carYn" id="carN" value="N">
+                                    <label class="form-check-label possi-size" for="carYn">
+                                        사용 불가
+                                    </label>
+                                </div>
+                                
+                            </div>
+                            
+                            
+
+
+                        </div>
+                        <div class="modal-footer rev-footer-align">
+                            <div class="col-sm-12 d-flex justify-content-end foot-margin">
+                            	<input type="hidden" name="carNo" th:value="${ carInfo.carNo }">
+                                <button type="submit" class="btn btn-primary me-1 mb-1 edit-btn">수정</button>&nbsp
+                                <button type="submit" class="btn btn-light-secondary me-1 mb-1 edit-btn">삭제</button>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+
+    </div>
+
+    <script src="/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+
+    <script src="/assets/js/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.work.workhub.admin.reserve.model.dao.CarMapper">
+	
+	<resultMap id="carResultMap" type="com.work.workhub.admin.reserve.model.dto.CarDTO">
+		<id property="carNo" column="CAR_NO"/>
+		<result property="carName" column="CAR_NAME"/>
+		<result property="carNumber" column="CAR_NUMBER"/>
+		<result property="carYn" column="CAR_YN"/>
+		<result property="delYn" column="DEL_YN"/>
+	</resultMap>
+	
+	<insert id="registCar">
+		INSERT INTO COM_CAR
+		VALUES
+		(
+			SEQ_CAR_NO.NEXTVAL,
+			#{ carName },
+			#{ carNumber },
+			#{ carYn },
+			DEFAULT	
+		)
+	</insert>
+	
+	<select id="selectAllCar" resultMap="carResultMap">
+		SELECT
+			*
+		  FROM COM_CAR
+		 WHERE DEL_YN = 'N'
+		 ORDER BY CAR_NO DESC 	
+	</select>
+	
+	<select id="selectCarInfo" resultMap="carResultMap">
+		SELECT
+			*
+		  FROM COM_CAR
+		 WHERE CAR_NO = #{ carNo }
+	</select>
+	
+	<update id="modifyCar">
+		UPDATE COM_CAR
+		SET
+		CAR_NAME = #{ carName },
+		CAR_NUMBER = #{ carNumber },
+		CAR_YN = #{ carYn }
+		WHERE CAR_NO = #{ carNo }
+		
+	</update>
+	
+	<update id="deleteCar">
+		UPDATE COM_CAR
+		SET
+		DEL_YN = 'Y'
+		WHERE CAR_NO = #{ carNo }
+	</update>
+	
+</mapper>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workhub-admin</title>
+
+	<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <!-- fonts -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+    <!-- <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet"> -->
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.css">
+
+    <link rel="stylesheet" href="/assets/vendors/iconly/bold.css">
+
+    <link rel="stylesheet" href="/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="stylesheet" href="/assets/css/memberList.css">
+    <link rel="shortcut icon" th:href="@{/assets/images/images/favicon-workHub.ico}" type="image/x-icon">
+</head>
+
+<body>
+    <div id="app">
+        <div th:include="sidebar/sidebar-admin-member" th:remove="tag"/>
+        <div id="main">
+            <!-- content -->
+            <div class="page-heading">
+                <h3>사원 관리</h3>
+                <!-- 구성원 추가 -->
+                <button class="add" onclick="location.href='/admin/signUp'">구성원 추가</button>
+
+                <!-- 사원 관리 컨테이너 -->
+                <div class="mng-container">
+                
+	                <!-- 사원 리스트 메뉴 -->
+                    <nav class="menu-list">
+                        <div class="nav-all">
+                            <ul class="nav-list">
+                                <li><a href="#">전체</a></li>
+                                <li><a href="#">초대 현황</a></li>
+                                <li><a href="#">재직 상태</a></li>
+                                <li><a href="#">계약 상태</a></li>
+                            </ul>
+                        </div> <!-- /nav-all -->
+                    </nav> <!-- /menu-list -->
+                    
+                    <form action="/admin/memberList">
+	                    
+	                    <!-- 사원 목록 래퍼 -->
+	                    <div class="content-wrap">
+	                        <section class="mem-tab col-3">
+	                            <h3>워크허브</h3>
+	                            <i class=""></i>
+	                            <div class="mem-tab-list">
+	                                <p><a href="#">전체 구성원</a></p>
+	                                <ul>
+	                                    <li th:each="department:${depList}"><a href="#" th:data="${department.depNo}" th:text="${department.depName}"></a></li>
+	                                </ul>
+	                            </div> <!-- /mem-tab-list -->
+	                        </section> <!-- /mem-tab -->
+	
+	                        <section class="mem-list col-7">
+	                            <h3 class="counting"><span id="memberCount" th:text="${#lists.size(memberList)}"></span>명</h3>
+	                            <p class="include"><span></span>하위조직 포함<i class=""></i></p>
+	                            <input type="search" name="search" id="search">
+	                            <table class="mem-table">
+	                                <thead>
+	                                	<tr>
+		                                    <th>이름</th>
+		                                    <th>조직 · 직책</th>
+		                                    <th>직위</th>
+		                                    <th>상태</th>
+	                                    </tr>
+	                                </thead>
+	                                <tbody id="memberList">
+		                                <tr th:each="member : ${ memberList } ">
+		                                    <td th:text="${ member.name }" name="memberName"></td>
+		                                    <td th:text="${ member.depName }" name="depName"></td>
+		                                    <td th:text="${ member.positionName }" name="positionName"></td>
+		                                    <td th:if="${ member.status == 'Y' }" name="memberStatus">재직중</td>
+		                                    <td th:unless="${ member.status == 'Y' }" name="memberStatus">퇴직</td>
+		                                </tr>
+	                                </tbody>
+	                            </table>
+	                        </section>  <!-- /mem-list -->
+	                    </div> <!-- /content-wrap -->
+
+	                    <!-- 초대 현황 -->
+	                    <div class="content-wrap">
+	
+	                        <!-- 초대 상단 버튼 -->
+	                        <section class="invite" style="display:none;">
+	                            <div class="inv-all-btn">전체</div>
+	                            <div class="before-all">초대 전</div>
+	                            <div class="wait-btn">가입 대기 중</div>
+	                            <div class="fill-btn">정보 입력 중</div>
+	                            <div class="inv-serach">
+	                                <input type="search" name="search" id="search">
+	                                <i class=""></i>
+	                            </div> <!-- /inv-search -->
+	
+	                            <!-- 초대 전체 -->
+	                            <div class="inv-all">
+	                                <p><b><span>0</span>명</b></p>
+	                                <div class="add-mem">
+	                                    <i></i>
+	                                    <br>
+	                                    <p>구성원이 없어요.</p>
+	                                    <p>회사의 구성원을 추가해보세요</p>
+	                                    <button><i class=""></i>구성원 추가하기</button>
+	                                </div> <!-- /add-mem -->
+	                            </div> <!-- /inv-all -->
+	
+	                            <!-- 초대 전 -->
+	                            <div class="before">
+	                                <p><b><span>0</span>명</b></p>
+	                                <button class="all-invite"><i class=""></i>전체 초대</button>
+	                                <div class="before-add-mem">
+	                                    <i></i>
+	                                    <br>
+	                                    <p>'초대 전'인 구성원이 없어요.</p>
+	                                    <p>초대 메일을 보내지 않은 구성원이 노출돼요.</p>
+	                                </div> <!-- /before-add-mem -->
+	                            </div> <!-- /before -->
+	
+	                            <!-- 가입 대기 중 -->
+	                            <div class="wait">
+	                                <p><b><span>0</span>명</b></p>
+	                                <button class="wait-invite"><i class=""></i>전체 초대</button>
+	                                <div class="before-add-mem">
+	                                    <i></i>
+	                                    <br>
+	                                    <p>'초대 전'인 구성원이 없어요.</p>
+	                                    <p>초대 메일을 보내지 않은 구성원이 노출돼요.</p>
+	                                </div> <!-- /wait-add-mem -->
+	                            </div> <!-- /wait -->
+	
+	                            <!-- 정보 입력 중 -->
+	                            <div class="info-fill">
+	                                <p><b><span>0</span>명</b></p>
+	                                <div class="info-add-mem">
+	                                    <i></i>
+	                                    <br>
+	                                    <p>'정보 입력 중'인 구성원이 없어요.</p>
+	                                    <p>가입 후 요청 정보를 완료하지 않은 구성원이 노출돼요.</p>
+	                                </div> <!-- /info-add-mem -->
+	                            </div> <!-- /info-fill --> 
+	                        </section> <!-- /invite -->
+	                    </div> <!-- /content-wrap -->
+		
+		
+	                    <!-- 재직 상태 -->
+	                    <div class="content-wrap"  style="display:none;">
+	                        <!-- 카운트 박스 -->
+	                        <div class="count-wrap">
+	
+	
+	
+	                            <!-- 퇴직 예정 -->
+	                            <div class="retire">
+	                                <div class="retire-txt">
+	                                    <span>퇴직 예정</span>
+	                                    <p>0명</p>
+	                                </div> <!-- /retire-txt -->
+	                                <div class="img-wrap">
+	                                    <path></path>
+	                                </div> <!-- /img-wrap -->
+	                            </div> <!-- /retire -->
+	
+	
+	
+	                            <!-- 입사 예정 -->
+	                            <div class="join">
+	                                <div class="join-txt">
+	                                    <span>퇴직 예정</span>
+	                                    <p>0명</p>
+	                                </div> <!-- /join-txt -->
+	                                <div class="img-wrap">
+	                                    <path></path>
+	                                </div> <!-- /img-wrap -->
+	                            </div> <!-- /join -->
+	
+	
+	
+	                            <!-- 수습 중 -->
+	                            <div class="intern">
+	                                <div class="intern-txt">
+	                                    <span>퇴직 예정</span>
+	                                    <p>0명</p>
+	                                </div> <!-- /retire-txt -->
+	                                <div class="img-wrap">
+	                                    <path></path>
+	                                </div> <!-- /img-wrap -->
+	                            </div> <!-- /intern -->
+	                        </div> <!-- /count-wrap -->
+	
+	
+	
+	                        <!-- 사원 목록 -->
+	                        <div class="mem-list">
+	
+	                            <!-- 추가된 사원이 있을 때 보여줄 표 -->
+	                            <div class="table-wrap">
+	                                <table>
+	                                    <tr>
+	                                        <th>이름</th>
+	                                        <th>사번</th>
+	                                        <th>조직 · 직책</th>
+	                                        <th>직위</th>
+	                                        <th>상태</th>
+	                                        <th><i class=""></i></th>
+	                                    </tr>
+	                                </table>
+	                            </div> <!-- /table-wrap -->
+	                            
+	                            <!-- 테이블이 비어있을 때 보여줄 사진과 문구 -->
+	                            <div class="empty-wrap">
+	                                <div class="empty-img">
+	                                    <i class=""></i>
+	                                </div> <!-- /empty --> 
+	                                <div class="empty-txt">
+	                                    <p>표시할 내용이 없습니다.</p>
+	                                </div> <!-- /empty-txt -->
+	                            </div> <!-- /empty-wrap -->
+	                        </div> <!-- /mem-list -->
+	
+	                    </div> <!-- /content-wrap -->
+	
+	                </div> <!-- /mng-container -->
+				</form>
+            </div> <!-- /page-heading -->
+
+
+            <!-- 푸터 -->
+            <footer>
+                <div class="footer clearfix mb-0 text-muted">
+                    <div class="float-start">
+                        <p>2021 &copy; Mazer</p>
+                    </div> <!-- /float-start -->
+                    <div class="float-end">
+                        <p>Crafted with <span class="text-danger"><i class="bi bi-heart"></i></span> by <a
+                                href="http://ahmadsaugi.com">A. Saugi</a></p>
+                    </div> <!-- /float-start -->
+                </div> <!-- /footer -->
+            </footer>
+        </div> <!-- /main -->
+    </div> <!-- /app -->
+    <script src="/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+
+    <script src="/assets/vendors/apexcharts/apexcharts.js"></script>
+    <script src="/assets/js/pages/dashboard.js"></script>
+
+    <script src="/assets/js/main.js"></script>
+</body>
+
+<script>
+	$(".mem-tab-list a").on("click", function(){
+		$.ajax({
+			type: "POST",
+			url: "/admin/member/memberListAjax",
+			data: {
+				depNo: $(this).attr("data") == undefined ? null : $(this).attr("data")
+			},
+			dataType: "json",
+			success: function(result) {
+				var memberListHtml = "";
+            	for(var i=0;i<result.length;i++) {
+            		memberListHtml += "<tr>";
+            		memberListHtml += 	"<td name='memberName'>" + result[i].name + "</td>";
+            		memberListHtml += 	"<td name='depName'>" + result[i].depName + "</td>";
+            		memberListHtml += 	"<td name='positionName'>" + result[i].positionName + "</td>";
+            		if(result.status == "Y") {
+	            		memberListHtml += "<td name='memberStatus'>재직중</td>";
+            		}else{
+	            		memberListHtml += "<td name='memberStatus'>퇴직</td>";
+            		}
+            		memberListHtml += "</tr>";
+            	}
+				$("#memberList").html(memberListHtml);
+				$("#memberCount").text(result.length);
+			}
+		});
+	});
+</script>
+
+</html>

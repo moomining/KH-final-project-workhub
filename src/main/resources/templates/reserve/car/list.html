@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>차량 예약 - workhub</title>
+
+    <!-- fonts -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"/>
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="/assets/css/bootstrap-ar.css">
+
+    <link rel="stylesheet" href="/assets/vendors/iconly/bold.css">
+
+    <link rel="stylesheet" href="/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/assets/css/app-ar.css">
+    <link rel="shortcut icon" th:href="@{/assets/images/images/favicon-workHub.ico}" type="image/x-icon">
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    
+    <!-- datepicker 추가! -->
+<!--     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+	
+</head>
+
+<body>
+    <div th:include="sidebar/sidebar-reserve" th:remove="tag"></div>
+    <div id="main">
+        <header class="mb-3">
+            <a href="#" class="burger-btn d-block d-xl-none">
+                <i class="bi bi-justify fs-3"></i>
+            </a>
+        </header>
+        <!-- 상단 horizontal nav-->
+        <div class="page-heading">
+            <ul class="nav nav-tabs" id="myTab">
+                <li class="nav-item">
+                    <a class="nav-link" id="home-tab" th:href="@{ /reserve/meeting/list }">
+                        <h5>회의실 예약</h5>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" id="profile-tab" th:href="@{ /reserve/car/list }">
+                        <h5>차량 예약</h5>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="contact-tab" th:href="@{ /reserve/mylist }">
+                        <h5>내 예약 조회</h5>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+		
+        <div class="page-heading border-bottom">
+           
+        </div>
+		       
+        <div>
+            <div class="content-ttl">
+                <h5>차량 예약</h5>
+            </div>
+			<!-- isAuthenticated() : 인증(로그인) 되어 있는지 확인 -->
+			<th:block sec:authorize="isAuthenticated()">
+			<!-- 
+				principal : 로그인 된 User 객체의 정보를 담고 있다.
+				principal.username : 로그인 시 입력한 id 값
+				그 외의 정보가 필요할 경우 User 타입을 상속한 클래스를 만들어서 커스터마이징 할 수 있다.
+			 -->
+			<input type="hidden" th:value="${#authentication.principal.no}" name="no">
+			</th:block>
+			
+            <div class="centered" id="date-area">
+
+                <span><button type="button" class="date-before" onclick="moveDate('previous');">&lt;</button></span>
+                <span><input type="date" class="res-date" id="booking_date" name="res-date"></span>
+                <span><button type="button" class="date-before" onclick="moveDate('next');">&gt;</button></span>
+                <span><button type="button" class="today-btn" onclick="setToday();">오늘</button></span>
+                
+            </div>
+            
+            
+            <!-- moveDate script -->
+            <script>
+            /* 기본값 오늘 날짜 지정 */
+            document.getElementById('booking_date').valueAsDate = new Date();
+
+            /* Date Format 지정 */    
+            function formatDate(date) {
+                    
+                    var d = new Date(date),
+                    
+                    month = '' + (d.getMonth() + 1) , 
+                    day = '' + d.getDate(), 
+                    year = d.getFullYear();
+                    
+                    if (month.length < 2) month = '0' + month; 
+                    if (day.length < 2) day = '0' + day; 
+                    
+                    return [year, month, day].join('-');
+                    
+            }
+			          
+            // 오늘 버튼 이벤트
+            function setToday() {
+                $('input#booking_date').val(formatDate(new Date()));
+
+            }
+            
+            /* 이전 날짜, 이후 날짜 이동 +1Day */
+            function moveDate(str) {
+               var yesterday = new Date($('#booking_date').val());
+               var tomorrow = new Date($('#booking_date').val());
+               
+               console.log(yesterday);
+               console.log(tomorrow);
+               
+               switch (str) {
+               case 'previous':
+            	   	yesterday.setDate(yesterday.getDate() - 1);
+            	   	console.log(yesterday);
+	            	$('#booking_date').val(formatDate(yesterday));
+                break;
+               case 'next':
+            	   tomorrow.setDate(tomorrow.getDate() + 1);
+            	   console.log(tomorrow);
+            	   $('#booking_date').val(formatDate(tomorrow));
+               break;
+            	}
+             }
+            
+            
+            </script>
+            
+            
+            
+            <!--  index 값으로 각각 가져오기 -->
+            <div class="car-img">
+            	<!-- 차 2개 표시 -->
+               <div class="car2"><th:block th:each="num : ${ #numbers.sequence(0,1) }" sec:authorize="isAuthenticated()">
+                    <!-- 미등록 차량 -->
+                    <div th:unless="${ #lists.size(carList) > num }"><img src="/assets/images/images/car-unregister-resize.png" alt="car"></div>
+                    
+                    
+                   	<div th:if="${ #lists.size(carList) > num }">
+                   		<!-- 예약 가능 차량 -->
+                   		<th:block th:if="${ reservableCar[num].carRes.resNo == 0 }">
+                   		<div class="car-sec">
+                   			<input type="hidden" th:value="${ carList[num].carNo }" class="carNoInput">
+                   			<img src="/assets/images/images/car.png" alt="car" data-bs-toggle="modal" data-bs-target="#inlineForm">
+                   		</div>
+                    	</th:block>
+                    
+                   
+                    	<th:block th:unless="${ reservableCar[num].carRes.resNo == 0 }">
+	                    	<!-- 본인 예약 차량 -->
+	                    	<div class="car-sec reserved" th:if="${ reservableCar[num].carRes.memberNo == #authentication.principal.no }">
+	                    		<form method="get" action="returnInfo">
+	                    			<input type="hidden" th:value="${ carList[num].carNo }" class="carNoInput">
+	                    			<input type="hidden" th:value="${ reservableCar[num].carRes.resNo }" name="resNo">
+	                    			<input type="hidden" th:value="${ reservableCar[num].carName }" name="returnCarName">
+	                    			<input type="hidden" th:value="${ reservableCar[num].carRes.startTime }" name="returnStartTime">
+	                    			<input type="hidden" th:value="${ reservableCar[num].carRes.endTime }" name="returnEndTime">
+	                    			<input type="hidden" th:value="${ #authentication.principal.name }" name="returnName">
+	                    			<input type="hidden" th:value="${ reservableCar[num].carRes.carPurpose }" name="returnCarPurpose">
+	                    			<button type="submit" class="bg-transparent-btn"><img src="/assets/images/images/car-rent-my.png" alt="car"></button>
+	                    		</form>
+	                    	</div>
+	                    	<!-- 타인 예약 차량 -->
+	                    	<div class="car-sec reserved" th:if="${ reservableCar[num].carRes.memberNo != #authentication.principal.no }">
+	                    		<input type="hidden" th:value="${ carList[num].carNo }" class="carNoInput">
+	                    		<img src="/assets/images/images/car-rent.png" alt="car">
+	                    	</div>
+                    	</th:block> 
+                    </div>
+                    
+                    
+              </th:block></div>
+               <div class="car2"><th:block th:each="num : ${ #numbers.sequence(0,1) }">
+               <div><label class="carLabel" th:if="${ #lists.size(carList) > num }" th:text="|${carList[num]?.carNumber} ${carList[num]?.carName}|"></label></div>
+               </th:block></div>
+               
+               
+               <!-- 차 3개 표시 -->
+               <div class="car3"><th:block th:each="num : ${ #numbers.sequence(2,4) }">
+                    <!-- 미등록 차량 -->
+                    <div th:unless="${ #lists.size(carList) > num }"><img src="/assets/images/images/car-unregister-resize.png" alt="car"></div>
+                    
+                    
+                   	<div id="reservableCar" th:if="${ #lists.size(carList) > num }">
+                   		<!-- 예약 가능 차량 -->
+                   		<th:block th:if="${ reservableCar[num]?.carRes.resNo == 0 }">
+                   		<div class="car-sec">
+                   			<input type="hidden" th:value="${ carList[num]?.carNo }" class="carNoInput">
+                   			<img src="/assets/images/images/car.png" alt="car" data-bs-toggle="modal" data-bs-target="#inlineForm">
+                   		</div>
+                    	</th:block>
+                   
+                    	<th:block th:unless="${ reservableCar[num]?.carRes.resNo == 0 }">
+                    	<!-- 본인 예약 차량 -->
+	                    	<div class="reserved car-sec" th:if="${ reservableCar[num]?.carRes.memberNo == #authentication.principal.no }">
+	                    		<form method="get" action="returnInfo">
+	                    			<input type="hidden" th:value="${ carList[num]?.carNo }" class="carNoInput">
+	                    			<input type="hidden" th:value="${ reservableCar[num]?.carRes.resNo }" name="resNo">
+	                    			<input type="hidden" th:value="${ reservableCar[num]?.carName }" name="returnCarName">
+	                    			<input type="hidden" th:value="${ reservableCar[num]?.carRes.startTime }" name="returnStartTime">
+	                    			<input type="hidden" th:value="${ reservableCar[num]?.carRes.endTime }" name="returnEndTime">
+	                    			<input type="hidden" th:value="${ #authentication.principal.name }" name="returnName">
+	                    			<input type="hidden" th:value="${ reservableCar[num]?.carRes.carPurpose }" name="returnCarPurpose">
+	                    			<button type="submit" class="bg-transparent-btn"><img src="/assets/images/images/car-rent-my.png" alt="car"></button>
+	                    		</form>
+	                    	</div>
+	                    	<!-- 타인 예약 차량 -->
+	                    	<div class="reserved car-sec" th:if="${ reservableCar[num]?.carRes.memberNo != #authentication.principal.no }">
+	                    		<input type="hidden" th:value="${ carList[num]?.carNo }" class="carNoInput">
+	                    		<img src="/assets/images/images/car-rent.png" alt="car">
+	                    	</div>
+                    	</th:block>
+                    </div>
+               </th:block></div>
+               <div class="car3"><th:block th:each="num : ${ #numbers.sequence(2,4) }">
+               <div><label class="carLabel" th:if="${ #lists.size(carList) > num }" th:text="|${carList[num]?.carNumber} ${carList[num]?.carName}|"></label></div>
+               </th:block></div>
+            </div>
+        </div>
+            
+		
+        <!--차량 예약 Modal -->
+        <div class="modal fade text-left" id="inlineForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg modal-resize"
+                role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel33">&nbsp;예약하기</h4>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <i data-feather="x"></i>
+                        </button>
+                    </div>
+                    
+                    <form class="form form-horizontal" method="post" th:action="@{/reserve/car/list}">
+                        <div class="form-body modal-body" sec:authorize="isAuthenticated()">
+                            <div class="row">
+                                <div class="col-md-4 modal-margin">
+                                    <label>차종명</label>
+                                </div>
+                                <div class="col-md-8 form-group modal-margin">
+                                    <input type="text" class="form-control input-margin" id="carIndex" name="carName" readonly>
+                                    <input type="hidden" name="carNo" id="carNo">
+                                </div>
+                                <div class="col-md-4 modal-margin">
+                                    <label>예약기간</label>
+                                </div>
+                                <div class="col-md-8 form-group date-grid modal-margin">
+                                    <div>
+                                        <input type="datetime-local" class="form-control pe-font-size" name="startTime" id="period1">
+                                    </div>
+                                    <div>-</div>
+                                    <div>
+                                        <input type="datetime-local" class="form-control pe-font-size" name="endTime" id="period2">
+                                    </div>
+                                </div>
+                                <div class="col-md-4 modal-margin">
+                                    <label>예약자</label>
+                                </div>
+                                <div class="col-md-8 form-group modal-margin" sec:authorize="isAuthenticated()">
+                                    <input type="text" id="contact-info" class="form-control input-margin" name="name"
+                                        th:value="${#authentication.principal.name}" readonly>
+                                    <input type="hidden" name="memberNo" th:value="${#authentication.principal.no}">
+                                </div>
+                                <div class="col-md-4 modal-margin">
+                                    <label>목적</label>
+                                </div>
+                                <div class="col-md-8 form-group modal-margin">
+                                    <textarea rows="5" cols="49" name="carPurpose" style="resize:none;"
+                                        required></textarea>
+                                </div>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <div class="col-sm-12 d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary me-1 mb-1 btn-size">예약하기</button>
+                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1 btn-size">초기화</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+	<script>
+		$(".car-sec").click(function(){
+			const carIndex = $(".car-sec").index(this);
+			console.log(carIndex);
+			
+			let modalCarName = document.getElementById('carIndex');
+			let carAll = $(".carLabel")[carIndex].innerText;
+			let carName = carAll.substring(5, carAll.length);
+			modalCarName.value = carName;
+			let check = modalCarName.value;
+			console.log(check);
+			
+			let carNo  = document.getElementById('carNo');
+			let carNoInput = $(this).find('.carNoInput').val();
+			console.log(carNoInput);
+			carNo.value = carNoInput;
+			
+		})
+		
+		
+	
+		let dateElement = document.getElementById('period1');
+	    let date = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, -8);
+	    dateElement.value = date;
+	    
+	    dateElement.setAttribute("min", date);
+	    
+	    function setMinValue() {
+	        if(dateElement.value < date) {
+	            alert('현재 시간보다 이전의 날짜는 설정할 수 없습니다.');
+	            dateElement.value = date;
+	        }
+	    }
+	    
+		let dateElement2 = document.getElementById('period2');
+	    let date2 = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000 + 1000*60*60*4).toISOString().slice(0, -8);
+	    console.log(date2);
+	    dateElement2.value = date2;
+	    
+	    dateElement2.setAttribute("min", date);
+	
+	    function setMinValue2() {
+	        if(dateElement2.value < date) {
+	            alert('현재 시간보다 이전의 날짜는 설정할 수 없습니다.');
+	            dateElement2.value = date;
+	        }
+	    }
+	</script>
+
+
+
+    <script src="/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+
+    <script src="/assets/js/main.js"></script>
+</body>
+
+</html>

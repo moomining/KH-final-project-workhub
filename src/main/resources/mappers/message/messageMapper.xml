@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.work.workhub.member.message.model.dao.MessageMapper">
+
+	<resultMap id="messageResultMap" type="com.work.workhub.member.message.model.dto.MessageDTO">
+		<id property="msgCode" column="MSG_CODE"/>
+		<result property="senderNo" column="MSG_SENDER_NO"/>
+		<result property="reicipientNo" column="MSG_REICIPIENT_NO"/>
+		<result property="msgContent" column="MSG_CONTENT"/>
+		<result property="sendDate" column="MSG_SEND_DATE"/>
+		<result property="sendTime" column="MSG_SEND_TIME"/>
+		<result property="readDate" column="MSG_READ_DATE"/>
+		<result property="readTime" column="MSG_READ_TIME"/>
+		<result property="recycleBinStatus" column="MSG_RECYCLE_BIN_STATUS"/>
+		<result property="deleteStatus" column="MSG_DELETE_STATUS"/>
+		
+		<association property="sender" resultMap="memberResultMap"/>
+        <association property="reicipient" resultMap="memberResultMap"/>
+	</resultMap>
+	
+	<resultMap id="memberResultMap" type="com.work.workhub.member.member.dto.MemberDTO">
+		<id property="no" column="NO"/>
+		<result property="id" column="ID"/>
+		<result property="pwd" column="PWD"/>
+		<result property="depNo" column="DEP_NO"/>
+		<result property="positionNo" column="POSITION_NO"/>
+		<result property="groupNo" column="GROUP_NO"/>
+		<result property="name" column="NAME"/>
+		<result property="email" column="EMAIL"/>
+		<result property="phone" column="PHONE"/>
+		<result property="status" column="STATUS"/>
+		
+		<association property="position" resultMap="positionResultMap"/>
+		<association property="dept" resultMap="departmentResultMap"/>
+	</resultMap>
+	
+	<resultMap id="departmentResultMap" type="com.work.workhub.member.member.dto.DepartmentDTO">
+		<id property="depNo" column="DEP_NO"/>
+		<result property="depName" column="DEP_NAME"/>
+	</resultMap>
+	
+	<resultMap id="positionResultMap" type="com.work.workhub.member.member.dto.PositionDTO">
+		<id property="positionNo" column="POSITION_NO"/>
+		<result property="positionName" column="POSITION_NAME"/>
+	</resultMap>
+	
+	<select id="findMessageInbox" resultMap="messageResultMap">
+		SELECT /* com.work.workhub.member.message.model.dao.findMessageInbox() */
+			    A.MSG_CODE
+			  , A.MSG_SENDER_NO
+			  , A.MSG_REICIPIENT_NO
+			  , A.MSG_CONTENT
+			  , A.MSG_SEND_DATE
+			  , A.MSG_SEND_TIME
+			  , A.MSG_READ_DATE
+			  , A.MSG_READ_TIME
+			  , A.MSG_RECYCLE_BIN_STATUS
+			  , A.MSG_DELETE_STATUS
+			  , B.NAME
+           FROM MESSAGE A
+           JOIN TBL_MEMBER B ON(A.MSG_SENDER_NO = B.NO)
+          WHERE MSG_RECYCLE_BIN_STATUS='N' 
+            AND A.MSG_REICIPIENT_NO = #{ no }
+          ORDER BY A.MSG_SEND_DATE DESC, A.MSG_SEND_TIME DESC
+            
+	</select>
+	
+	<select id="findMessageInboxByCode" resultMap="messageResultMap">
+		SELECT /* com.work.workhub.member.message.model.dao.findMessageInbox() */
+			    A.MSG_CODE
+			  , A.MSG_SENDER_NO
+			  , A.MSG_REICIPIENT_NO
+			  , A.MSG_CONTENT
+			  , A.MSG_SEND_DATE
+			  , A.MSG_SEND_TIME
+			  , A.MSG_READ_DATE
+			  , A.MSG_READ_TIME
+			  , A.MSG_RECYCLE_BIN_STATUS
+			  , A.MSG_DELETE_STATUS
+			  , B.NAME
+           FROM MESSAGE A
+           JOIN TBL_MEMBER B ON(A.MSG_SENDER_NO = B.NO)
+          WHERE MSG_RECYCLE_BIN_STATUS='N' 
+            AND A.MSG_CODE = #{ msgCode }
+          
+	</select>
+	
+	<select id="findMessageSent" resultMap="messageResultMap">
+		SELECT /* com.work.workhub.member.message.model.dao.findMessageSent() */
+			    A.MSG_CODE
+			  , A.MSG_SENDER_NO
+			  , A.MSG_REICIPIENT_NO
+			  , A.MSG_CONTENT
+			  , A.MSG_SEND_DATE
+			  , A.MSG_SEND_TIME
+			  , A.MSG_READ_DATE
+			  , A.MSG_READ_TIME
+			  , A.MSG_RECYCLE_BIN_STATUS
+			  , A.MSG_DELETE_STATUS
+			  , B.NAME
+           FROM MESSAGE A
+           JOIN TBL_MEMBER B ON(A.MSG_SENDER_NO = B.NO)
+          WHERE A.MSG_SENDER_NO = #{ no }
+          ORDER BY A.MSG_SEND_DATE DESC, A.MSG_SEND_TIME DESC
+          
+          
+    </select>
+    
+    <select id="findMessageRecyclebinList" resultMap="messageResultMap">
+    	SELECT /* com.work.workhub.member.message.model.dao.findMessageRecyclebinList() */
+			    A.MSG_CODE
+			  , A.MSG_SENDER_NO
+			  , A.MSG_REICIPIENT_NO
+			  , A.MSG_CONTENT
+			  , A.MSG_SEND_DATE
+			  , A.MSG_SEND_TIME
+			  , A.MSG_READ_DATE
+			  , A.MSG_READ_TIME
+			  , A.MSG_RECYCLE_BIN_STATUS
+			  , A.MSG_DELETE_STATUS
+			  , B.NAME
+           FROM MESSAGE A
+           JOIN TBL_MEMBER B ON(A.MSG_SENDER_NO = B.NO)
+          WHERE A.MSG_RECYCLE_BIN_STATUS = 'Y'
+            AND A.MSG_REICIPIENT_NO = #{ no }
+          ORDER BY A.MSG_SEND_DATE DESC, A.MSG_SEND_TIME DESC
+            
+    </select>
+    
+    <select id="sendMessage" resultMap="messageResultMap">
+    	INSERT /* com.work.workhub.member.message.model.dao.sendMessage(MessageDTO message) */
+    	  INTO MESSAGE
+        (
+          MSG_CODE
+        , MSG_SENDER_NO
+        , MSG_REICIPIENT_NO
+        , MSG_CONTENT
+        , MSG_SEND_DATE
+        , MSG_SEND_TIME
+        , MSG_READ_DATE
+        , MSG_READ_TIME
+        , MSG_RECYCLE_BIN_STATUS
+        , MSG_DELETE_STATUS
+        )
+       VALUES
+       (
+         SEQ_MSG_CODE.NEXTVAL
+       , #{ senderNo }
+       , #{ reicipientNo }
+       , #{ msgContent }
+       , TO_CHAR(SYSDATE, 'YYYYMMDD')
+       , TO_CHAR(SYSDATE, 'HH24MISS')
+       , ''
+       , ''
+       , 'N'
+       , 'N'
+       )
+    </select>
+    
+    <select id="selectDepartmentList" resultMap="departmentResultMap">
+    	SELECT
+    	       DEP_NO
+    	     , DEP_NAME
+    	  FROM DEPARTMENT
+    </select>
+    
+    <select id="selectMemberList" resultMap="memberResultMap">
+    	SELECT 
+    		   A.NO
+    	     , A.DEP_NO
+    	     , A.POSITION_NO
+    	     , A.NAME
+    	     , A.EMAIL
+    	     , A.ID
+    	     , B.POSITION_NAME
+    	     , C.DEP_NAME
+          FROM TBL_MEMBER A 
+          JOIN TBL_POSITION B ON(A.POSITION_NO = B.POSITION_NO)
+          JOIN DEPARTMENT C ON(A.DEP_NO = C.DEP_NO)
+    </select>
+    
+    <update id="deleteMessage">
+    	UPDATE /* com.work.workhub.member.message.model.dao.deleteMessage(valueArr) */
+    	       MESSAGE
+           SET MSG_RECYCLE_BIN_STATUS = 'Y'
+         WHERE MSG_CODE= #{ code }
+    </update>
+    
+    <update id="updateMessageForView">
+    	UPDATE 
+    	       MESSAGE
+           SET 
+           		MSG_READ_DATE = TO_CHAR(SYSDATE, 'YYYYMMDD')
+              , MSG_READ_TIME = TO_CHAR(SYSDATE, 'HH24MISS')
+         WHERE MSG_CODE= #{ msgCode }
+    </update>
+</mapper>

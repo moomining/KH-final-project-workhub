@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WorkHub | 설문작성</title>
+
+    <!-- fonts -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="/assets/css/bootstrap2.css">
+
+    <link rel="stylesheet" href="/assets/vendors/iconly/bold.css">
+
+    <link rel="stylesheet" href="/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/assets/css/app2.css">
+    <link rel="stylesheet" href="/assets/css/com-surv.css">
+    <link rel="shortcut icon" th:href="@{/assets/images/images/favicon-workHub.ico}" type="image/x-icon">
+</head>
+
+<body>
+    <div id="app">
+        <div th:include="sidebar/sidebar-surv" th:remove="tag"/>
+        <div id="main">
+            <header class="mb-3">
+                <a href="#" class="burger-btn d-block d-xl-none">
+                    <i class="bi bi-justify fs-3"></i>
+                </a>
+            </header>
+
+            <div class="page-heading">
+                <h3>설문 작성</h3>
+            </div>
+            <section class="section">
+                <div class="card">
+                    <div class="card-header" name="survey-content">
+                        <form>
+                            <div class="row write-body-head surv-head">
+                                <div class="col-md-2 write-title">
+                                    <label>설문 제목</label>
+                                </div>
+                                <div class="col-md-10 form-group">
+                                    <input type="text" class="form-control btn-sm" name="title" maxlength="50" required>
+                                </div>
+                                <div class="col-md-2 write-title">
+                                    <label>설문 대상</label>
+                                </div>
+                                <div class="col-md-10 form-group">
+                                    <div class="surv-target">
+                                        <input type="checkbox" class="form-check-input" id="AllDept">
+                                        <label for="checkbox">허브본부</label>
+                                        <input type="checkbox" class="form-check-input" id="PDept">
+                                        <label for="checkbox">인사팀</label>
+                                        <input type="checkbox" class="form-check-input" id="GADept">
+                                        <label for="checkbox">총무팀</label>
+                                        <input type="checkbox" class="form-check-input" id="SDept">
+                                        <label for="checkbox">영업팀</label>
+                                        <input type="checkbox" class="form-check-input" id="MDept">
+                                        <label for="checkbox">마케팅팀</label>
+                                        <input type="checkbox" class="form-check-input" id="DDepy">
+                                        <label for="checkbox">개발팀</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 write-title">
+                                    <label>설문 기간</label>
+                                </div>
+                                <div class="col-md-10 form-group surv-date">
+                                    <form>
+                                        <input type="date" id="startDate">
+                                    </form>
+                                    <p> &nbsp - &nbsp </p>
+                                    <form>
+                                        <input type="date" id="endDate">                      
+                                    </form>
+                                </div>
+                                <div class="col-md-2 write-title">
+                                    <label>설문 설명</label>
+                                </div>
+                                <div class="col-md-10 form-group">
+                                    <textarea class="textarea-surv"></textarea>
+                                    <input type="file" name="input-surv-file">
+                                </div>
+                            </div><hr>
+
+                            <!-- 질문 -->
+                            <div class="surv-question">
+                                <form>
+                                    <div class="row write-body-head">
+                                        <div class="col-md-2 write-title">
+                                            <label>질문</label>
+                                        </div>
+                                        <div class="col-md-10 form-group">
+                                            <input type="text" name="question" class="form-control btn-sm" maxlength="150" required>
+                                        </div>
+                                        <div class="col-md-2 write-title">
+                                            <label>선택 가능 문항수</label>
+                                        </div>
+                                        <div class="col-md-10 form-group">
+                                            <select class="que-num">
+                                                <option value="1">하나만 선택</option>
+                                                <option value="2">두가지 선택</option>
+                                                <option value="3">다중 선택</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2 write-title">
+                                            <label>설문 항목</label>
+                                        </div>
+                                        <div class="col-md-10 form-group">
+	                                        <ul style="padding-left: 0;">
+		                                        <li style="list-style: none;">
+		                                        <div class="col-md-10 form-group">
+		                                            <span class="que-title-box">
+		                                                <input type="radio" name="que-title-radio">
+		                                                <input type="text" name="queTitle" class="form-control btn-sm">
+		                                                <input type="image" src="/assets/images/post-surv/cancle.png" name="que-title-delete" id="que-title-delete" >
+		                                            </span>
+		                                        </div>
+		                                        </li>
+	                                        </ul>
+	                                            <span class="que-title-box-add">
+	                                                <input type="radio" name="que-title-radio">
+	                                                <input type="button" value="항목을 추가하려면 이 곳을 클릭하세요.">
+	                                            </span>
+	                                    </div>
+                                        <div class="surv-button que-button">
+                                            <input type="submit" value="완료" id="que-submit">
+                                            <input type="submit" value="취소" id="que-cancle">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div><hr>
+                            <input type="button" value="질문 추가" id="surv-add-btn">
+                            <div class="surv-button">
+                                <input type="submit" value="등록" id="surv-submit">
+                                <input type="submit" value="취소" id="surv-cancle">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <script src="/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="/assets/js/bootstrap.bundle.min2.js"></script>
+
+    <script src="/assets/vendors/apexcharts/apexcharts.js"></script>
+    <script src="/assets/js/pages/dashboard.js"></script>
+
+    <script src="/assets/js/main.js"></script>
+</body>
+
+</html>

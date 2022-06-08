@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.work.workhub.admin.reserve.model.dao.RoomMapper">
+    <resultMap id="roomResultMap"  type="com.work.workhub.admin.reserve.model.dto.MeetingRoomDTO">
+
+        <id property="roomNo" column="ROOM_NO"/>
+        <result property="rmLocation" column="RM_LOCATION"/>
+        <result property="roomName" column="ROOM_NAME"/>
+        <result property="roomYn" column="ROOM_YN"/>
+        <result property="delYn" column="DEL_YN"/>
+        <result property="orgName" column="ORG_NAME"/>
+        <result property="savedName" column="SAVED_NAME"/>
+        <result property="savePath" column="SAVE_PATH"/>
+
+    </resultMap>
+
+    <insert id="registRoom">
+        INSERT INTO MT_ROOM
+        VALUES
+        (
+            SEQ_ROOM_NO.NEXTVAL,
+            #{ rmLocation },
+            #{ roomName },
+            #{ roomYn },
+            DEFAULT,
+            #{ orgName },
+            #{ savedName },
+            #{ savePath }
+        )
+    </insert>
+    
+    <select id="selectRoomList" resultMap="roomResultMap">
+    
+    	SELECT *
+    	  FROM MT_ROOM
+  		 WHERE DEL_YN = 'N'
+		 ORDER BY RM_LOCATION DESC, ROOM_NO DESC 	
+    	
+    </select>
+    
+    <select id="selectRoomInfo" resultMap="roomResultMap">
+    	SELECT *
+    	  FROM MT_ROOM
+    	 WHERE ROOM_NO = #{ roomNo }
+    </select>
+    
+    <update id="modifyRoom">
+    	UPDATE MT_ROOM
+    	SET
+    	RM_LOCATION = #{ rmLocation },
+    	ROOM_NAME = #{ roomName },
+    	ROOM_YN = #{ roomYn }
+    	<if test="orgName != null">
+    		, ORG_NAME = #{ orgName },
+    		SAVED_NAME = #{ savedName },
+    		SAVE_PATH = #{ savePath }
+    	</if>
+    	WHERE ROOM_NO = #{ roomNo }
+    </update>
+    
+    <update id="deleteRoom">
+    	UPDATE MT_ROOM
+    	SET
+    	DEL_YN = 'Y'
+    	 WHERE ROOM_NO = #{ roomNo } 
+    </update>
+</mapper>

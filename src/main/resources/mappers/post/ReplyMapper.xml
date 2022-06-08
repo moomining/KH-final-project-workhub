@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.work.workhub.member.post.model.dao.ReplyMapper">
+
+<!-- 	reply -->
+	<resultMap id="replyResultMap" type="com.work.workhub.member.post.model.dto.ReplyDTO">
+		<id property="replyNo" column="REPLY_NO"/>
+		<result property="replyContent" column="REPLY_CONTENT"/>
+		<result property="replyDate" column="REPLY_DATE"/>
+		<result property="replyUpdate" column="REPLY_UPDATE"/>
+		<result property="replyStatus" column="REPLY_STATUS"/>
+		<result property="postNo" column="POST_NO"/>
+		<result property="no" column="NO"/>
+		<result property="refReplyNo" column="REF_REPLY_NO"/>
+		
+		<association property="member" resultMap="loginMemberResultMap"/>		
+		<association property="post" resultMap="postResultMap"/>		
+		<association property="reply" resultMap="replyResultMap"/>		
+	</resultMap>
+	
+	
+	
+<!-- 	Reply img -->
+<!-- 	<resultMap type="com.work.workhub.member.post.model.dto.replyImgDTO" id="replyImgDTO"> -->
+<!-- 		<result property="replyNo" column="REPLY_NO"/> -->
+<!-- 		<result property="imgNo" column="IMG_NO"/> -->
+	
+<!-- 		<association property="reply" resultMap="replyResultMap"/> -->
+<!-- 		<collection property="img" resultMap="imgResultMap"/>  -->
+<!-- 	</resultMap>	 -->
+	
+<!-- 		img -->
+<!-- 	<resultMap type="com.work.workhub.member.post.model.dto.postImgDTO" id="postImgResultMap"> -->
+<!-- 		<result property="postNo" column="POST_NO"/> -->
+<!-- 		<result property="imgNo" column="IMG_NO"/> -->
+	
+<!-- 		<association property="post" resultMap="postResultMap"/> -->
+<!-- 		<collection property="img" resultMap="imgResultMap"/>  -->
+<!-- 	</resultMap> -->
+	
+<!-- 	<resultMap type="com.work.workhub.member.img.model.dto.imgDTO" id="imgResultMap"> -->
+<!-- 		<id property="imgNo" column="IMG_NO"/> -->
+<!-- 		<id property="orgName" column="ORG_NAME"/> -->
+<!-- 		<id property="svrName" column="SVR_NAME"/> -->
+<!-- 		<id property="imgPath" column="IMG_PATH"/> -->
+<!-- 		<id property="imgType" column="IMG_TYPE"/> -->
+<!-- 	</resultMap> -->
+
+
+
+	<!-- post -->
+	<resultMap type="com.work.workhub.member.post.model.dto.PostDTO" id="postResultMap">
+		<id property="postNo" column="POST_NO"/>
+		<result property="postTitle" column="POST_TITLE"/>
+		<result property="postContent" column="POST_CONTENT"/>
+		<result property="postDate" column="POST_DATE"/>
+		<result property="postUpdate" column="POST_UPDATE"/>
+		<result property="noticeEndDate" column="NOTICE_END_DATE"/>
+		<result property="postStatus" column="POST_STATUS"/>
+		<result property="no" column="NO"/>
+		<result property="categoryNo" column="CATEGORY_NO"/>
+		
+		<association property="member" resultMap="loginMemberResultMap"/>
+		<association property="category" resultMap="categoryResultMap"/>
+		
+<!-- 		<collection property="postImg" resultMap="postImgResultMap"/> -->
+	</resultMap>
+	
+	<!-- category -->
+	<resultMap type="com.work.workhub.member.post.model.dto.CategoryDTO" id="categoryResultMap">
+		<id property="categoryNo" column="CATEGORY_NO"/>
+		<result property="categoryName" column="CATEGORY_NAME"/>
+	</resultMap>
+	
+	
+	<!-- member -->
+	<resultMap id="loginMemberResultMap" type="com.work.workhub.member.member.dto.MemberDTO">
+		<id property="no" column="NO"/>
+		<result property="id" column="ID"/>
+		<result property="pwd" column="PWD"/>
+		<result property="depNo" column="DEP_NO"/>
+		<result property="positionNo" column="POSITION_NO"/>
+		<result property="groupNo" column="GROUP_NO"/>
+		<result property="name" column="NAME"/>
+		<result property="email" column="EMAIL"/>
+		<result property="phone" column="PHONE"/>
+		<result property="status" column="STATUS"/>
+		
+		<collection property="memberRoleList" resultMap="memberRoleResultMap"/>
+	</resultMap>
+	
+	<resultMap id="memberRoleResultMap" type="com.work.workhub.member.member.dto.MemberRoleDTO">
+		<id property="memberNo" column="REF_NO"/>
+		<id property="authNo" column="REF_AUTH_NO"/>
+		
+		<association property="authority" resultMap="authorityResultMap"/>
+	</resultMap>
+	
+	<resultMap id="authorityResultMap" type="com.work.workhub.member.member.dto.AuthorityDTO">
+		<id property="authNo" column="REF_AUTH_NO2"/>
+		<result property="authName" column="AUTH_NAME"/>
+	</resultMap>
+
+	
+	<!-- 댓글 조회 -->
+	<select id="findReplyListByPostNo" resultMap="replyResultMap">
+		SELECT
+			  R.*
+			, M.NAME
+		 FROM REPLY R
+		 JOIN TBL_MEMBER M ON (R.NO = M.NO)
+		WHERE R.REPLY_STATUS = 'Y'
+		  AND R.POST_NO = #{ postNo } 
+	</select>
+	
+	<!-- 댓글 작성 -->
+	<insert id="writeReply">
+		INSERT INTO REPLY
+		(
+		  REPLY_NO
+		, REPLY_CONTENT
+		, REPLY_DATE
+		, REPLY_STATUS
+		, POST_NO
+		, NO
+		)
+		VALUES
+		(
+		  SEQ_REPLY_NO.NEXTVAL
+		, #{ replyContent }
+		, SYSDATE
+		, DEFAULT
+		, #{ postNo }
+		, #{ no }
+		)
+	</insert>
+	
+	<!-- 댓글 수정 -->
+	<update id="updateReply">
+		UPDATE REPLY
+		  SET REPLY_CONTENT = #{ replyContent }
+		    , REPLY_DATE = SYSDATE
+		WHERE REPLY_NO = #{ replyNo }
+	</update>	
+	
+	<!-- 댓글 삭제 -->
+	<update id="deleteReply">
+		UPDATE REPLY
+		  SET REPLY_STATUS = 'N'
+		WHERE REPLY_NO = #{ replyNo }
+	</update>	
+	
+	
+
+</mapper>

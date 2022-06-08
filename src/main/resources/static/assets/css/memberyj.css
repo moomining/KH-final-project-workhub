@@ -1,0 +1,474 @@
+@charset "UTF-8";
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+a:hover {
+    color: #5a9175;
+}
+
+.btn-primary:hover {
+    background-color: #5a9175;
+    border: 1px solid #5a9175;
+}
+
+body {
+    font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+    background-color: #ffffff;
+}
+
+ .wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 170px;
+    width: 1000px;
+    
+  }
+  
+  .glow {
+    font-size: 43px;
+    color: #767676;
+    font-weight: bold;
+    animation: glow 1s ease-in-out infinite alternate;
+    -moz-animation: glow 1s ease-in-out infinite alternate;
+    -webkit-animation: glow 1s ease-in-out infinite alternate;
+    position: relative;
+    top: 80px;
+    right: 136px;
+}
+  
+  .hatta {
+	font-weight: bolder;
+    font-size: 26px;
+    position: relative;
+    bottom: 4px;
+    left: 70px;
+    color: #000000;
+    
+
+  }
+
+
+
+  .clocka {
+
+	position: relative;
+    right: 20px;
+    top: 42px;
+    font-size: 17px;
+  }
+
+  .hattc {
+    position: relative;
+    top: 188px;
+    right: 393px;
+    font-size: 20px;
+
+  }
+
+ .hattd {
+    position: relative;
+    top: 140px;
+    right: 222px;
+    font-size: 20px;
+ }
+
+ .hatte {
+    position: relative;
+    top: 240px;
+    right: 473px;
+    font-size: 20px;
+
+  }
+
+ .hattf {
+    position: relative;
+    top: 190px;
+    right: 302px;
+    font-size: 20px;
+ }
+
+ .hattee {
+    position: relative;
+    top: 290px;
+    right: 555px;
+    font-size: 20px;
+
+  }
+
+ .hattff {
+    position: relative;
+    top: 240px;
+    right: 381px;
+    font-size: 20px;
+ }
+
+ .hatt {
+   position: relative;
+    bottom:1602px;
+   right: 20px;
+ }
+
+ .hr1 {
+    position: relative;
+    top: 200px;
+    left: 351px;
+ }
+
+ .buttons {
+	background-color:#6caf8d;
+	border-radius:19px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-size: 18px;
+	font-weight:bold;
+	padding:15px 28px;
+	text-decoration:none;
+    position: relative;
+    top: 40px;
+    left: 340px;
+    margin-right: 18px;
+}
+.buttons:focus {
+	background-color:#BEBEBE;
+    color: #ffffff;
+    top: 40px;
+    left: 340px;
+}
+
+.buttons:hover {
+   color: #ffffff;
+}
+
+.buttonsa {
+	background-color:#6caf8d;
+	border-radius:19px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-size: 18px;
+	font-weight:bold;
+	padding:15px 28px;
+	text-decoration:none;
+    position: relative;
+    top: 40px;
+    left: 338px;
+    margin-right: 18px;
+}
+.buttonsa:focus {
+	background-color:#BEBEBE;
+    color: #ffffff;
+    top: 40px;
+    left: 338px;
+}
+
+.buttonsa:hover {
+   color: #ffffff;
+}
+
+ .workss {
+    border-radius:9px;
+    padding:4px 60px;
+    position: relative;
+    top: 60px;
+    left: 341px;
+    font-size: 20px;
+    border: solid 3px #6caf8d;
+ }
+
+ .workss:focus {
+    outline: none;
+}
+
+.v-line {
+    position: relative;
+    border-left : solid 2px #BEBEBE;
+    height : 1600px;
+    left: 640px;
+    bottom: 240px;
+  }
+
+  .hattsd {
+   font-weight: bolder;
+   font-size: 26px;
+   position: relative;
+   bottom: 214px;
+   left: 886px;
+   color: #000000;
+  }
+
+  .box {
+   position: relative;
+   float: left;
+   border: 1px solid #6CAF8D;
+   width: 220px;
+   height: 150px;
+   text-align: center;
+   line-height: 100px;
+   font-weight: bold;
+   border-radius: 15px;
+   background-color: #FFFBF4;
+   margin-left: 6px;
+}
+
+
+.boxx {
+   position: relative;
+    bottom: 160px;
+    left: 1060px;
+}
+
+.box1 {
+   width: 280px;
+}
+
+.nsns {
+   position: relative;
+   bottom: 56px;
+   left: 50px;
+}
+
+.sss {
+   position: relative;
+   top: 33px;
+   left: 40px;
+   width : 80px;
+  height : 80px;
+  border-radius: 50%;
+  background-color: #6CAF8D;
+}
+
+.csc {
+   font-size: 27px;
+   position: relative;
+   top: 40px;
+   right: 23px;
+}
+
+.asa {
+   position: relative;
+   left: 14px;
+   bottom: 8px;
+}
+
+.asss {
+   position: relative;
+   right: 200px;
+   bottom: 100px;
+}
+
+.assss {
+   position: relative;
+   right: 170px;
+   bottom: 100px;
+}
+
+.sds {
+   background-color:#6caf8d;
+	border-radius:19px;
+	cursor:pointer;
+	color:#ffffff;
+	font-size: 14px;
+	font-weight:bold;
+	padding:10px 15px;
+	text-decoration:none;
+    position: relative;
+    bottom: 100px;
+    right: 130px;
+    margin-right: 18px;
+    border: none;
+    
+}
+
+.sds:hover {
+   background-color:#BEBEBE;
+    color: #ffffff;
+}
+
+.section {
+   position: relative;
+   bottom: 1410px;
+   right: 240px;
+}
+
+.card-title {
+   position: relative;
+   right: 18px;
+}
+
+.qqq {
+   width: 200px;
+}
+
+.qqqs {
+   width: 350px;
+}
+.qqqss {
+   width: 100px;
+}
+
+.sections {
+   position: relative;
+   bottom: 1410px;
+   left: 735px;
+}
+
+.oopo {
+	position: relative;
+    left: 2135px;
+    bottom: 160px;
+}
+
+.card-content {
+   width: 1600px;
+}
+.row {
+   position: relative;
+   right: 270px;
+   top: 150px;
+}
+
+.rows {
+   position: relative;
+   left: 703px;
+   top: 250px;
+}
+
+.vvv {
+   position: relative;
+   left: 50px;
+   
+}
+
+.ssgdd {
+   position: relative;
+   right: 36px;
+}
+
+.risis {
+   position: relative;
+   left:890px;
+   bottom: 155px;
+}
+
+.skdsklk {
+   position: relative;
+   left:10px;
+   bottom: 155px;
+}
+
+.ppo {
+    background-color: #ffffff;
+    box-shadow: none;
+    border: solid 3px #BEBEBE;
+    position: relative;
+    left: 2189px;
+    bottom: 220px;
+    color: #000000;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+
+
+.fc-left {
+   position: relative;
+   right: 286px;
+   top: 111px;
+}
+
+.fc-today-button {
+   position: relative;
+   left: 100px;
+   bottom: 39px;
+}
+
+.fc-right {
+   position: relative;
+   left: 182px;
+   top: 90px;
+}
+
+.fc-view-container {
+   position: relative;
+   left: 300px;
+   top: 60px;
+}
+
+.chec {
+	background-color:#6caf8d;
+	border-radius:12px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-size: 18px;
+	font-weight:bold;
+	padding:5px 10px;
+	text-decoration:none;
+    position: relative;
+    top: 59px;
+    left: 340px;
+    margin-right: 18px;
+    border: none;
+}
+.chec:focus {
+	background-color:#BEBEBE;
+    color: #ffffff;
+    top: 59px;
+    left: 340px;
+}
+
+.chec:hover {
+   color: #ffffff;
+}
+
+.dgsaujjk {
+   position: relative;
+   top: 920px;
+   left: 350px;
+   border: solid 2px #6caf8d;
+   border-radius: 10px;
+   font-size: 18px;
+	padding:8px 78px;
+   color: #000000;
+   cursor:pointer;
+    background-color: #ffffff;
+}
+
+.dgsaujjk:hover {
+ color: #6caf8d;
+}
+
+.djdji {
+    position: absolute;
+    top: 32px;
+    left: 310px;
+    background-color: #ffffff;
+    height: 350px;
+    width: 310px;
+    border-radius: 20px;
+}
+
+.tgts {
+    position: absolute;
+    bottom: 440px;
+    left: 880px;
+    width: 1624px;
+}
+
+.tgtss {
+    position: relative;
+    bottom: 500px;
+    left: 880px;
+    width: 1600px;
+}
+
+ .worksss {
+    border-radius:9px;
+    padding:4px 60px;
+    position: relative;
+    top: 60px;
+    left: 341px;
+    font-size: 20px;
+    border: solid 3px #6caf8d;
+ }

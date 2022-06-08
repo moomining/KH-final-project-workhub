@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>approval personal reception list</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/bootstrap.css">
+
+    <link rel="stylesheet" href="/assets/css/pages/email.css">
+    <link rel="stylesheet" href="/assets/vendors/simple-datatables/style.css">
+
+    <link rel="stylesheet" href="/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/assets/css/app copy.css">
+    <link rel="shortcut icon" th:href="@{/assets/images/images/favicon-workHub.ico}" type="image/x-icon">
+</head>
+
+<body>
+	<div th:include="sidebar/sidebar-approval" th:remove="tag"></div>
+        </div>
+        <div id="main">
+            <header class="mb-3">
+                <a href="#" class="burger-btn d-block d-xl-none">
+                    <i class="bi bi-justify fs-3"></i>
+                </a>
+            </header>
+
+            <div class="page-heading email-application">
+                <div class="page-title">
+                    <div class="row">
+                        <div class="col-12 col-md-6 order-md-   1 order-last">
+                            <h3>발송 결재함</h3><br>
+                        </div>
+                    </div>
+                </div>
+                <section class="section content-area-wrapper">
+                    <div class="sidebar-left">
+                        <div class="sidebar">
+                            <div class="sidebar-content email-app-sidebar d-flex">
+                                <div class="email-app-menu">
+                                    <br><br>
+                                    <div class="sidebar-menu-list ps">
+                                        <!-- sidebar menu  -->
+                                        <div class="list-group list-group-messages">
+                                            <a onclick="location.href='/approval/receptionList'" class="list-group-item" style="cursor:pointer;">수신 결재함</a>
+                                            <a onclick="location.href='/approval/sendList'" class="list-group-item active" style="cursor:pointer;">발송 결재함</a>
+                                        </div>
+                                        <!-- sidebar menu  end-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-right">
+                        <div class="card">
+                            <div class="card-body">
+                                <table class="table table-striped" id="table1">
+                                    <thead>
+                                        <tr>
+                                            <th>상신일</th>
+                                            <th>제목</th>
+                                            <th>상신자</th>
+                                            <th>결재 상태</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="approval : ${ sendList }">
+                                            <td th:text="${#dates.format(approval.createdDate, 'yyyy-MM-dd')}"></td>
+                                            <td><a th:href="|@{/approval/sendDetail?approvalNo={approvalNo}(approvalNo=${approval.no})}|" th:text="${ approval.title }"></a></td>
+                                            <td th:text="${ approval.sender.name }"></td>
+                                            <td>
+                                                <!-- <span class="badge bg-light-success" th:text="${ approval.status }"></span> -->
+                                                <span th:if="${ approval.status.equals('진행중') }" class="badge bg-light-success">진행중</span>
+                                                <span th:if="${ approval.status.equals('승인') }" class="badge bg-light-secondary">승인</span>
+                                                <span th:if="${ approval.status.equals('반려') }" class="badge bg-light-danger">반려</span>
+                                                <span th:if="${ approval.status.equals('대기') }" class="badge bg-light-warning">대기</span>
+                                                <span th:if="${ approval.status.equals('회수') }" class="badge bg-light-info">회수</span>
+                                                <span th:if="${ approval.status.equals('임시') }" class="badge bg-light-primary">임시</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <footer>
+                <div class="footer clearfix mb-0 text-muted">
+                    <div class="float-start">
+                        <p>2022 &copy; WorkHub</p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/vendors/simple-datatables/simple-datatables.js"></script>
+    <script>
+        // Simple Datatable
+        let table1 = document.querySelector('#table1');
+        let dataTable = new simpleDatatables.DataTable(table1);
+    </script>
+    <script src="/assets/js/approval.js"></script>
+    <script src="/assets/js/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.work.workhub.admin.member.model.dao.AdminMemberMapper">
+	
+	<resultMap id="loginMemberResultMap" type="com.work.workhub.member.member.dto.MemberDTO">
+		<id property="no" column="NO"/>
+		<result property="id" column="ID"/>
+		<result property="pwd" column="PWD"/>
+		<result property="depNo" column="DEP_NO"/>
+		<result property="depName" column="DEP_NAME"/>
+		<result property="positionNo" column="POSITION_NO"/>
+		<result property="positionName" column="POSITION_NAME"/>
+		<result property="groupNo" column="GROUP_NO"/>
+		<result property="name" column="NAME"/>
+		<result property="email" column="EMAIL"/>
+		<result property="phone" column="PHONE"/>
+		<result property="status" column="STATUS"/>
+		
+		<collection property="memberRoleList" resultMap="memberRoleResultMap"/>
+	</resultMap>
+	
+	<resultMap id="memberRoleResultMap" type="com.work.workhub.member.member.dto.MemberRoleDTO">
+		<id property="memberNo" column="REF_NO"/>
+		<id property="authNo" column="REF_AUTH_NO"/>
+		
+		<association property="authority" resultMap="authorityResultMap"/>
+	</resultMap>
+	
+	<resultMap id="authorityResultMap" type="com.work.workhub.member.member.dto.AuthorityDTO">
+		<id property="authNo" column="REF_AUTH_NO2"/>
+		<result property="authName" column="REF_AUTH_NAME"/>
+	</resultMap>
+	
+	<resultMap id="depResultMap" type="com.work.workhub.member.member.dto.DepartmentDTO">
+		<id property="depNo" column="DEP_NO"/>
+		<result property="depName" column="DEP_NAME"/>
+	</resultMap>
+	
+	<insert id="insertMember">
+		INSERT
+		  INTO TBL_MEMBER
+		(
+		  NO
+		, ID
+		, PWD
+		, DEP_NO
+		, POSITION_NO
+		, GROUP_NO
+		, NAME
+		, GENDER
+		, EMAIL
+		, PHONE
+		, STATUS
+		)
+		VALUES
+		(
+		  ${ sequenceName }.NEXTVAL
+		, #{ id }
+		, #{ pwd }
+		, #{ depNo }
+		, #{ positionNo }
+		, null
+		, #{ name }
+		, null
+		, #{ email }
+		, #{ phone }
+		, DEFAULT
+		)
+	</insert>
+	
+	<insert id="insertMemberRole">
+		INSERT
+		  INTO MEMBER_ROLE
+		(
+		  NO
+		  , AUTH_NO
+		)
+		VALUES
+		(
+		  ${ sequenceName }.CURRVAL
+		, #{ authNo }
+		)
+	</insert>
+
+	<select id="selectMemberList" resultMap="loginMemberResultMap">
+		SELECT
+			   A.NO
+			 , A.ID
+			 , A.PWD
+			 , A.DEP_NO
+			 , D.DEP_NAME
+			 , A.POSITION_NO
+			 , P.POSITION_NAME
+			 , A.GROUP_NO
+			 , A.NAME
+			 , A.GENDER
+			 , A.EMAIL
+			 , A.PHONE
+			 , A.STATUS
+			 , B.NO REF_NO
+			 , B.AUTH_NO REF_AUTH_NO
+			 , C.AUTH_NO REF_AUTH_NO2
+			 , C.AUTH_NAME
+		 FROM TBL_MEMBER A
+		 LEFT JOIN MEMBER_ROLE B ON (A.NO = B.NO)
+		 LEFT JOIN AUTHORITY C ON (B.AUTH_NO = C.AUTH_NO)
+		 LEFT JOIN DEPARTMENT D ON (D.DEP_NO = A.DEP_NO)
+		 LEFT JOIN TBL_POSITION P ON (P.POSITION_NO = A.POSITION_NO)
+		 WHERE 1=1
+		 <if test='depNo != null and depNo != ""'>
+		 	and A.DEP_NO = #{depNo}
+		 </if>
+	</select>
+	
+	<select id="selectDepList" resultMap="depResultMap">
+		SELECT * FROM DEPARTMENT
+	</select>
+	
+	
+</mapper>

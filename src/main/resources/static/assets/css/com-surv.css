@@ -1,0 +1,458 @@
+/* com ------------------- */
+
+.post-title{
+	color: #707080;
+}
+
+.post-title:hover{
+	color: #435ebe;
+}
+
+.reply-content{
+	text-align: left;
+	padding: 10px 0 5px 20px;
+}
+
+.icon-notice{
+	width: 20px;
+}
+
+.btn-outline-primary{
+    height: 2.2rem;
+}
+
+.post-notice td{
+	font-weight: bold;
+	color: #7b8abf;
+}
+
+.post-notice:hover{
+	cursor: pointer;
+	background-color: #efefef;
+}
+
+#btn-list{
+    float: right;
+}
+
+.com-detail-title{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.detail-title{
+    display: flex;
+}
+
+.icon-messenger{
+    width: 17px;
+    height: 17px;
+    margin: 0 7px 0 15px;
+    opacity: 50%;
+}
+
+.com-detail-heart{
+    align-items: rignt;
+}
+
+.com-detail-writer{
+    margin-top: 5px;
+    margin-bottom: 30px;
+    display:flex;
+}
+
+.profile-photo{
+    height: 36px;
+    width: 36px;
+    margin-right: 5px;
+    border-radius: 100%;
+}
+
+.com-detail-content, .surv-detail-content{
+    margin: 1%;
+    margin-bottom: 150px;
+}
+
+.com-detail-date{
+	margin-left: 10px;
+}
+
+.com-reply-writer{
+	margin-right: 10px;
+	align-items: center;
+	justify-content: flex-start;
+}
+
+.icon-heart{
+    height: 25px;
+    width: 25px;
+}
+
+.com-reply-writer{
+    margin-top: 5px;
+    margin-bottom: 3px;
+    display:flex;
+}
+
+
+.com-detail-reply{
+    margin-top: 3%
+}
+
+.icon-reply{
+    width: 15px;
+    height: 15px;
+    opacity: 50%;
+    margin-left: 10px;
+}
+
+.reply-btn span{
+    font-size: 0.9rem;
+}
+
+.reply-btn-ud{
+	text-align: right;
+	padding-left: 10px;
+}
+
+.reply-btn-ud a{
+	color: #cdcdcd !important;
+	cursor: pointer;
+}
+.reply-btn-ud a:hover{
+	color: #435ebe !important;
+}
+
+.com-insert-reply{
+    margin: 35px 1%;
+}
+
+.com-update-reply{
+	display: flex;
+	margin-bottom: 20px;
+}
+
+.text-reply{
+    width: 85%;
+    opacity: 80%;
+    margin: 0 1%;
+}
+
+.com-insert-reply{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 60px;
+}
+
+.com-insert-reply .btn {
+    width: 5%;
+}
+
+.post-detail-list{
+    margin: 2% 2% 5%;
+}
+
+.detail-body-footer p {
+    font-size: 0.9rem;
+}
+
+.card-header{
+    margin-top: 20px;
+}
+
+.post-write-select{
+    display: flex;
+    width: 400px;
+}
+
+.form-select{
+    margin-left: 2%;
+}
+
+.write-body-head{
+    margin: 20px 10px;
+}
+
+.write-submit-btn{
+    margin-bottom: 70px;
+}
+
+.write-textarea{
+    margin-top: 50px;
+    margin-bottom: 70px;
+}
+
+.write-save-btn{
+    float: right;
+    border-style: none;
+    background: none;
+    font-size: 0.9rem;
+}
+
+.modal-write{
+    display: flex;
+    margin-bottom: 15px;
+    align-items: center;
+}
+
+.icon-cancle{
+    margin-left: 12px;
+    width: 0.7rem;
+    height: 0.7rem;
+}
+
+.reply-ul{
+	padding-left: 0;
+}
+
+
+
+/* surv ------------------- */
+
+.surv-list{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #c8c8c8;
+    border-radius: 12px;
+    padding: 30px 0px 0px;
+    margin: 1%;
+    width: 35%;
+}
+
+.card{
+    padding: 1%;
+}
+
+.card-body-surv{
+    margin: 10% 0 10%;
+}
+
+.table-surv{
+    margin-top: 3%;
+}
+
+.title-bg{
+    margin-bottom: 30px;
+}
+
+.card-date{
+    font-size: 0.8rem;
+}
+
+.surv-write{
+    font-size: 0.9rem;
+    margin-bottom: 30px;
+}
+
+.surv-writer{
+    color: black;
+    margin-left: 10px;
+}
+
+.show-sv-result{
+    text-align: center;
+    font-weight: bold;
+}
+
+.surv-card-list{
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-body-surv-ing{
+    margin: 40px 30px 10px;
+}
+
+.surv-tr{
+    border-bottom: 1px solid #cdcdcd;
+}
+
+.com-tr{
+    border-bottom: 1px solid #cdcdcd;
+}
+
+.surv-detail-title{
+    margin-bottom: 25px;
+}
+
+.surv-info{
+    display: flex;
+    flex-direction: row;
+}
+
+.surv-info p{
+    margin-right: 20px;
+}
+
+.profile-photo-surv{
+    height: 30px;
+    width: 30px;
+    margin-right: 5px;
+    border-radius: 100%;
+}
+
+.surv-box{
+    border: 1px solid #777777;
+    border-radius: 10px;
+    width: 110px;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 0.2rem;
+}
+
+.surv-box-title{
+    margin: 1rem 0 0.1rem 0;
+    font-weight: bold;
+}
+
+.surv-content-cnt{
+    margin-top: 2.2em;
+    display: flex;
+}
+
+.surv-content-que{
+    margin-top: 2.2em;
+}
+
+.surv-content-que h6{
+    margin-bottom: 1.3em;
+}
+
+.surv-detail-content hr{
+    margin-top: 2em;
+    margin-bottom: 4em;
+}
+
+.surv-detail-content{
+    margin: 1%;
+}
+
+.surv-submit{
+    display: flex;
+    justify-content: center;
+    margin: 5% auto;
+}
+
+.surv-btn{
+    width: 200px;
+}
+
+.surv-result-ctn{
+    margin: 2%;
+    border: 1px solid #cdcdcd;
+    border-radius: 8px;
+    width: 90%;
+    height: 40px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.surv-result-ctn p{
+    margin:0;
+}
+
+.surv-target label {
+    margin-right: 12px;
+}
+
+.surv-date{
+    display: flex;
+}
+
+#startDate, #endDate{
+    opacity: 70%;
+    height: 30px;
+}
+
+.textarea-surv{
+    width: 100%;
+    height: 100%;
+    resize: none;
+    border-color: #dedede;
+    border-radius: 4px;
+}
+
+#que-title-delete{
+    height: 12px;
+}
+
+.input-survey-table{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.que-title-box{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.que-title-box input{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.que-title-box-add{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    opacity: 50%;
+}
+
+.que-title-box-add input{
+    margin-left: 10px;
+    margin-right: 10px;
+    border-style: none;
+    outline-style: none;
+    background: none;
+}
+
+.surv-button{
+    width: 200px;
+    margin: 30px auto;
+}
+
+.surv-button input{
+    border-style: none;
+    border-radius: 3px;
+    width: 5rem;
+    height: 2.2rem;
+}
+
+.que-button{
+	margin-left: 39%;
+}
+
+#que-submit, #surv-submit{
+    background-color: #6CAF8D;
+    color: white;
+}
+
+#que-cancle, #surv-cancle{
+    background-color: #dedede;
+}
+
+#surv-add-btn{
+    border-style: none;
+    border-radius: 3px;
+    background-color: #dedede;
+    width: 25rem;
+    height: 2.2rem;
+    margin: 10px 29%;
+}
+
+.surv-head{
+    margin-bottom: 5%;
+}
+
+.que-num{
+    width: 10rem;
+    height: 2.2rem;
+    border-radius: 3px;
+    border-color: #dedede;
+}

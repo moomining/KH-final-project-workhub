@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.work.workhub.member.employ.model.dao.EmpstatusMapper">
+
+<!-- 근태관리 -->
+<resultMap type="com.work.workhub.member.employ.model.dto.AttDTO" id="AttResultMap">
+	<id property="attNo" column="ATT_NO"/>
+	<result property="no" column="NO"/>
+	<result property="workNo" column="WORK_NO"/>
+	<result property="workName" column="WORK_NAME"/>
+	<result property="name" column="NAME"/>
+	<result property="attGo" column="ATT_GO"/>
+	<result property="attOff" column="ATT_OFF"/>
+	<result property="attAdd" column="ATT_ADD"/>
+	<result property="attOver" column="ATT_OVER"/>
+	<result property="attNight" column="ATT_NIGHT"/>
+	<result property="attReason" column="ATT_REASON"/>
+	<result property="attDate" column="ATT_DATE"/>
+	<result property="attStatus" column="ATT_STATUS"/>
+	<result property="attModdate" column="ATT_MODDATE"/>
+	<result property="attDateSub" column="ATT_DATESUB"/>
+</resultMap>
+
+<!-- 근태유형 -->
+<resultMap type="com.work.workhub.admin.work.model.dto.WorkDTO" id="workResultMap">
+	<id property="workNo" column="WORK_NO"/>
+	<result property="workName" column="WORK_NAME"/>
+	<result property="workInclude" column="WORK_INCLUDE"/>
+	<result property="workUse" column="WORK_USE"/>
+	<result property="workStatus" column="WORK_STATUS"/>
+	<result property="workDate" column="WORK_DATE"/>
+	<result property="workModdate" column="WORK_MODDATE"/>
+	<result property="writeNo" column="WRITE_NO"/>
+</resultMap>
+
+<!-- 연차유형 -->
+<resultMap type="com.work.workhub.admin.work.model.dto.RestCateDTO" id="restResultMap">
+	<id property="restNo" column="REST_NO"/>
+	<result property="restName" column="REST_NAME"/>
+	<result property="restDed" column="REST_DED"/>
+	<result property="restInclude" column="REST_INCLUDE"/>
+	<result property="restMoney" column="REST_MONEY"/>
+	<result property="restPoss" column="REST_POSS"/>
+	<result property="restDay" column="REST_DAY"/>
+	<result property="restUse" column="REST_USE"/>
+	<result property="restStatus" column="REST_STATUS"/>
+	<result property="restDate" column="REST_DATE"/>
+	<result property="restModdate" column="REST_MODDATE"/>
+	<result property="writeNo" column="WRITE_NO"/>
+</resultMap>
+
+<!-- 연차 신청 -->
+<resultMap type="com.work.workhub.member.employ.model.dto.RestDTO" id="restReportResultMap">
+	<id property="porestNo" column="POREST_NO"/>
+	<result property="no" column="NO"/>
+	<result property="restNo" column="REST_NO"/>
+	<result property="repNo" column="REP_NO"/>
+	<result property="porestDate" column="POREST_DATE"/>
+	<result property="porestModdate" column="POREST_MODDATE"/>
+	<result property="porestFir" column="POREST_FIR"/>
+	<result property="porestEnd" column="POREST_END"/>
+	<result property="porestReason" column="POREST_REASON"/>
+	<result property="porestStatus" column="POREST_STATUS"/>
+	<result property="porestDay" column="POREST_DAY"/>
+	<result property="porestYn" column="POREST_YN"/>
+	<result property="porestOk" column="POREST_OK"/>
+	<result property="porestPoss" column="POREST_POSS"/>
+	<result property="name" column="NAME"/>
+	<result property="depName" column="DEP_NAME"/>
+	<result property="restName" column="REST_NAME"/>
+	<result property="imageName" column="IMAGE_NAME"/>
+</resultMap>
+
+<!-- 이미지 -->
+<resultMap type="com.work.workhub.member.employ.model.dto.ImgDTO" id="imgResultMap">
+	<id property="imageId" column="IMAGE_ID"/>
+	<result property="porestNo" column="POREST_NO"/>
+	<result property="imagePath" column="IMAGE_PATH"/>
+	<result property="imageName" column="IMAGE_NAME"/>
+	<result property="imageRename" column="IMAGE_RENAME"/>
+	<result property="fileType" column="FILE_TYPE"/>
+	<result property="thumbnailPath" column="THUMBNAIL_PATH"/>
+	<result property="imageStatus" column="IMAGE_STATUS"/>
+	
+	<collection property="porestList" resultMap="restReportResultMap"/>
+</resultMap>
+
+
+	<!-- 출근하기 버튼 눌렀을 때 -->
+	<insert id="employmentIn">
+		INSERT
+			INTO ATT
+		(
+		   ATT_NO
+		 , NO
+		 , WORK_NO
+		 , ATT_GO
+		 , ATT_STATUS
+		)
+		VALUES
+		(
+		SEQ_ATT_NO.NEXTVAL
+		, #{ no }
+		, 15
+		, TO_CHAR(SYSDATE,'YYYY.MM.DD HH24:MI:SS')
+		, DEFAULT
+		)
+	</insert>
+	
+	<!-- 퇴근하기 버튼 눌렀을 때 -->
+	<insert id="employmentOut">
+		INSERT
+			INTO ATT
+		(
+		   ATT_NO
+		 , NO
+		 , WORK_NO
+		 , ATT_GO
+		 , ATT_STATUS
+		)
+		VALUES
+		(
+		SEQ_ATT_NO.NEXTVAL
+		, #{ no }
+		, 16
+		, TO_CHAR(SYSDATE,'YYYY.MM.DD HH24:MI:SS')
+		, DEFAULT
+		)
+	</insert>
+	
+	<!-- 근무유형 select box -->
+	<!-- 출근, 퇴근 근태 등록은 따로 버튼이 있으므로 출근, 퇴근은
+	조회에서 제외한다. -->
+	<select id="boxWork" resultMap="workResultMap">
+		SELECT
+			*
+		FROM WORK_CATEGORY
+		WHERE WORK_USE = '사용'
+		AND NOT WORK_NAME = '출근'
+		AND NOT WORK_NAME = '퇴근'
+		AND WORK_STATUS = 'Y'
+		ORDER BY WORK_NO
+	</select>
+	
+	<!-- select box 근무 등록 -->
+	<insert id="employmentOther">
+		INSERT
+			INTO ATT
+		(
+		   ATT_NO
+		 , NO
+		 , WORK_NO
+		 , ATT_GO
+		 , ATT_STATUS
+		)
+		VALUES
+		(
+		SEQ_ATT_NO.NEXTVAL
+		, #{ no }
+		, #{ workNo }
+		, TO_CHAR(SYSDATE,'YYYY.MM.DD HH24:MI:SS')
+		, DEFAULT
+		)
+	</insert>
+	
+	<!-- 근태 조회 -->
+	<select id="attenSelect" resultMap="AttResultMap">
+	   SELECT
+			ATT_NO,
+			NO,
+			WORK_NO,
+			REPLACE(REPLACE(ATT_GO, '-', '.'),'T',' '),
+			ATT_OFF,
+			ATT_ADD,
+			ATT_OVER,
+			ATT_NIGHT,
+			ATT_REASON,
+			ATT_DATE,
+			ATT_STATUS,
+			ATT_MODDATE
+		FROM ATT
+		WHERE ATT_STATUS = 'Y'
+		ORDER BY ATT_NO
+	</select>
+	
+	
+	<!-- 근무유형 select box -->
+	<!-- 출근, 퇴근 근태 등록은 따로 버튼이 있으므로 출근, 퇴근은
+	조회에서 제외한다. -->
+	<select id="boxsWork" resultMap="workResultMap">
+		SELECT
+			*
+		FROM WORK_CATEGORY
+		WHERE WORK_USE = '사용'
+		AND NOT WORK_NAME = '출근'
+		AND NOT WORK_NAME = '퇴근'
+		AND WORK_STATUS = 'Y'
+		ORDER BY WORK_NO
+	</select>
+	
+	
+	<!-- 휴가 신청서의 휴가 유형 selectBox -->
+	<select id="boxRc" resultMap="restResultMap">
+	SELECT
+		*
+		FROM REST_CATEGORY
+	WHERE REST_USE = '사용'
+	AND REST_STATUS = 'Y'
+	ORDER BY REST_NO
+	</select>
+	
+	<!-- 연차 신청서 값 등록 -->
+	<insert id="insertPara">
+	        INSERT 
+	        	INTO POREST
+	    (
+	       POREST_NO
+	     , NO
+	     , REST_NO
+	     , POREST_FIR
+	     , POREST_END
+	     , POREST_DAY
+	     , POREST_REASON
+	     , POREST_STATUS
+	     )
+        VALUES
+        (
+            SEQ_POREST_NO.NEXTVAL
+          , #{ no }   
+          , #{ restNo }  
+          , #{ porestFir }
+          , #{ porestEnd }
+          , #{ porestDay }
+          , #{ porestReason }
+          , DEFAULT
+        )
+	</insert>
+	
+
+
+	<!-- 연차 신청서 사진 등록 -->
+	<insert id="insertRest">
+	        INSERT 
+	        	INTO ATT_IMAGE
+	    (
+	       IMAGE_ID
+	     , POREST_NO
+	     , IMAGE_NAME
+	     , IMAGE_RENAME
+	     , IMAGE_PATH
+	     , IMAGE_STATUS
+	     )
+        VALUES
+        (
+            SEQ_IMAGE_ID.NEXTVAL
+          , SEQ_POREST_NO.CURRVAL
+          , #{ imageName }
+          , #{ imageRename }
+          , #{ imagePath }
+          , DEFAULT
+        )
+	</insert>
+	
+	
+	<!-- 내 근태 조회 -->
+	<select id="mySelect" resultMap="AttResultMap">
+	SELECT
+		  A.ATT_NO
+		, A.NO
+		, A.WORK_NO
+		, REPLACE(REPLACE(A.ATT_GO, '-', '.'),'T',' ') ATT_GO
+		, A.ATT_OFF
+		, A.ATT_ADD
+		, A.ATT_OVER
+		, A.ATT_NIGHT
+		, A.ATT_REASON
+		, A.ATT_DATE
+		, A.ATT_STATUS
+		, A.ATT_MODDATE
+		, SUBSTR(A.ATT_DATE, 7,8) ATT_DATESUB
+		, B.WORK_NAME
+		FROM ATT A
+		JOIN WORK_CATEGORY B ON (A.WORK_NO = B.WORK_NO)
+		WHERE A.ATT_STATUS = 'Y'
+		ORDER BY A.ATT_DATE
+	</select>
+	
+	
+	<!-- 연차 유형 사용한 것 -->
+	<!-- 연산자 구문 오류 나므로 <![CDATA[ > ]]> 이렇게 표현한다. 사용한 연차 조회하는 것이므로
+		지금 날짜보다 작은 날을 조회한다.-->
+	<select id="restselect" resultMap="restReportResultMap">
+	SELECT
+		  A.POREST_NO
+		, A.NO
+		, A.REST_NO
+		, A.REP_NO
+		, A.POREST_DATE
+		, A.POREST_MODDATE
+		, A.POREST_FIR
+		, A.POREST_END
+		, A.POREST_REASON
+		, A.POREST_STATUS
+		, A.POREST_DAY
+		, A.POREST_YN
+		, A.POREST_OK
+		, A.POREST_POSS
+		, B.NAME
+		, C.DEP_NAME
+		, D.REST_NAME
+		FROM POREST A
+		JOIN TBL_MEMBER B ON (A.NO = B.NO)
+		JOIN DEPARTMENT C ON (B.DEP_NO = C.DEP_NO)
+		JOIN REST_CATEGORY D ON (A.REST_NO = D.REST_NO)
+		WHERE TO_CHAR(SYSDATE, 'YY/MM/DD') <![CDATA[ > ]]> TO_CHAR(A.POREST_END, 'YY/MM/DD')
+		AND POREST_STATUS = 'Y'
+	</select>
+	
+	
+	<!-- 연차 유형 사용하지 않은 것 -->
+		<select id="restsselect" resultMap="restReportResultMap">
+	SELECT
+		  A.POREST_NO
+		, A.NO
+		, A.REST_NO
+		, A.REP_NO
+		, A.POREST_DATE
+		, A.POREST_MODDATE
+		, A.POREST_FIR
+		, A.POREST_END
+		, A.POREST_REASON
+		, A.POREST_STATUS
+		, A.POREST_DAY
+		, A.POREST_YN
+		, A.POREST_OK
+		, A.POREST_POSS
+		, B.NAME
+		, C.DEP_NAME
+		, D.REST_NAME
+		FROM POREST A
+		JOIN TBL_MEMBER B ON (A.NO = B.NO)
+		JOIN DEPARTMENT C ON (B.DEP_NO = C.DEP_NO)
+		JOIN REST_CATEGORY D ON (A.REST_NO = D.REST_NO)
+		WHERE TO_CHAR(SYSDATE, 'YY/MM/DD') <![CDATA[ < ]]> TO_CHAR(A.POREST_FIR, 'YY/MM/DD')
+		AND POREST_STATUS = 'Y'
+	</select>
+	
+	<!-- 연차신청서 옛날 값 파라 -->
+	<select id="modifyPa" resultMap="restReportResultMap">
+	SELECT
+		  A.POREST_NO
+		, A.NO
+		, A.REST_NO
+		, A.REP_NO
+		, A.POREST_DATE
+		, A.POREST_MODDATE
+		, A.POREST_FIR
+		, A.POREST_END
+		, A.POREST_REASON
+		, A.POREST_STATUS
+		, A.POREST_DAY
+		, A.POREST_YN
+		, A.POREST_OK
+		, A.POREST_POSS
+		, B.NAME
+		, C.DEP_NAME
+		, D.REST_NAME
+		, E.IMAGE_NAME
+		FROM POREST A
+		JOIN TBL_MEMBER B ON (A.NO = B.NO)
+		JOIN DEPARTMENT C ON (B.DEP_NO = C.DEP_NO)
+		JOIN REST_CATEGORY D ON (A.REST_NO = D.REST_NO)
+		JOIN ATT_IMAGE E ON (A.POREST_NO = E.POREST_NO)
+	WHERE A.POREST_NO = #{ porestNo } 
+	</select>
+	
+	
+		<!-- 휴가 신청서의 휴가 유형 selectBox -->
+	<select id="boxRe" resultMap="restResultMap">
+	SELECT
+		*
+		FROM REST_CATEGORY
+	WHERE REST_USE = '사용'
+	AND REST_STATUS = 'Y'
+	ORDER BY REST_NO
+	</select>
+	
+	<!-- 수정하기 버튼을 눌렀을 때 해당 게시글의 이미지 정보 가져오기 -->
+	<select id="modifyImgs" resultMap="imgResultMap">
+	SELECT
+		*
+	FROM ATT_IMAGE
+	WHERE POREST_NO = #{ porestNo }
+	</select> 
+	
+	
+	<!-- 연차신청서 값만 업데이트 -->
+	<update id="ModifyPara">
+	UPDATE POREST
+	SET
+	   REST_NO = #{ restNo }
+	 , POREST_FIR = #{ porestFir }
+	 , POREST_END = #{ porestEnd }
+	 , POREST_DAY = #{ porestDay }
+	 , POREST_REASON = #{ porestReason }
+	 WHERE POREST_NO = #{ porestNo }			
+	</update>
+	
+	
+	
+	<!-- 연차신청서 이미지만 업데이트 -->
+	<update id="ModifyRest">
+	UPDATE ATT_IMAGE
+	SET
+    	<if test="imageName != null">
+    		IMAGE_NAME = #{ imageName },
+    		IMAGE_RENAME = #{ imageRename },
+    		IMAGE_PATH = #{ imagePath }
+    	</if>
+	 WHERE POREST_NO = #{ porestNo }	
+	</update> 
+	
+	
+	<!-- 삭제하기 버튼을 눌렀을 때 해당 게시글의 이미지 정보 가져오기 -->
+	<select id="modifyImgss" resultMap="imgResultMap">
+	SELECT
+		*
+	FROM ATT_IMAGE
+	WHERE POREST_NO = #{ porestNo }
+	</select>
+	
+	
+	<!-- 연차신청서 삭제 -->
+	<update id="deleteRest">
+	UPDATE
+		POREST
+	SET POREST_STATUS = 'N'
+	WHERE POREST_NO = #{ porestNo }
+	</update>
+	
+	
+	<!-- 내 근태 예전 값 -->
+	
+	
+	<!-- 내 근태 수정 근무 유형 selectBox -->
+	<select id="sBox" resultMap="workResultMap">
+		SELECT
+			*
+		FROM WORK_CATEGORY
+		WHERE WORK_USE = '사용'
+		ORDER BY WORK_NO
+	</select>
+	
+	<!-- 내 근태 수정 -->
+		<select id="beforedData" resultMap="AttResultMap">
+		SELECT
+			*
+		FROM ATT
+		WHERE ATT_NO = #{ attNo }
+	</select>
+	
+	
+	<!-- 근태관리 수정 -->
+	<update id="employmentModifyGo">
+	UPDATE ATT
+	SET 
+		WORK_NO = #{ workNo }, 
+        ATT_GO = #{ attGo },
+		ATT_REASON = #{ attReason },
+		NO = #{ no },
+		ATT_MODDATE = SYSDATE
+	WHERE ATT_NO = #{ attNo }
+	</update>
+	
+		<!-- 근태관리 삭제 -->
+	<update id="employDelete">
+	UPDATE ATT
+	SET 
+		ATT_STATUS = 'N'
+	WHERE ATT_NO = #{ attNo }
+	</update>
+	
+		<!-- 근태 엑셀 -->
+	<select id="excelDown" resultMap="AttResultMap">
+	SELECT
+			A.ATT_NO,
+            A.NO,
+            A.WORK_NO,
+            A.ATT_GO,
+            A.ATT_REASON,
+            A.ATT_DATE,
+            A.ATT_MODDATE,
+            B.WORK_NAME,
+            C.NAME
+		FROM ATT A
+        JOIN WORK_CATEGORY B ON (A.WORK_NO = B.WORK_NO)
+        JOIN TBL_MEMBER C ON (A.NO = C.NO)
+		WHERE A.ATT_STATUS = 'Y'
+		ORDER BY A.ATT_NO
+	</select>
+	
+</mapper>

@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.work.workhub.admin.work.model.dao.WorkMapper">
+
+<!-- 근태유형 -->
+<resultMap type="com.work.workhub.admin.work.model.dto.WorkDTO" id="workResultMap">
+	<id property="workNo" column="WORK_NO"/>
+	<result property="workName" column="WORK_NAME"/>
+	<result property="workInclude" column="WORK_INCLUDE"/>
+	<result property="workUse" column="WORK_USE"/>
+	<result property="workStatus" column="WORK_STATUS"/>
+	<result property="workDate" column="WORK_DATE"/>
+	<result property="workModdate" column="WORK_MODDATE"/>
+	<result property="writeNo" column="WRITE_NO"/>
+</resultMap>
+
+<!-- 연차유형 -->
+<resultMap type="com.work.workhub.admin.work.model.dto.RestCateDTO" id="restcateResultMap">
+	<id property="restNo" column="REST_NO"/>
+	<result property="restName" column="REST_NAME"/>
+	<result property="restDed" column="REST_DED"/>
+	<result property="restInclude" column="REST_INCLUDE"/>
+	<result property="restMoney" column="REST_MONEY"/>
+	<result property="restPoss" column="REST_POSS"/>
+	<result property="restDay" column="REST_DAY"/>
+	<result property="restUse" column="REST_USE"/>
+	<result property="restStatus" column="REST_STATUS"/>
+	<result property="restDate" column="REST_DATE"/>
+	<result property="restModdate" column="REST_MODDATE"/>
+	<result property="writeNo" column="WRITE_NO"/>
+</resultMap>
+
+<!-- 근무그룹 유형 -->
+<resultMap type="com.work.workhub.admin.work.model.dto.WorkGroupDTO" id="workGroupResultMap">
+	<id property="groupNo" column="GROUP_NO"/>
+	<result property="groupName" column="GROUP_NAME"/>
+	<result property="groupEx" column="GROUP_EX"/>
+	<result property="groupDay" column="GROUP_DAY"/>
+	<result property="groupFirdate" column="GROUP_FIRDATE"/>
+	<result property="groupEnddate" column="GROUP_ENDDATE"/>
+	<result property="groupFirrest" column="GROUP_FIRREST"/>
+	<result property="groupEndrest" column="GROUP_ENDREST"/>
+	<result property="groupStatus" column="GROUP_STATUS"/>
+	<result property="groupRest" column="GROUP_REST"/>
+	<result property="groupDate" column="GROUP_DATE"/>
+	<result property="groupModdate" column="GROUP_MODDATE"/>
+	<result property="groupUse" column="GROUP_USE"/>
+	<result property="writeNo" column="WRITE_NO"/>
+</resultMap>
+
+<!-- 사원 -->
+  <!--   <resultMap type="com.work.workhub.member.member.dto.MemberDTO" id="memberResultMap">
+		<id property="no" column="NO"/>
+		<result property="id" column="ID"/>
+		<result property="pwd" column="PWD"/>
+		<result property="depNo" column="DEP_NO"/>
+		<result property="positionNo" column="POSITION_NO"/>
+		<result property="groupNo" column="GROUP_NO"/>
+		<result property="name" column="NAME"/>
+		<result property="email" column="EMAIL"/>
+		<result property="phone" column="PHONE"/>
+		<result property="status" column="STATUS"/>
+	</resultMap>-->
+
+<!-- 사원 근무그룹 지정-->
+  <resultMap type="com.work.workhub.admin.work.model.dto.MemberGroupDTO" id="memberGroupResultMap">
+		<id property="gmNo" column="GM_NO"/>
+		<result property="no" column="NO"/>
+		<result property="groupNo" column="GROUP_NO"/>
+		<result property="gmDate" column="GM_DATE"/>
+		<result property="groupStatus" column="GROUP_STATUS"/>
+		<result property="gmModdate" column="GM_MODDATE"/>
+		<result property="name" column="NAME"/>
+		<result property="groupName" column="GROUP_NAME"/>
+		<result property="writeNo" column="WRITE_NO"/>
+		<result property="writeName" column="WRITE_NAME"/>
+	<!-- <collection property="memberList" resultMap="memberResultMap"/>
+	<collection property="workGroupList" resultMap="workGroupResultMap"/> -->
+	</resultMap>
+
+	
+	<!-- 근태유형 작성 -->
+	<insert id="workWrite">
+		INSERT
+			INTO WORK_CATEGORY
+		(
+		WORK_NO
+		, WORK_NAME
+		, WORK_INCLUDE
+		, WORK_USE
+		, WORK_STATUS
+		, WRITE_NO
+		)	
+		VALUES
+		(
+		  SEQ_WORK_NO.NEXTVAL
+		, #{ workName } 
+		, #{ workInclude }
+		, #{ workUse }
+		, DEFAULT
+		, #{ writeNo }
+		)
+	</insert>
+	
+	<!-- 근태유형 조회 -->
+	<select id="workSelect" resultMap="workResultMap">
+	SELECT
+	      A.WORK_NO
+		, A.WORK_NAME
+		, A.WORK_INCLUDE
+		, A.WORK_USE
+		, A.WORK_STATUS
+		, A.WORK_DATE
+		, A.WORK_MODDATE
+		, A.WRITE_NO
+		, B.NAME
+	 FROM WORK_CATEGORY A
+	 JOIN TBL_MEMBER B ON (A.WRITE_NO = B.NO)
+	 WHERE A.WORK_STATUS = 'Y'
+	 ORDER BY A.WORK_NO 
+	</select>
+	
+	
+	<!-- 근태유형 수정 예전 값-->
+	<select id="Modifywork" resultMap="workResultMap">
+	SELECT
+	      A.WORK_NO
+		, A.WORK_NAME
+		, A.WORK_INCLUDE
+		, A.WORK_USE
+		, A.WORK_STATUS
+		, A.WORK_DATE
+		, A.WORK_MODDATE
+	 FROM WORK_CATEGORY A
+	 WHERE WORK_NO = #{ workNo }
+	</select>
+	
+	<!-- 근태 유형  수정-->
+	<!-- MODDATE 새로 날짜 삽입해야함 -->
+	 <update id="workModifyGo">
+		UPDATE
+		    WORK_CATEGORY
+		  SET 
+		      WORK_NO = #{ workNo }
+		  	, WORK_NAME = #{ workName }  
+		    , WORK_INCLUDE = #{ workInclude }
+		    , WORK_USE = #{ workUse }
+		    , WRITE_NO = #{ writeNo }
+		    , WORK_MODDATE = SYSDATE
+		  WHERE WORK_NO = #{ workNo } 
+	</update>
+	
+	<!-- 근태유형 삭제 -->
+	<update id="workDelete">
+		UPDATE
+			WORK_CATEGORY
+		SET WORK_STATUS = 'N'
+		WHERE WORK_NO = #{ workNo }
+	</update>
+	
+	
+	<!-- 연차유형 조회 -->
+	<select id="restcateSelect" resultMap="restcateResultMap">
+	SELECT
+	      A.REST_NO
+		, A.REST_NAME
+		, A.REST_DED
+		, A.REST_INCLUDE
+		, A.REST_MONEY
+		, A.REST_POSS
+		, A.REST_DAY
+		, A.REST_USE
+		, A.REST_STATUS
+		, A.REST_DATE
+		, A.REST_MODDATE
+		, A.WRITE_NO
+		, B.NAME
+	 FROM REST_CATEGORY A
+	 JOIN TBL_MEMBER B ON (A.WRITE_NO = B.NO)
+	 WHERE A.REST_STATUS = 'Y'
+	 ORDER BY A.REST_NO    
+	</select>
+	
+	<!-- 연차유형 작성 -->
+	<insert id="restCateWrite">
+		INSERT
+			INTO REST_CATEGORY
+		(
+		  REST_NO
+		, REST_NAME
+		, REST_DED
+		, REST_INCLUDE
+		, REST_MONEY
+		, REST_USE
+		, REST_STATUS
+		, WRITE_NO
+		)	
+		VALUES
+		(
+		  SEQ_REST_NO.NEXTVAL
+		, #{ restName } 
+		, #{ restDed }
+		, #{ restInclude }
+		, #{ restMoney }
+		, #{ restUse }
+		, DEFAULT
+		, #{ writeNo }
+		)
+	</insert>
+	
+	<!-- 연차 유형 예전 값 -->
+	<select id="ModifyrestCate" resultMap="restcateResultMap">
+	SELECT
+	      A.REST_NO
+		, A.REST_NAME
+		, A.REST_DED
+		, A.REST_INCLUDE
+		, A.REST_MONEY
+		, A.REST_POSS
+		, A.REST_DAY
+		, A.REST_USE
+		, A.REST_STATUS
+		, A.REST_DATE
+		, A.REST_MODDATE
+	 FROM REST_CATEGORY A
+	 WHERE A.REST_NO = #{ restNo }
+	</select>
+	
+	<!-- 연차 유형  수정-->
+	<!-- MODDATE 새로 날짜 삽입해야함 -->
+	 <update id="restCateModifyGo">
+		UPDATE
+		    REST_CATEGORY
+		  SET 
+		      REST_NO = #{ restNo }
+		  	, REST_NAME = #{ restName }  
+		    , REST_DED = #{ restDed }
+		    , REST_INCLUDE = #{ restInclude }
+		    , REST_MONEY = #{ restMoney }
+		    , REST_USE = #{ restUse }
+		    , WRITE_NO = #{ writeNo }
+		    , REST_MODDATE = SYSDATE
+		  WHERE REST_NO = #{ restNo } 
+	</update>
+	
+	<!-- 연차유형 삭제 -->
+	<update id="restCateDelete">
+		UPDATE
+			REST_CATEGORY
+		SET	REST_STATUS = 'N'
+		 WHERE  REST_NO = #{ restNo }
+	</update>
+	
+	
+	<!-- 근무그룹유형 조회 -->
+	<select id="workGroupSelect" resultMap="workGroupResultMap">
+	SELECT
+	      A.GROUP_NO
+	    , A.WRITE_NO
+	    , A.GROUP_NAME
+	    , A.GROUP_EX
+	    , A.GROUP_DAY
+	    , A.GROUP_FIRDATE
+	    , A.GROUP_ENDDATE
+	    , A.GROUP_FIRREST
+	    , A.GROUP_ENDREST
+	    , A.GROUP_STATUS
+	    , A.GROUP_REST
+	    , A.GROUP_DATE
+	    , A.GROUP_MODDATE
+	    , A.GROUP_USE
+	    , B.NAME
+	 FROM WORK_GROUP A
+	 JOIN TBL_MEMBER B ON (A.WRITE_NO = B.NO)
+	 WHERE A.GROUP_STATUS = 'Y'
+	 ORDER BY A.GROUP_NO    
+	</select>
+	
+	
+		<!-- 근무그룹유형 작성 -->
+	<insert id="workGroupWrite">
+		INSERT
+			INTO WORK_GROUP
+		(
+		  GROUP_NO
+		, GROUP_NAME
+		, GROUP_EX
+		, GROUP_DAY
+		, GROUP_FIRDATE
+		, GROUP_ENDDATE
+		, GROUP_FIRREST
+		, GROUP_ENDREST
+		, GROUP_STATUS
+		, GROUP_REST
+		, GROUP_USE
+		, WRITE_NO
+		)	
+		VALUES
+		(
+		  SEQ_GROUP_NO.NEXTVAL
+		, #{ groupName } 
+		, #{ groupEx }
+		, #{ groupDay }
+		, #{ groupFirdate }
+		, #{ groupEnddate }
+		, #{ groupFirrest }
+		, #{ groupEndrest }
+		, DEFAULT
+		, #{ groupRest }
+		, #{ groupUse }
+		, #{ writeNo }
+		)
+	</insert>
+	
+	<!-- 근무그룹유형 예전값 -->
+	<select id="ModifyworkGroup" resultMap="workGroupResultMap">
+	SELECT
+	      A.GROUP_NO
+	    , A.GROUP_NAME
+	    , A.GROUP_EX
+	    , A.GROUP_DAY
+	    , A.GROUP_FIRDATE
+	    , A.GROUP_ENDDATE
+	    , A.GROUP_FIRREST
+	    , A.GROUP_ENDREST
+	    , A.GROUP_STATUS
+	    , A.GROUP_REST
+	    , A.GROUP_DATE
+	    , A.GROUP_MODDATE
+	    , A.GROUP_USE
+	 FROM WORK_GROUP A
+	 WHERE A.GROUP_NO = #{ groupNo } 
+	</select>
+	
+	<!-- 근무그룹 수정 -->
+	<update id="workGroupModifyGo">
+		UPDATE
+			WORK_GROUP
+		SET	
+		 	 GROUP_NO = #{ groupNo }
+			, GROUP_NAME = #{ groupName }
+			, GROUP_EX = #{ groupEx }
+			, GROUP_DAY = #{ groupDay }
+			, GROUP_FIRDATE = #{ groupFirdate }
+			, GROUP_ENDDATE = #{ groupEnddate }
+			, GROUP_FIRREST = #{ groupFirrest }
+			, GROUP_ENDREST = #{ groupEndrest }
+			, GROUP_REST = #{ groupRest }
+			, GROUP_USE = #{ groupUse }
+			, WRITE_NO = #{ writeNo }
+			, GROUP_MODDATE = SYSDATE
+		 WHERE  GROUP_NO = #{ groupNo }
+	</update>
+	
+	<!-- 근무그룹 삭제 -->
+	<update id="workGroupDelete">
+		UPDATE
+			WORK_GROUP
+		SET	GROUP_STATUS = 'N'
+		 WHERE  GROUP_NO = #{ groupNo }
+	</update>
+	
+	<!-- selectbox 근무그룹 -->
+	<select id="boxSelect" resultMap="workGroupResultMap">
+	SELECT
+	    *
+	 FROM WORK_GROUP
+	 WHERE GROUP_USE = '사용'
+	 AND GROUP_STATUS = 'Y'
+	 ORDER BY GROUP_NO    
+	</select>
+	
+	<!-- 사원 근무그룹 등록 -->
+	<insert id="memberGroupWrite">
+		INSERT
+			INTO GROUP_MEM
+		(
+		  GM_NO
+		, NO
+		, GROUP_NO
+		, GROUP_STATUS
+		, WRITE_NO
+		)	
+		VALUES
+		(
+		  SEQ_GM_NO.NEXTVAL
+		, #{ no } 
+		, #{ groupNo }
+		, DEFAULT
+		, #{ writeNo }
+		)
+	</insert>
+	
+	
+	
+	<!-- 근무그룹유형 조회 -->
+	<!--  
+	<select id="workGroupSelects" resultMap="workGroupResultMap">
+	
+	SELECT
+	    *
+	 FROM WORK_GROUP
+	  WHERE GROUP_STATUS = 'Y'
+	 WHERE GROUP_USE = '사용'
+	 ORDER BY GROUP_NO    
+	</select>
+	-->
+	
+	
+	<!-- 사원 아이디 검색으로 근무그룹 조회 -->
+	<!-- 같은 테이블에서 NAME이라는 컬럼을 두번 다른 값으로 불러와야 하기 때문에
+	D.NAME 뒤에는 resultMap 에서 정의해둔 컬럼명을 별칭으로 뒤에 적는다. 그럼 다른 값이 
+	불러와진다. DTO 에 정의하고 resultMap에도 정의했다. erd에 추가는 필요없다. 그냥 값을
+	담아두기 위해 만들어둔 것이다. -->
+	<select id="memberGroupSelect" resultMap="memberGroupResultMap">
+	SELECT
+	    A.WRITE_NO
+	  , A.GM_DATE
+	  , A.GM_NO
+	  , A.NO
+	  , A.GROUP_NO
+	  , C.NAME
+	  , B.GROUP_NAME
+	  , A.GROUP_STATUS
+	  , D.NAME WRITE_NAME
+	 FROM GROUP_MEM A
+	 JOIN TBL_MEMBER C ON (A.NO = C.NO)
+	 JOIN TBL_MEMBER D ON (A.WRITE_NO = D.NO)
+	 JOIN WORK_GROUP B ON (A.GROUP_NO = B.GROUP_NO)
+	 WHERE A.NO =  #{ no }
+	 AND A.GROUP_STATUS = 'Y'
+	 ORDER BY A.GM_NO   
+	</select>
+	
+	<!-- 사원근무그룹 수정 예전 값 보기 -->
+	<select id="ModifymemberGroup" resultMap="memberGroupResultMap">
+	SELECT
+	   A.GM_DATE
+	  , A.GM_NO
+	  , A.NO
+	  , A.GROUP_NO
+	  , C.NAME
+	  , B.GROUP_NAME
+	  , A.GROUP_STATUS
+	 FROM GROUP_MEM A
+	 JOIN TBL_MEMBER C ON (A.NO = C.NO)
+	 JOIN WORK_GROUP B ON (A.GROUP_NO = B.GROUP_NO)
+	 WHERE A.GM_NO =  #{ gmNo } 
+	</select>
+	
+	
+	<!-- 사원근무그룹 수정 -->
+	<update id="memberGroupModifyGo">
+		UPDATE
+			GROUP_MEM
+		SET	
+		 	 GM_NO = #{ gmNo }
+			, NO = #{ no }
+			, GROUP_NO = #{ groupNo }
+			, WRITE_NO = #{ writeNo }
+			, GM_MODDATE = SYSDATE
+		 WHERE  GM_NO = #{ gmNo }
+	</update>
+	
+	<!-- 사원근무그룹 삭제 -->
+	<update id="memberGroupDelete">
+		UPDATE
+			GROUP_MEM
+		SET	GROUP_STATUS = 'N'
+		 WHERE  GM_NO = #{ gmNo }
+	</update>
+	
+	
+</mapper>

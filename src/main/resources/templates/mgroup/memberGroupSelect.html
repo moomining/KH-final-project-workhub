@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>memberGroupSelect</title>
+    <!-- fonts -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="/assets/vendors/iconly/bold.css">
+    <link rel="stylesheet" href="/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="shortcut icon" href="/assets/images/favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="/assets/css/adminyj.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>    
+	<link rel="shortcut icon" th:href="@{/assets/images/images/favicon-workHub.ico}" type="image/x-icon">
+<script>
+	const successMessage = '[[${successMessage}]]';
+	
+	if(successMessage) {
+		alert(successMessage);
+	}
+</script>
+</head>
+<body>
+    <div th:include="sidebar/sidebar-admin" th:remove="tag"></div>    
+      
+	<h3 class="fdawr">사원 근무그룹</h3>
+	<div class="yurcfxg">
+            <form action="/mgroup/memberGroupSelects" method="get">
+                <h6 class="fsdf">사원 검색 : </h6>
+                <input type="text" placeholder="사원 아이디 입력" class="ytgk" name="no">
+                <input type="submit" class="sdsss" value="검색">
+            </form>
+         </div>
+        <!--모든 근무 그룹 시작-->
+        <section class="section xdkrst">
+            <div class="card">
+                <input type="button" value="신규 추가" class="gttt" onclick="location.href='/mgroup/memberGroupWrite'">
+                <div class="card-body">
+                    <table class="table table-striped" id="table1">
+                        <thead>
+                            <tr>
+                                <th class="erre">지정일</th>
+                                <th class="erff">아이디</th>
+                                <th class="sds">이름</th>
+                                <th class="deaf">그룹명</th>
+                                <th class="deaf">작성자</th>
+                                <th class="dfadsf">사용여부</th>
+                                <th class="dfadsf">수정</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="id : ${ memberGroupList }">
+                                <td th:text="${ id.gmDate }"></td>
+                                <td th:text="${ id.no }"></td>
+                                <td th:text="${ id.name }"></td>
+                                <td th:text="${ id.groupName }"></td>
+                                <td th:text="${ id.writeName }"></td>
+                                <td>
+                                    <span th:text="${ id.groupStatus }" class="badge bg-success">사용</span>
+                                </td>
+                                <td>
+                                    <span class="badge bg-success" style="cursor:pointer;" th:onclick="|javascript:memberGroupModify('${ id.gmNo }')|">수정</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        
+        <!--모든 근무 그룹 끝-->
+       
+       <!-- 수정하기 버튼을 눌렀을 때 게시글 번호 넘기는 것 -->
+    <script type="text/javascript">
+    function memberGroupModify(gmNo) { 
+    	// 근무그룹  번호 확인용
+    	//alert(gmNo); 
+    	var gmNo = gmNo; 
+        location.href='/mgroup/memberGroupModify?gmNo='+gmNo; }
+    </script> 
+       
+    
+    <script src="assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+
+    <script src="assets/vendors/apexcharts/apexcharts.js"></script>
+    <script src="assets/js/pages/dashboard.js"></script>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

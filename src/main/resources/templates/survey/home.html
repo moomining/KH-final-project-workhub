@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WorkHub | 설문</title>
+
+    <!-- fonts -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="/assets/css/bootstrap2.css">
+
+    <link rel="stylesheet" href="/assets/vendors/iconly/bold.css">
+
+    <link rel="stylesheet" href="/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/assets/css/app2.css">
+    <link rel="stylesheet" href="/assets/css/com-surv.css">
+    <link rel="shortcut icon" th:href="@{/assets/images/images/favicon-workHub.ico}" type="image/x-icon">
+</head>
+
+<body>
+    <div id="app">
+        <div th:include="sidebar/sidebar-surv" th:remove="tag"/>
+        <div id="main">
+            <header class="mb-3">
+                <a href="#" class="burger-btn d-block d-xl-none">
+                    <i class="bi bi-justify fs-3"></i>
+                </a>
+            </header>
+            <div class="page-heading">
+                <h3>설문 홈</h3>
+            </div>
+            <section class="section">
+                <div class="card">
+                    <div class="card-header">
+                        <!-- Basic card section start -->
+                        <section id="content-types">
+                            <div class="surv-card-list">
+                                <div class="surv-list">
+                                    <div class="card-content">
+                                        <div class="card-body">
+                                            <span class="badge bg-danger title-bg">미참여</span>
+                                            <h5 class="card-title">오늘의 점심메뉴는?</h5>
+                                            <p class="card-date">2022-05-24 ~ 2022-05-24</p>
+                                            <div class="surv-write">
+                                                <span>작성자</span>
+                                                <span class="surv-writer">김허브 파트너</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="surv-card-footer" onclick="location.href='/survey/detail'" style="cursor:pointer">
+                                        <hr>
+                                        <p class="show-sv-result">조회하기</p>
+                                    </div>
+                                </div>                            
+                                <div class="surv-list">
+                                    <div class="card-content">
+                                        <div class="card-body">
+                                            <span class="badge bg-success title-bg">진행 중</span>
+                                            <h5 class="card-title">사무실의 파티션 제거</h5>
+                                            <p class="card-date">2022-04-14 ~ 2022-04-22</p>
+                                            <div class="surv-write">
+                                                <span>작성자</span>
+                                                <span class="surv-writer">주워크 대표</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="surv-card-footer">
+                                        <hr>
+                                        <p class="show-sv-result">조회하기</p>
+                                    </div>
+                                </div>
+                                <div class="surv-list">
+                                    <div class="card-content">
+                                        <div class="card-body">
+                                            <span class="badge bg-secondary title-bg">참여완료</span>
+                                            <h5 class="card-title">자율출근제 찬반</h5>
+                                            <p class="card-date">2022-03-21 ~ 2022-04-21</p>
+                                            <div class="surv-write">
+                                                <span>작성자</span>
+                                                <span class="surv-writer">주워크 대표</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="surv-card-footer">
+                                        <hr>
+                                        <p class="show-sv-result">조회하기</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>                 
+                    </div>
+                    <div class="card-body-surv">
+                        <h5> &nbsp 최근 생성된 설문</h5>
+                        <table class="table table-borderless" id="table1">
+                            <thead>
+                                <tr class="surv-tr">
+                                    <th>상태</th>
+                                    <th>설문 제목</th>
+                                    <th>설문 기간</th>
+                                    <th>작성자</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <span class="badge bg-danger">미참여</span>
+                                    </td>
+                                    <td>오늘의 점심메뉴는?</td>
+                                    <td>2022-05-24 ~ 2022-05-24</td>
+                                    <td>김허브 파트너</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="badge bg-success">진행 중</span>
+                                    </td>
+                                    <td>사무실 파티션 제거</td>
+                                    <td>2022-04-14 ~ 2022-04-22</td>
+                                    <td>주워크 대표</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="badge bg-secondary">참여완료</span>
+                                    </td>
+                                    <td>자율출근제 찬반</td>
+                                    <td>2022-03-21 ~ 2022-04-21</td>
+                                    <td>주워크 대표</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="badge bg-secondary">참여완료</span>
+                                    </td>
+                                    <td>민트초코의 호불호에 관한 투표</td>
+                                    <td>2022-03-01 ~ 2022-03-07</td>
+                                    <td>장그래 인턴</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="badge bg-danger">미참여</span>
+                                    </td>
+                                    <td>총무팀 비품 관련</td>
+                                    <td>2022-02-01 ~ 2022-02-14</td>
+                                    <td>이다해 파트너</td>
+                                </tr>                                                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <script src="/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="/assets/js/bootstrap.bundle.min2.js"></script>
+
+    <script src="/assets/vendors/apexcharts/apexcharts.js"></script>
+    <script src="/assets/js/pages/dashboard.js"></script>
+
+    <script src="/assets/js/main.js"></script>
+</body>
+
+</html>

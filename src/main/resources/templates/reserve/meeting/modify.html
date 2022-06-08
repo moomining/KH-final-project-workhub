@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회의실 예약 수정- workhub</title>
+
+    <!-- fonts -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="/assets/css/bootstrap-ar.css">
+
+    <link rel="stylesheet" href="/assets/vendors/iconly/bold.css">
+
+    <link rel="stylesheet" href="/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/assets/css/app-ar.css">
+    <link rel="shortcut icon" th:href="@{/assets/images/images/favicon-workHub.ico}" type="image/x-icon">
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div th:include="sidebar/sidebar-reserve" th:remove="tag"></div>
+    <div id="main">
+        <header class="mb-3">
+            <a href="#" class="burger-btn d-block d-xl-none">
+                <i class="bi bi-justify fs-3"></i>
+            </a>
+        </header>
+        <!-- 상단 horizontal nav-->
+        <div class="page-heading">
+            <ul class="nav nav-tabs" id="myTab">
+                <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" th:href="@{ /reserve/meeting/list }">
+                        <h5>회의실 예약</h5>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" th:href="@{ /reserve/car/list }">
+                        <h5>차량 예약</h5>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="contact-tab" th:href="@{ /reserve/mylist }">
+                        <h5>내 예약 조회</h5>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="page-heading border-bottom">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item font-clr" role="presentation">
+                    <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab"
+                        aria-controls="home" aria-selected="true">4층 회의실</a>
+                </li>
+                <li class="nav-item font-clr" role="presentation">
+                    <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab"
+                        aria-controls="profile" aria-selected="false">5층 회의실</a>
+                </li>
+
+            </ul>
+        </div>
+
+        
+        <div class="content-area card-rev">
+            <div class="content-ttl">
+                <h5>예약 수정/삭제</h5>
+            </div>
+            <div class="card-body">
+                
+                <form class="form form-horizontal" method="post" th:action="@{ /reserve/meeting/modify }">
+                    <div class="form-body modal-body">
+                        <div class="row res-row">
+                            <div class="col-md-4 row-margin col-label">
+                                <label class="label-size">회의실 이름</label>
+                            </div>
+                            <div class="col-md-8 form-group row-margin col-input">
+                            	<input type="hidden" name="resNo" th:value="${ meetingInfo2.resNo }">
+                                <input type="text" class="form-control input-margin" name="roomName"
+                                    th:value="${ meetingInfo2.roomName }" readonly>
+                            </div>
+                            <div class="col-md-4 row-margin col-label">
+                                <label class="label-size">예약기간</label>
+                            </div>
+                            <div class="col-md-8 form-group date-grid row-margin col-input">
+                                <div>
+                                    <input type="datetime-local" class="form-control pe-font-size ud-size" name="startTime"
+                                        th:value="${ meetingInfo2.startTime }">
+                                </div>
+                                <div>-</div>
+                                <div>
+                                    <input type="datetime-local" class="form-control pe-font-size ud-size" name="endTime"
+                                        th:value="${ meetingInfo2.endTime }">
+                                </div>
+                            </div>
+                            <div class="col-md-4 row-margin col-label">
+                                <label class="label-size">예약자</label>
+                            </div>
+                            <div class="col-md-8 form-group row-margin col-input">
+                                <input type="text" id="contact-info" class="form-control input-margin" name="name"
+                                    th:value="${ meetingInfo2.name }" readonly>
+                            </div>
+                            <div class="col-md-4 row-margin col-label">
+                                <label class="label-size">목적</label>
+                            </div>
+                            <div class="col-md-8 form-group row-margin col-input">
+                                <textarea rows="5" cols="49" name="meetPurpose" style="resize:none;" 
+                                th:text="${ meetingInfo2.meetPurpose }" required></textarea>
+                            </div>
+
+
+                        </div>
+                        <div class="modal-footer rev-footer-align">
+                            <div class="col-sm-12 d-flex justify-content-end foot-margin">
+                                <button type="submit" data-oper="modify" class="btn btn-primary me-1 mb-1 edit-btn">수정하기</button>&nbsp
+                                <button type="submit" data-oper="delete" class="btn btn-light-secondary me-1 mb-1 edit-btn">삭제하기</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+
+	<script type="text/javascript">
+	$(document).ready(function() {
+		var formObj = $("form");
+		$('button').on("click", function(e) { 		//모든 button태그에 대한 클릭 이벤트 처리
+			e.preventDefault(); 			//버튼의 기본 submit() 동작 막기
+			var operation = $(this).data("oper");	//data-oper 값 읽어오기
+			console.log(operation);
+
+			if (operation === 'delete') {
+				if (confirm("회의실 예약을 삭제하시겠습니까?") == true) {
+					alert("예약이 삭제되었습니다.");
+					formObj.attr("action", "/reserve/meeting/delete");
+				} else {
+					return false;
+				}
+			} else if (operation === 'modify') {
+				if (confirm("예약을 수정하시겠습니까?") == true) {
+					alert("예약이 수정되었습니다.");
+					formObj.attr("action", "/reserve/meeting/modify");
+				} else {
+					return false;
+				}
+			}
+			formObj.submit();
+		})
+	})
+	</script>
+
+    <script src="/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+
+    <script src="/assets/js/main.js"></script>
+</body>
+
+</html>

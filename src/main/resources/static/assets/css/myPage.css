@@ -1,0 +1,29 @@
+@charset "UTF-8";
+
+.container {
+	margin:20px; margin-left:0;
+	padding:0;
+	width:100%; height:auto;
+	font-size:0.935em;
+}
+	.in-form {
+		margin:0; padding:0;
+	}
+		.info-wrap {
+			margin:0; padding:0;
+			width:70%; height:auto;
+		}
+			.info-wrap>table {
+				margin:0; padding:20px;
+				width:100%; height:auto;
+			}
+				.info-wrap>table> tr, td {
+					margin:0; padding:9px;
+				}
+					.titles {
+						text-align:left;
+					}
+					.info-result {
+						text-align:left;
+					}
+					

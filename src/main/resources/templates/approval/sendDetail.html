@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>approval personal reception detail</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/bootstrap.css">
+
+    <link rel="stylesheet" href="/assets/css/pages/email.css">
+    <link rel="stylesheet" href="/assets/vendors/simple-datatables/style.css">
+
+    <link rel="stylesheet" href="/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/assets/css/app copy.css">
+    <link rel="shortcut icon" href="/assets/images/favicon.svg" type="image/x-icon">
+</head>
+
+<body>
+    <div id="app">
+        <div th:include="sidebar/sidebar-approval" th:remove="tag"></div>
+        <div id="main">
+            <header class="mb-3">
+                <a href="#" class="burger-btn d-block d-xl-none">
+                    <i class="bi bi-justify fs-3"></i>
+                </a>
+            </header>
+
+            <div class="page-heading email-application">
+                <div class="page-title">
+                    <div class="row">
+                        <div class="col-12 col-md-6 order-md-1 order-last">
+                            <h3>발송 결재함</h3><br>
+                        </div>
+                    </div>
+                </div>
+                <section class="section content-area-wrapper">
+                    <div class="sidebar-left">
+                        <div class="sidebar">
+                            <div class="sidebar-content email-app-sidebar d-flex">
+                                <div class="email-app-menu">
+                                    <br><br>
+                                    <div class="sidebar-menu-list ps">
+                                        <!-- sidebar menu  -->
+                                        <div class="list-group list-group-messages">
+                                            <a onclick="location.href='/approval/receptionList'" class="list-group-item" style="cursor:pointer;">수신
+                                                결재함</a>
+                                            <a onclick="location.href='/approval/sendList'" class="list-group-item active" style="cursor:pointer;">발송 결재함</a>
+                                            <a onclick="location.href='/approval/tempList'" class="list-group-item">임시 저장함</a>
+                                        </div>
+                                        <!-- sidebar menu  end-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-right">
+                        <div class="card">
+                            <!-- 서브메뉴 옆 내용 작성 -->
+                            <div class="card-body">
+                                <!-- <div class="align-items-center">
+                                    <h5>제목</h5>
+                                    <input class="form-control" id="app-title" type="text" value="결재문서" aria-label="Disabled input example" disabled readonly>
+                                </div> -->
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">제목</span>
+                                    <input th:value="${ approvalDTO.title }" type="text" class="form-control" id="app-title1" readonly>
+                                    <span class="input-group-text" id="basic-addon1">상신자</span>
+                                    <input th:value="${ approvalDTO.sender.name }" type="text" class="form-control" id="app-title" readonly>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">첨부 파일</span>
+                                    <input type="text" class="form-control" id="app-title1" value="업무협조전.pdf" readonly>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">내용</span>
+                                    <!-- <input th:utext="${ approvalDTO.content }" type="text" class="form-control" id="app-content" readonly> -->
+                                    <div th:utext="${ approvalDTO.content }" class="com-detail-content">
+                                    내용
+                                	</div>
+                                    <!-- <input th:value="${#strings.unescapeJava(approvalDTO.content)}" type="text" class="form-control" id="app-content"/> -->
+                                </div>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="card" id="app-date">
+                                                <h6 class="card-subtitle mb-2 text-muted">상신일</h6>
+                                                <p th:text="${#dates.format(approvalDTO.createdDate, 'yyyy-MM-dd')}" class="card-text"></p>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="card" id="app-date">
+                                                <h6 class="card-subtitle mb-2 text-muted">마감일</h6>
+                                                <p th:text="${#dates.format(approvalDTO.dueDate, 'yyyy-MM-dd')}" class="card-text"></p>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="card" id="app-date">
+                                                <h6 class="card-subtitle mb-2 text-muted">진행 상태</h6>
+                                                <p th:text="${ approvalDTO.status }" class="card-text"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h6 class="card-subtitle mb-2 text-muted">결재자</h6>
+                                            <div class="card" id="app-date">
+                                                <div class="row">
+                                                <div th:each="receiver : ${ receiver }">
+                                                	<span th:text="${ receiver.receiver.name }" class="col"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                		<span th:if="${ accept != null }">
+                                                			<span th:text="${ accept.status }"></span>
+                                                			<span th:text="${ #dates.format(accept.date, 'yyyy-MM-dd')}"></span>
+                                                		</span>
+                                                </div>
+                                                    <div class="col">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <h6 class="card-subtitle mb-2 text-muted">참조자</h6>
+                                               <div th:each="ref : ${ ref }">
+                                                	<div th:text="${ ref.ref.name }" class="col"></div>
+                                               </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                                <!-- 회수일 때 수정/삭제 버튼 나오게 -->
+                           <span th:if="${ approvalDTO.status.equals('회수') }">
+                            <div class="row">
+                                 <div class="d-grid col-1 mx-auto">
+                                </div>
+                                <div class="d-grid col-2 mx-auto">
+                                    <a th:href="@{'/approval/modify/no/' + ${ approvalDTO.no }}" class="btn btn-primary">수정</a>
+                                </div>
+                                <div class="d-grid col-2 mx-auto">
+                                    <button type="submit" class="btn btn-primary" th:onclick="|javascript:deleteApp('${approvalDTO.no}')|">삭제</button>
+                                </div>
+                                 <div class="d-grid col-1 mx-auto">
+                            	</div>
+                            </div>
+                           </span>
+                             
+                                <!-- 대기일 때 회수 버튼 나오게 -->
+                           <span th:if="${ approvalDTO.status.equals('대기') }">
+                            <div class="row">
+                                <div class="d-grid col-2 mx-auto">
+                                    <button type="submit" class="btn btn-primary" th:onclick="|javascript:ret('${approvalDTO.no}')|">회수</button>
+                                </div>
+                            </div>
+                           </span>
+
+
+                            <!-- 서브메뉴 옆 내용 끝 -->
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <footer>
+                <div class="footer clearfix mb-0 text-muted">
+                    <div class="float-start">
+                        <p>2022 &copy; WorkHub</p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    
+    <script th:inline="javascript">
+    	function ret(approvalNo) {
+    		console.log(approvalNo);
+    		$.ajax({
+    			url: "/approval/retrieve",
+    			type: "post",
+    			data: {approvalNo: approvalNo},
+    			success: function(data) {
+    				//console.log("성공");
+    				location.href = "/approval/sendList";
+    			}
+    			
+    		});
+    	}
+    	
+    	function deleteApp(approvalNo) {
+    		console.log("삭제 문서 : " + approvalNo);
+    		$.ajax({
+    			url: "/approval/delete",
+    			type: "post",
+    			data: {approvalNo: approvalNo},
+    			success: function(data) {
+    				//console.log("삭제 완료");
+    				location.href = "/approval/sendList";
+    			}
+    		});
+    	}
+    	
+    </script>
+    
+    <script src="/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <!-- <script src="/assets/js/bootstrap.bundle.min.js"></script> -->
+
+    <script src="/assets/js/main.js"></script>
+</body>
+
+</html>

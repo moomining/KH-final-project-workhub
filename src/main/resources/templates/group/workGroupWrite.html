@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>workGroupWrite</title>
+    <!-- fonts -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="/assets/vendors/iconly/bold.css">
+    <link rel="stylesheet" href="/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="shortcut icon" href="/assets/images/favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="/assets/css/adminyj.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>    
+	<link rel="shortcut icon" th:href="@{/assets/images/images/favicon-workHub.ico}" type="image/x-icon">
+</head>
+<body>
+	
+		<div th:include="sidebar/sidebar-admin" th:remove="tag"></div>
+         
+		
+        <!--근무 그룹 작성 시작-->
+        <form class="eeee kjhg" action="/group/workGroupWrite" method="post">
+            <h3 class="vfews">근무그룹 등록</h3>
+            <h6 class="fsdf">그룹명</h6>
+            <input type="text" name="groupName">
+            <br><br>
+            <h6 class="fsdf">그룹설명</h6>
+            <textarea cols="80" rows="50" class="fdds" name="groupEx"></textarea><br><br>
+            <h6 class="fsdf">근무요일</h6>
+    <input type="checkbox" name="groupDay" value="월" checked>월&nbsp;&nbsp;&nbsp;
+    <input type="checkbox" name="groupDay" value="화">화&nbsp;&nbsp;&nbsp;
+    <input type="checkbox" name="groupDay" value="수">수&nbsp;&nbsp;&nbsp;
+    <input type="checkbox" name="groupDay" value="목">목&nbsp;&nbsp;&nbsp;
+    <input type="checkbox" name="groupDay" value="금">금&nbsp;&nbsp;&nbsp;
+    <input type="checkbox" name="groupDay" value="토">토
+    <br><br>
+    <h6 class="fsdf">업무시작</h6>
+    <input type="time" name="groupFirdate"> 
+    <br><br>
+    <h6 class="fsdf">업무끝</h6>
+    <input type="time" name="groupEnddate">  
+    <br><br>
+    <h6 class="fsdf">휴게시간 시작</h6>
+    <input type="time" name="groupFirrest"> 
+    <br><br>
+    <h6 class="fsdf">휴게시간 끝</h6>
+    <input type="time" name="groupEndrest">
+    <br><br>
+    <h6 class="fsdf">휴가일수</h6>
+    <input type="text" name="groupRest">   
+    
+    
+
+            <h6 class="fsdf dsfs">사용여부</h6>
+        
+        <div class="card-body">
+            <div class="form-check ssswwe">
+                <input class="form-check-input" type="radio" name="groupUse" value="사용"
+                    id="flexRadioDefault7">
+                <h6 class="fsdf pohg">
+                   사용
+                </h6>
+            </div>
+            <div class="form-check ssswwe">
+                <input class="form-check-input" type="radio" name="groupUse" value="미사용"
+                    id="flexRadioDefault8" checked>
+                <h6 class="fsdf pohg">
+                    미사용
+                </h6>
+            </div>
+        </div>
+   
+    <div class="dfdssd">
+    <input type="submit" class="btn btn-success rounded-pill " id="btnChk" value="저장"></button>
+    <a href="#" class="btn btn-light rounded-pill">삭제</a>
+    <a onclick="location.href='/group/list'" class="btn btn-light rounded-pill">취소</a>
+    </div>
+    </form>
+        
+        <!--근무 그룹 작성 끝-->
+    
+    
+    
+    <!-- groupDay 여러값 묶어서 전달 -->
+    <script>
+    $('#btnChk').click(function() {
+
+    	var gSize = "";
+
+    	$("input[name=groupDay]:checked").each(function() {
+
+    	if(gSize == ""){
+
+    	gSize = $(this).val();
+
+    	} else {
+
+    	gSize = gSize + "," + $(this).val();
+
+    	}
+
+    	});
+
+    	$('#gSize').val(gSize);
+
+    	});
+
+    </script>
+    <script src="assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+
+    <script src="assets/vendors/apexcharts/apexcharts.js"></script>
+    <script src="assets/js/pages/dashboard.js"></script>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

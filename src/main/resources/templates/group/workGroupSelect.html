@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>workGroupSelect</title>
+    <!-- fonts -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="/assets/vendors/iconly/bold.css">
+    <link rel="stylesheet" href="/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="shortcut icon" href="/assets/images/favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="/assets/css/adminyj.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>    
+	<link rel="shortcut icon" th:href="@{/assets/images/images/favicon-workHub.ico}" type="image/x-icon">
+<script>
+	const successMessage = '[[${successMessage}]]';
+	
+	if(successMessage) {
+		alert(successMessage);
+	}
+</script>
+</head>
+<body>
+   		
+   		<div th:include="sidebar/sidebar-admin" th:remove="tag"></div>
+        
+      
+        <!--모든 근무 그룹 시작-->
+        <h3 class="fdawr ddsgcs">근무그룹</h3>
+        <section class="yujikm">
+            <div class="card">
+                <input type="button" value="신규 추가" class="gttt sdcsdzs" onclick="location.href='/group/workGroupWrite'">
+                <div class="card-body">
+                    <table class="table table-striped" id="table1">
+                        <thead>
+                            <tr>
+                            	<th class="erre">No.</th>
+                                <th class="erre">작성일</th> 
+                                <th class="sds">그룹명</th>
+                                <th class="deaf">그룹설명</th>
+                                <th class="deaf">근무요일</th>
+                                <th class="deaf">근무 시작</th>
+                                <th class="deaf">근무 끝</th>
+                                <th class="deaf">쉬는시간 시작</th>
+                                <th class="deaf">쉬는시간 끝</th>
+                                <th class="deaf">연차일수</th>
+                                <th class="dfadsf">작성자</th>
+                                <th class="dfadsf">사용여부</th>
+                                <th class="dfadsf">수정</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="group : ${ workGroupList }">
+                                <td th:text="${ group.groupNo }"></td> <!-- 근무그룹번호 -->
+                                <td th:text="${ group.groupDate }"></td> <!-- 작성일 -->
+                                <td th:text="${ group.groupName }"></td> <!-- 그룹명 -->
+                                <td th:text="${ group.groupEx }"></td> <!-- 그룹설명 -->
+                                <td th:text="${ group.groupDay }"></td> <!-- 그룹요일 -->
+                                <td th:text="${ group.groupFirdate }"></td> <!-- 근무시작 -->
+                                <td th:text="${ group.groupEnddate }"></td> <!-- 근무 끝 -->
+                                <td th:text="${ group.groupFirrest }"></td> <!-- 쉬는시간시작 -->
+                                <td th:text="${ group.groupEndrest }"></td> <!-- 쉬는시간 끝 -->
+                                <td th:text="${ group.groupRest }"></td> <!-- 연차일수-->
+                                <td th:text="${ group.name }"></td> <!-- 작성자-->
+                                <td>
+                                    <span th:text="${ group.groupUse }" class="badge bg-success">설정</span> <!-- 상태 -->
+                                </td>
+                                <td>
+                                    <span class="badge bg-success" style="cursor:pointer;" th:onclick="|javascript:workGroupModify('${ group.groupNo }')|">수정</span> <!-- 상태 -->
+                                </td>
+                            </tr>                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+        <!--모든 근무 그룹 끝-->
+    
+    <!-- 수정하기 버튼을 눌렀을 때 게시글 번호 넘기는 것 -->
+    <script type="text/javascript">
+    function workGroupModify(groupNo) { 
+    	// 근무그룹  번호 확인용
+    	//alert(groupNo); 
+    	var groupNo = groupNo; 
+        location.href='/group/workGroupModify?groupNo='+groupNo; }
+    </script>   
+    
+    
+    <script src="assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+
+    <script src="assets/vendors/apexcharts/apexcharts.js"></script>
+    <script src="assets/js/pages/dashboard.js"></script>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

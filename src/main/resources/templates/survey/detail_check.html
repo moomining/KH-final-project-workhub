@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WorkHub | 설문 상세조회</title>
+
+    <!-- fonts -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="/assets/css/bootstrap2.css">
+
+    <link rel="stylesheet" href="/assets/vendors/iconly/bold.css">
+
+    <link rel="stylesheet" href="/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/assets/css/app2.css">
+    <link rel="stylesheet" href="/assets/css/com-surv.css">
+    <link rel="shortcut icon" th:href="@{/assets/images/images/favicon-workHub.ico}" type="image/x-icon">
+
+</head>
+
+
+<body>
+    <div id="app">
+        <div th:include="sidebar/sidebar-surv" th:remove="tag"/>
+        <div id="main">
+            <header class="mb-3">
+                <a href="#" class="burger-btn d-block d-xl-none">
+                    <i class="bi bi-justify fs-3"></i>
+                </a>
+            </header>
+
+            <div class="page-heading">
+                <div class="page-title">
+                    <div class="row">
+                        <div class="col-12 col-md-6 order-md-1 order-last">
+                            <h3>설문</h3><br>
+                        </div>
+                        <div class="col-12 col-md-6 order-md-2 order-first">
+                            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="#">설문</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">진행 중인 설문</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <section class="section">
+                    <div class="card">
+                        <div class="card-header">
+                            <a href="#" class="btn btn-outline-primary">수정하기</a>
+                            <a href="#" class="btn btn-outline-primary">삭제하기</a>
+                            <a th:href="@{/survey/list_ing}" class="btn btn-outline-primary" id="btn-list">목록보기</a>
+                        </div>
+                        <hr><br>
+                        <div class="card-body">
+                            <div class="surv-detail-title">
+                                <h4>오늘의 점심 메뉴는?</h4>
+                            </div>
+                            <div class="surv-detail-writer">
+                                <div class="surv-info">
+                                    <p>작성자: </p>
+                                    <img src="/assets/images/post-surv/grey.png" alt="profile" class="profile-photo-surv">
+                                    <span>김허브 파트너</span>
+                                </div>
+                                <div class="surv-info">
+                                    <p>작성일: </p>
+                                    <span>2022/05/24</span>
+                                </div>
+                                <div class="surv-info">
+                                    <p>설문 기간: </p>
+                                    <span>2022/05/24~2022/05/26</span>
+                                </div>
+                            </div>
+                            <div class="surv-detail-body">
+                                <div class="surv-detail-content" name="surv-question">
+                                    <div class="surv-content-que">
+                                        <h6>먹고싶은 메뉴에 투표해주세요.</h6>
+                                        <div class="surv-result">
+                                            <div class="surv-result-ctn">
+                                                <p>전체 참여자: 10명</p>
+                                                <p>참여 인원: 4명</p>
+                                            </div>
+                                            <div id="chart-visitors-profile"></div>
+                                        </div>
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+<!--     <script>
+         date = new Date();
+         year = date.getFullYear();
+         month = date.getMonth() + 1;
+         day = date.getDate();
+
+ 	    hour = date.getHours(); 
+ 	    hour = ( hour > 9 ) ? hour : "0" + hour; 
+ 	    minute = date.getMinutes(); 
+ 	    minute = ( minute > 9 ) ? minute : "0" + minute; 
+
+         document.getElementById("current-time").innerHTML =  "&nbsp&nbsp" + year + "/" + month + "/" + day + 
+         "&nbsp&nbsp" + hour + ":" + minute;
+         document.getElementById("current-time2").innerHTML =  "&nbsp&nbsp" + year + "/" + month + "/" + day + 
+         "&nbsp&nbsp" + hour + ":" + minute;
+    </script> -->
+    <script src="/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="/assets/js/bootstrap.bundle.min2.js"></script>
+
+    <script src="/assets/vendors/apexcharts/apexcharts.js"></script>
+    <script src="/assets/js/pages/dashboard2.js"></script>
+
+    <script src="/assets/js/main.js"></script>
+</body>
+
+</html>

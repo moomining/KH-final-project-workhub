@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>workWrite</title>
+    <!-- fonts -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="/assets/vendors/iconly/bold.css">
+    <link rel="stylesheet" href="/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="shortcut icon" href="/assets/images/favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="/assets/css/adminyj.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>    
+	<link rel="shortcut icon" th:href="@{/assets/images/images/favicon-workHub.ico}" type="image/x-icon">
+</head>
+<body>
+        
+         <div th:include="sidebar/sidebar-admin" th:remove="tag"></div> 
+
+        <!--근무 유형 작성 시작-->
+        
+        <form class="wwfw kjhg" action="/work/workModifyGo" method="post" th:each="workMos: ${workMo}">
+            <h4 style="color: black;" class="sdssssc">근무 유형 등록</h4>
+            <h6 class="fsdf">항목</h6>
+            <input type="text" name="workName" th:value="${workMos.workName}">
+            
+            <!-- 수정할때 이게 제일 중요함! get일때는 onClick으로 게시글 번호 넘기고 post일때는 input hidden으로 넘기기 -->
+            
+            <input type="hidden" th:value="${workMos.workNo}" name="workNo">
+            <br><br>
+           	
+                        <div class="card">
+                            <div class="card-header">
+                                <h6 class="fsdf dxfgfds">근무시간</h6>
+                            </div>
+                            <div class="card-body dgyterdert">
+                                <div class="form-check ssswwe">
+                                <!-- radio는 예전 값 checked 할때 th:checked로 하고 문자열 비교는 strings.equals로 한다. 타임리프에서 
+                                문자열을 =로 비교하면 인식이 잘 안되는 경우가 많기 때문이다. -->
+                                    <input class="form-check-input" type="radio" name="workInclude"
+                                        id="flexRadioDefault12" value="포함" th:checked="${#strings.equals(workMos.workInclude, '포함')}">
+                                        <h6 class="fsdf dfgdd">포함</h6>
+                                </div>
+                                <div class="form-check ssswwe">
+                                    <input class="form-check-input" type="radio" name="workInclude"
+                                        id="flexRadioDefault32" value="포함안함" th:checked="${#strings.equals(workMos.workInclude, '포함안함')}">
+                                        <h6 class="fsdf dfgdd">포함안함</h6>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card gggjj">
+                            <div class="card-header">
+                                <h6 class="fsdf dxfgfds">사용여부</h6>
+                            </div>
+                            <div class="card-body dgyterdert">
+                                <div class="form-check ssswwe">
+                                    <input class="form-check-input" type="radio" name="workUse"
+                                        id="flexRadioDefault1" value="사용" th:checked="${#strings.equals(workMos.workUse, '사용')}">
+                                        <h6 class="fsdf dfgdd">사용</h6>
+                                </div>
+                                <div class="form-check ssswwe">
+                                    <input class="form-check-input" type="radio" name="workUse"
+                                        id="flexRadioDefault2" value="미사용" th:checked="${#strings.equals(workMos.workUse, '미사용')}">
+                                        <h6 class="fsdf dfgdd">미사용</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sdasdsss pdpdpf">   
+    <input type="submit" class="btn btn-success rounded-pill" value="저장"></button>
+    <a th:onclick="|javascript:workDelete('${ workMos.workNo }')|" class="btn btn-light rounded-pill">삭제</a>
+    <a onclick="location.href='/work/list'" class="btn btn-light rounded-pill">취소</a></div>
+    </form>
+        
+        <!--근무 유형 작성 끝-->
+   
+   <!-- 삭제 버튼 -->
+    <script type="text/javascript">
+    function workDelete(workNo) { 
+    	// 근무그룹  번호 확인용
+    	
+    	var workNo = workNo; 
+        location.href='/work/workDelete?workNo='+workNo; }
+    </script> 
+   
+    
+    <script src="assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+
+    <script src="assets/vendors/apexcharts/apexcharts.js"></script>
+    <script src="assets/js/pages/dashboard.js"></script>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

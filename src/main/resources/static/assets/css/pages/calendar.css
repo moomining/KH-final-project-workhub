@@ -1,0 +1,609 @@
+.media {
+    display: flex;
+    align-items: center
+}
+
+.media .media-body {
+    padding-left: 1rem;
+    flex: 1
+}
+
+.calendar-application .content-area-wrapper {
+    border: 1px solid #dfe3e7;
+    border-radius: .267rem;
+    height: calc(100% - 5rem);
+    display: flex;
+    position: relative
+}
+
+.calendar-application .content-area-wrapper .app-content-overlay {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    z-index: 7;
+    visibility: hidden;
+    opacity: 0;
+    border-radius: .267rem
+}
+
+.calendar-application .content-area-wrapper .app-content-overlay.show {
+    visibility: visible;
+    transition: all .3s ease;
+    opacity: 1;
+    background-color: rgba(0, 0, 0, .2)
+}
+
+.calendar-application .content-area-wrapper .sidebar {
+    position: inherit
+}
+
+.calendar-application .content-area-wrapper .sidebar .calendar-app-sidebar {
+    width: 160px;
+    height: calc(100vh - 9rem);
+    border-right: 1px solid #dfe3e7;
+    border-top-left-radius: .267rem;
+    border-bottom-left-radius: .267rem;
+    transition: all .3s ease
+}
+
+.calendar-application .content-area-wrapper .sidebar .calendar-app-sidebar .sidebar-close-icon {
+    position: absolute;
+    right: .25rem;
+    top: .25rem;
+    cursor: pointer;
+    font-size: 1.25rem;
+    z-index: 5;
+    visibility: hidden
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-action .action-right .calendar-fixed-search .sidebar-toggle i,
+.calendar-application .content-area-wrapper .sidebar .compose-new-mail-sidebar .close-icon i {
+    font-size: 1.75rem
+}
+
+.calendar-application .content-area-wrapper .sidebar .calendar-app-sidebar .calendar-app-menu {
+    width: 100%;
+    z-index: 3;
+    background-color: #fff
+}
+
+.calendar-application .content-area-wrapper .sidebar .calendar-app-sidebar .calendar-app-menu .form-group-compose {
+    padding: 1px 1.5rem;
+    margin-bottom: .8rem
+}
+
+.calendar-application .content-area-wrapper .sidebar .calendar-app-sidebar .calendar-app-menu .form-group-compose .compose-btn {
+    box-shadow: 0 2px 4px 0 rgba(90, 141, 238, .6);
+    font-weight: 500
+}
+
+.calendar-application .content-area-wrapper .sidebar .calendar-app-sidebar .calendar-app-menu .sidebar-menu-list {
+    padding: 0;
+    position: relative;
+    height: calc(100% - 6.4rem)
+}
+
+.calendar-application .content-area-wrapper .sidebar .calendar-app-sidebar .calendar-app-menu .sidebar-menu-list a:hover {
+    color: #596f88
+}
+
+.calendar-application .content-area-wrapper .sidebar .calendar-app-sidebar .calendar-app-menu .list-group .list-group-item {
+    padding: .6rem 0;
+    font-weight: 500;
+    background-color: transparent;
+    border: none
+}
+
+.calendar-application .content-area-wrapper .sidebar .calendar-app-sidebar .calendar-app-menu .list-group .list-group-item.active {
+    color: #5a8dee
+}
+
+.calendar-application .content-area-wrapper .sidebar .calendar-app-sidebar .calendar-app-menu .list-group .list-group-item.active:before {
+    content: "";
+    width: 2px;
+    height: 30px;
+    background-color: #5a8dee;
+    position: absolute;
+    left: -26px
+}
+
+.calendar-application .content-area-wrapper .sidebar .compose-new-mail-sidebar {
+    height: calc(100vh - 9rem);
+    width: 400px;
+    border-radius: 0 .267rem .267rem 0;
+    background-color: #fff;
+    position: absolute;
+    transform: translateX(130%);
+    transition: all .3s ease;
+    z-index: 8;
+    right: 2.15rem;
+    bottom: 1px
+}
+
+.calendar-application .content-area-wrapper .sidebar .compose-new-mail-sidebar.show {
+    transform: translateX(8%) translateY(1px)
+}
+
+.calendar-application .content-area-wrapper .sidebar .compose-new-mail-sidebar .card-footer .btn-send {
+    box-shadow: 0 2px 4px 0 rgba(90, 141, 238, .6)
+}
+
+.calendar-application .content-area-wrapper .sidebar .compose-new-mail-sidebar .close-icon {
+    position: absolute;
+    top: 18px;
+    right: 15px;
+    outline: 0
+}
+
+.calendar-application .content-area-wrapper .content-right {
+    width: 100%;
+    background-color: #fff
+}
+
+.calendar-application .content-area-wrapper .content-right .content-wrapper {
+    padding: 0
+}
+
+.calendar-application .content-area-wrapper .content-right .selected-row-bg {
+    background-color: #e7edf3 !important
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .checkbox,
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .checkbox label {
+    cursor: pointer
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-action {
+    padding: 1rem 1.5rem;
+    display: flex;
+    border-bottom: 1px solid #dfe3e7
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-action .action-right .calendar-fixed-search {
+    margin: 0 .86rem
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-action .action-right .calendar-fixed-search .sidebar-toggle {
+    cursor: pointer;
+    margin: .5rem .99rem .5rem 0;
+    float: left;
+    line-height: 1.1
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-action .action-right .calendar-fixed-search input {
+    border-color: #dfe3e7;
+    font-family: IBM Plex Sans, Helvetica, Arial, serif
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-action .action-right .calendar-fixed-search input::-moz-placeholder {
+    font-size: 1rem;
+    font-family: IBM Plex Sans, Helvetica, Arial, serif
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-action .action-right .calendar-fixed-search input:-ms-input-placeholder {
+    font-size: 1rem;
+    font-family: IBM Plex Sans, Helvetica, Arial, serif
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-action .action-right .calendar-fixed-search input::placeholder {
+    font-size: 1rem;
+    font-family: IBM Plex Sans, Helvetica, Arial, serif
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-action .action-right .calendar-fixed-search .form-control-position {
+    top: 3px
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-details .calendar-detail-header i,
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-action .action-left ul li i {
+    top: 0
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-action .action-right .calendar-pagination-next,
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-action .action-right .calendar-pagination-prev {
+    padding: .35rem .5rem;
+    border: 1px solid #dfe3e7;
+    margin-left: .6rem
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-action .action-left ul li .dropdown-toggle:after {
+    display: none
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-action .action-left ul li .dropdown-menu .dropdown-item .bullet,
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-action .action-left ul li .dropdown-menu .dropdown-item i {
+    margin-right: .5rem
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-action .action-left .list-inline-item:not(:last-child) {
+    margin-right: .86rem
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-user-list {
+    position: relative;
+    height: calc(100vh - 13.65rem)
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-user-list .ps__rail-y {
+    z-index: 6
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-user-list .users-list-wrapper {
+    padding: 0;
+    margin: 0
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-user-list .users-list-wrapper li {
+    cursor: pointer;
+    -webkit-animation: fadeIn .5s linear;
+    animation: fadeIn .5s linear;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    position: relative
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-user-list .users-list-wrapper li.media {
+    padding: 1rem 1.5rem;
+    align-items: center;
+    z-index: 1;
+    background-color: #fff
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-user-list .users-list-wrapper li.media:hover {
+    transform: translateY(1px);
+    box-shadow: 0 0 10px 0 rgba(58, 70, 93, .25);
+    transition: all .2s;
+    z-index: 5
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-user-list .users-list-wrapper li.media .media-body {
+    overflow: hidden
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-user-list .users-list-wrapper li .avatar,
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-user-list .users-list-wrapper li .avatar img {
+    height: 38px;
+    width: 38px
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-user-list .users-list-wrapper li .avatar img {
+    border: 2px solid #fff
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-user-list .users-list-wrapper li.mail-read {
+    background-color: #f2f4f4
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-user-list .users-list-wrapper li.mail-read .list-group-item-text {
+    font-weight: 400 !important
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-user-list .users-list-wrapper li:not(:first-child) {
+    border-top: 1px solid #dfe3e7
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-user-list .users-list-wrapper li .user-details {
+    display: flex;
+    justify-content: space-between
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-user-list .users-list-wrapper li .user-details .list-group-item-text {
+    font-size: 1rem;
+    font-weight: 500
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-user-list .users-list-wrapper li .mail-date {
+    color: #828d99;
+    font-size: .86rem
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-user-list .users-list-wrapper li .mail-message {
+    display: flex;
+    justify-content: space-between
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-user-list .users-list-wrapper li .mail-message p {
+    font-size: .8rem;
+    color: #828d99;
+    margin-right: 1rem;
+    line-height: 1.75
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-details .calendar-detail-header .dropdown-menu .dropdown-item .bullet,
+.calendar-application .content-area-wrapper .content-right .calendar-app-details .calendar-detail-header .dropdown-menu .dropdown-item i,
+.calendar-application .content-area-wrapper .content-right .calendar-app-details .calendar-scroll-area .calendar-detail-head .collapse-header .card-header .information .dropdown-menu .dropdown-item {
+    margin-right: .5rem
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-user-list .users-list-wrapper .user-action {
+    display: flex;
+    align-items: center
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-user-list .users-list-wrapper .user-action .favorite {
+    margin-right: .5rem;
+    color: #c7cfd6
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-user-list .users-list-wrapper .user-action .favorite i {
+    font-size: 1.3rem;
+    line-height: 1.5
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-user-list .no-results {
+    display: none;
+    padding: 1.5rem;
+    text-align: center
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-user-list .no-results.show {
+    display: block
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-details {
+    position: absolute;
+    display: block;
+    z-index: 6;
+    visibility: hidden;
+    opacity: 0;
+    top: 0;
+    width: calc(100% - 260px);
+    transform: translateX(100%);
+    transition: all .3s ease;
+    height: 100%;
+    background-color: #f2f4f4
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-details.show {
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(0);
+    border-left: 1px solid #dfe3e7;
+    overflow: hidden
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-details .calendar-detail-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    border-bottom: 1px solid #dfe3e7;
+    padding: .85rem 1rem 0;
+    background-color: #fff
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-details .calendar-header-right .dropdown-toggle:after,
+.calendar-application .content-area-wrapper .content-right .calendar-app-details .calendar-scroll-area .calendar-detail-head .collapse-header .card-header .information .dropdown-toggle:after {
+    display: none
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-details .calendar-detail-header .go-back {
+    cursor: pointer
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-details .calendar-detail-header .calendar-pagination-next i,
+.calendar-application .content-area-wrapper .content-right .calendar-app-details .calendar-detail-header .calendar-pagination-prev i {
+    top: 2px
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-details .calendar-detail-header .calendar-detail-title {
+    color: #475f7b;
+    font-size: 1.2rem;
+    position: relative;
+    top: 2px
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-details .calendar-scroll-area {
+    padding: 0 1rem;
+    position: relative;
+    height: calc(100vh - 13.5rem)
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-details .calendar-scroll-area .calendar-detail-head {
+    padding: 1.5rem .5rem .75rem
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-details .calendar-scroll-area .calendar-detail-head .collapse-header {
+    margin-bottom: 1.2rem;
+    background-color: transparent
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-details .calendar-scroll-area .calendar-detail-head .collapse-header.open {
+    background-color: #fff !important;
+    box-shadow: -8px 12px 18px 0 rgba(25, 42, 70, .13) !important
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-details .calendar-scroll-area .calendar-detail-head .collapse-header .card-header {
+    font-size: 1rem;
+    border-color: #dfe3e7
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-details .calendar-scroll-area .calendar-detail-head .collapse-header .card-header .information .dropdown-toggle {
+    color: #727e8c
+}
+
+.calendar-application .content-area-wrapper .content-right .calendar-app-details .calendar-scroll-area .calendar-detail-head .collapse-header .card-header .information .dropdown-menu {
+    transform: translate3d(-144px, 19px, 0) !important
+}
+
+.calendar-application .content-area-wrapper .sidebar-label {
+    font-family: Rubik, Helvetica, Arial, serif;
+    letter-spacing: 1px;
+    color: #828d99;
+    margin: 1.8rem 0 .5rem
+}
+
+.calendar-application .content-area-wrapper .attchement-text {
+    font-family: IBM Plex Sans, Helvetica, Arial, serif
+}
+
+.calendar-application .content-area-wrapper .action-icon {
+    padding: .35rem .5rem;
+    border: 1px solid #dfe3e7
+}
+
+.calendar-application .content-area-wrapper .quill-wrapper {
+    padding: 1.3rem 1.7rem
+}
+
+.calendar-application .content-area-wrapper .quill-wrapper .snow-container {
+    position: relative
+}
+
+.calendar-application .content-area-wrapper .quill-wrapper .snow-container .ql-snow .ql-tooltip {
+    left: 0 !important
+}
+
+.calendar-application .content-area-wrapper .quill-wrapper .snow-container .ql-container.ql-snow,
+.calendar-application .content-area-wrapper .quill-wrapper .snow-container .ql-toolbar {
+    border: none
+}
+
+.calendar-application .content-area-wrapper .quill-wrapper .snow-container .send-btn {
+    box-shadow: 0 2px 4px 0 rgba(90, 141, 238, .6);
+    font-weight: 500;
+    padding: .2rem 1rem
+}
+
+.calendar-application .content-area-wrapper .quill-wrapper .ql-editor.ql-blank:before {
+    left: 0
+}
+
+.calendar-application .content-area-wrapper .quill-wrapper .ql-editor {
+    min-height: 80px;
+    padding-left: 0;
+    padding-right: 0
+}
+
+@media screen and (max-width:1280px) {
+    .content-right .calendar-app-list-wrapper .calendar-app-list .calendar-user-list {
+        height: calc(100vh - 13.9rem)
+    }
+}
+
+@media (max-width:991.98px) {
+    .calendar-application .app-content .content-area-wrapper .calendar-user-list {
+        height: calc(100vh - 17.4rem) !important
+    }
+
+    .calendar-application .app-content .content-area-wrapper .sidebar-left .calendar-app-sidebar {
+        background-color: #fafbfb;
+        height: calc(100vh - 8.98rem);
+        transform: translateX(-110%);
+        transition: transform .25s;
+        position: absolute;
+        z-index: 8;
+        left: -34px;
+        top: 1px
+    }
+
+    .calendar-application .app-content .content-area-wrapper .sidebar-left .calendar-app-sidebar .sidebar-close-icon {
+        visibility: visible
+    }
+
+    .calendar-application .app-content .content-area-wrapper .sidebar-left.show .calendar-app-sidebar {
+        transform: translateX(13%) translateY(-1px)
+    }
+
+    .calendar-application .app-content .content-area-wrapper .sidebar-left .compose-new-mail-sidebar.show {
+        transform: translateX(10.5%) translateY(1px)
+    }
+
+    .calendar-application .app-content .content-area-wrapper .content-right {
+        width: 100%
+    }
+
+    .calendar-application .app-content .content-area-wrapper .content-right .calendar-action {
+        flex-direction: column-reverse
+    }
+
+    .calendar-application .app-content .content-area-wrapper .content-right .calendar-action .action-right {
+        margin-bottom: 1rem
+    }
+
+    .calendar-application .app-content .content-area-wrapper .content-right .calendar-action .action-right .calendar-fixed-search {
+        margin-left: 0 !important
+    }
+
+    .calendar-application .app-content .content-area-wrapper .content-right .calendar-action .action-right .calendar-fixed-search .sidebar-toggle {
+        margin-left: 0
+    }
+
+    .calendar-application .app-content .content-area-wrapper .content-right .calendar-app-details {
+        width: 100%;
+        border-radius: .267rem
+    }
+}
+
+@media (max-width:767.98px) {
+    .sidebar .compose-new-mail-sidebar {
+        width: auto
+    }
+}
+
+@media (max-width:575.98px) {
+    .content-right .calendar-user-list .users-list-wrapper li .user-details .mail-items {
+        width: 70%;
+        display: inline-grid
+    }
+
+    .content-right .calendar-user-list .users-list-wrapper li .user-details .mail-meta-item {
+        position: absolute;
+        right: 1rem
+    }
+
+    .content-right .calendar-user-list .users-list-wrapper li .user-details .mail-meta-item .mail-date {
+        margin: 1rem .75rem 0 0
+    }
+}
+
+@media screen and (max-width:436px) {
+    .calendar-app-details .calendar-header-right {
+        margin-left: 0 !important;
+        padding-left: 0 !important
+    }
+
+    .calendar-app-details .calendar-header-right li {
+        margin-right: 0
+    }
+}
+
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity: 0;
+        top: 100px
+    }
+
+    75% {
+        opacity: .5;
+        top: 0
+    }
+
+    to {
+        opacity: 1
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        top: 100px
+    }
+
+    75% {
+        opacity: .5;
+        top: 0
+    }
+
+    to {
+        opacity: 1
+    }
+}
+
+@media (-ms-high-contrast:active),
+(-ms-high-contrast:none) {
+    .calendar-scroll-area .collapse-header .media .media-body {
+        flex: none
+    }
+}

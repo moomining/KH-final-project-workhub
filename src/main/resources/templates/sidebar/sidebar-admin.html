@@ -1,0 +1,116 @@
+                             <!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- fonts -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+    
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="/assets/css/bootstrap-ar.css">
+
+    <link rel="stylesheet" href="/assets/vendors/iconly/bold.css">
+
+    <link rel="stylesheet" href="/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/assets/css/app-ar.css">
+    <link rel="stylesheet" href="/assets/css/admin-ar.css">
+    <link rel="shortcut icon" href="/assets/images/images/favicon-workHub.ico" type="image/x-icon">
+</head>
+<body>
+	<div id="app">
+        <div id="sidebar" class="active">
+            <div class="sidebar-wrapper active">
+                <div class="sidebar-header">
+                    <div class="d-flex justify-content-between">
+                        <div class="logo">
+                            <a href="index.html"><img src="/assets/images/images/logo-workhub-edit.png" alt="Logo"></a>
+                            
+                        </div>
+                        <div class="toggler">
+                            <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar-menu">
+                    <ul class="menu">
+                        <li class="sidebar-title">Menu</li>
+
+                        <li class="sidebar-item active ">
+                            <a href="index.html" class='sidebar-link'>
+                                <i class="bi bi-grid-fill"></i>
+                                <span>홈</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item  has-sub">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-collection-fill"></i>
+                                <span>사원 관리</span>
+                            </a>
+                            <ul class="submenu ">
+                                <li class="submenu-item ">
+                                    <a onclick="location.href='/admin/member/memberList'" style="cursor:pointer;">사원 목록</a>
+                                </li>
+                                <!-- <li class="submenu-item ">
+                                    <a href="extra-component-sweetalert.html">정보 다운로드</a>
+                                </li> -->
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-item  has-sub">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-grid-1x2-fill"></i>
+                                <span>근태 관리</span>
+                            </a>
+                            <ul class="submenu ">
+                                <li class="submenu-item ">
+                                   <a onclick="location.href='/group/list'" style="cursor:pointer;">근무그룹 등록</a>
+                                </li>
+                                <li class="submenu-item ">
+                                    <a onclick="location.href='/mgroup/memberGroupSelect'" style="cursor:pointer;">사원 근무그룹 등록
+                                    </a>
+                                </li>
+                                <li class="submenu-item ">
+                                    <a onclick="location.href='/work/list'" style="cursor:pointer;">근무 유형 등록</a>
+                                </li>
+                                <li class="submenu-item ">
+                                    <a onclick="location.href='/restcate/list'" style="cursor:pointer;">연차 유형 등록</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-item  has-sub">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-pen-fill"></i>
+                                <span>자산 관리</span>
+                            </a>
+                            <ul class="submenu ">
+                                <li class="submenu-item ">
+                                    <a th:href="@{/asset/room/list}">회의실 관리</a>
+                                </li>
+                                <li class="submenu-item ">
+                                    <a th:href="@{/asset/car/list}">차량 관리</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <br><br><br><br><br><br>
+                        
+                        <li class="sidebar-item logout-array">
+                            <a th:href="@{ / }" class='sidebar-link'>
+                                <img src="/assets/images/images/logout.png" alt="logout">
+                                <span>Logout</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+            </div>
+        </div>
+    </div>
+   	<script src="/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+
+    <script src="/assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Mazer Admin Dashboard</title>
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet"> -->
+    <link rel="stylesheet" as="style" crossorigin
+    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" href="/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="stylesheet" href="/assets/css/pages/auth.css">
+    <link rel="shortcut icon" th:href="@{/assets/images/images/favicon-workHub.ico}" type="image/x-icon">
+</head>
+
+<body>
+    <div id="auth">
+
+        <div class="row h-100">
+            <div class="col-lg-5 col-12">
+                <div id="auth-left">
+                        <div class="logo">
+                            <a href="index.html"><img src="/assets/images/images/logo-workhub-edit.png" alt="Logo"></a>
+                        </div><br><br>
+                    <h5 class="auth-title fs-3">사원 등록</h5>
+                    <!-- <p class="auth-subtitle mb-5">사원을 등록합니다.</p> -->
+
+                    <form th:action="@{/admin/signUp}" method="post">
+                        <div class="form-group position-relative has-icon-left mb-4">
+                            
+                            <input type="text" class="form-control form-control-xl" placeholder="아이디" name="id">
+                            <div class="form-control-icon">
+                                <i class="bi bi-envelope"></i>
+                            </div>
+                        </div>
+                        <div class="form-group position-relative has-icon-left mb-4">
+                            <input type="password" class="form-control form-control-xl" placeholder="비밀번호" name="pwd">
+                            <div class="form-control-icon">
+                                <i class="bi bi-shield-lock"></i>
+                            </div>
+                        </div>
+                        <div class="form-group position-relative has-icon-left mb-4">
+                            <input type="text" class="form-control form-control-xl" placeholder="이름" name="name">
+                            <div class="form-control-icon">
+                                <i class="bi bi-person"></i>
+                            </div>
+                        </div>
+                        <div class="form-group position-relative has-icon-left mb-4">
+                            <input type="text" class="form-control form-control-xl" placeholder="이메일" name="email">
+                            <div class="form-control-icon">
+                                <i class="bi bi-envelope"></i>
+                            </div>
+                        </div>
+                        <div class="form-group position-relative has-icon-left mb-4">
+                            <input type="text" class="form-control form-control-xl" placeholder="'-'를 제외한 숫자만 입력해주세요." name="phone">
+                            <div class="form-control-icon">
+                                <i class="bi bi-phone"></i>
+                            </div>
+                        </div>
+                        <div class="form-group position-relative has-icon-left mb-4">
+                            <select class="form-select form-select-xl" aria-label="Default select example" name="depNo">
+                                <option selected>부서를 선택하세요</option>
+                                <option value="01">인사팀</option>
+                                <option value="02">총무팀</option>
+                                <option value="03">영업팀</option>
+                                <option value="04">마케팅팀</option>
+                                <option value="05">개발팀</option>
+                              </select>
+                        </div>
+                        <div class="form-group position-relative has-icon-left mb-4">
+                            <select class="form-select form-select-xl" aria-label="Default select example" name="positionNo">
+                                <option selected>직급을 선택하세요</option>
+                                <option value="02">전무</option>
+                                <option value="03">상무</option>
+                                <option value="04">파트너</option>
+                                <option value="05">프로</option>
+                                <option value="06">인턴</option>
+                              </select>
+                        </div>
+                        
+                        <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5">사원 등록</button>
+                    </form>
+                    <!-- <div class="text-center mt-5 text-lg fs-4">
+                        <p class='text-gray-600'>Already have an account? <a href="auth-login.html"
+                                class="font-bold">Log
+                                in</a>.</p>
+                    </div> -->
+                </div>
+            </div>
+            <div class="col-lg-7 d-none d-lg-block">
+                <div id="auth-right">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>workGroupSelect</title>
+    <!-- fonts -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+   
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.css">
+
+    <link rel="stylesheet" href="/assets/vendors/iconly/bold.css">
+
+    <link rel="stylesheet" href="/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="shortcut icon" href="/assets/images/favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="/assets/css/report.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>        
+    <link rel="shortcut icon" th:href="@{/assets/images/images/favicon-workHub.ico}" type="image/x-icon">
+   
+</head>
+<body>
+   		
+		<div th:include="sidebar/sidebar" th:remove="tag"/></div>
+        
+        <!-- th:action="@{//}" 나중에 작성-->
+     <form method="post" action="/rest/modify" enctype="multipart/form-data" class="dsad" th:each="paLists: ${paList}">
+    <div class="col-md-6 col-12 dfdda">
+        <div class="card">
+            <div class="card-header">
+                <h1 class="card-title ghfdds">연차 신청서</h1>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <form class="form form-horizontal">
+                        <div class="form-body">
+                            <div class="row">
+                                <input type="hidden" 
+                                          th:value="${paLists.porestNo}" name="porestNo">
+                                <div class="col-md-4">
+                                    <label>기안자</label>
+                                </div>
+                                <div class="col-md-8 form-group">
+                                    <input type="text"  class="form-control rtyh"
+                                          th:value="${paLists.name}" readonly>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="fgd">기안부서</label>
+                                </div>
+                                <div class="col-md-8 form-group">
+                                    <input type="text" class="form-control rtyh"
+                                         th:value="${paLists.depName}" readonly>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="jhgfg">기안일</label>
+                                </div>
+                                <div class="col-md-8 form-group">
+                                    <input type="text" class="form-control rtyh"
+                                          th:value="${paLists.porestDate}" readonly>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="jhgfg">문서번호</label>
+                                </div>
+                                <div class="col-md-8 form-group">
+                                    <input type="text" class="form-control rtyh"
+                                          th:value="${paLists.porestNo}" readonly>
+                                </div>
+                                
+                                <br><br><br><br>
+                                <div class="col-md-4">
+                                    <label>휴가 종류</label>
+                                </div>
+                                <fieldset class="form-group">
+                                    <select class="form-select nhsj" name="restNo">
+                                        <option th:each="re : ${reList}" th:value="${re.restNo}" th:utext="${re.restName}" th:selected="${re.restNo} == ${paLists.restNo}"></option>            
+                                    </select>
+                                </fieldset>
+
+                                <div class="col-md-4 fgsdfsaw">
+                                    <label>기간</label>
+                                </div>
+                                <div class="col-md-8 form-group">
+                                    <input type="date"  class="form-control gbhdf"
+                                        name="porestFir" th:value="${paLists.porestFir}">
+                                </div>
+                                <h4 class="fsddds">~</h4>
+                                <div class="col-md-8 form-group">
+                                    <input type="date"  class="form-control ffsf"
+                                        name="porestEnd" th:value="${paLists.porestEnd}">
+                                </div>
+                                
+                                <div class="col-md-4 dsf">
+                                    <label>선택일수</label>
+                                </div>
+                                <div class="col-md-8 form-group">
+                                    <input type="text"  class="form-control dfssdf"
+                                        name="porestDay"  th:value="${paLists.porestDay}">
+                                </div>
+                                <div class="col-md-4 dsfdfd">
+                                    <label>휴가 사유</label>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group mb-3">
+                                        
+                                        <textarea class="form-control ghfg"  name="porestReason"
+                                            rows="3" th:value="${paLists.porestReason}" th:text="${paLists.porestReason}"></textarea>
+                                    </div>
+                                </div>
+								
+								<div class="col-md-4 dsf">
+                                    <label>사진 업로드</label>
+                                </div>
+                                <div class="col-md-8 form-group">
+                                    <input type="file" id="password" class="form-control dfssdfs"
+                                        name="singleFile" >
+                                </div>
+                                <div class="col-md-4 dsfs">
+                                    <label>이전 파일</label>
+                                </div>
+                                <input type="text" class="form-control rtyhs" th:value="${paLists.imageName}" readonly>
+
+                                <div class="col-sm-12 d-flex justify-content-end ghhg">
+                                    <button type="submit"
+                                        class="btn btn-success rounded-pill">등록</button>
+                                    <a th:onclick="|javascript:restDelete('${ paLists.porestNo }')|" class="btn btn-light rounded-pill">삭제</a>
+                                    <a onclick="location.href='/rest/restSelect'" class="btn btn-light rounded-pill">취소</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   </form>
+         
+             <!-- 삭제 버튼 -->
+    <script type="text/javascript">
+    function restDelete(porestNo) { 
+    	// 근무그룹  번호 확인용
+    	
+    	var porestNo = porestNo; 
+        location.href='/rest/restDelete?porestNo='+porestNo; }
+    </script> 
+   		
+</body>
+</html>

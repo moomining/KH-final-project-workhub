@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.work.workhub.member.reserve.model.dao.MeetingMapper">
+	<resultMap id="roomResultMap"  type="com.work.workhub.admin.reserve.model.dto.MeetingRoomDTO">
+
+        <id property="roomNo" column="ROOM_NO"/>
+        <result property="rmLocation" column="RM_LOCATION"/>
+        <result property="roomName" column="ROOM_NAME"/>
+        <result property="roomYn" column="ROOM_YN"/>
+        <result property="delYn" column="DEL_YN"/>
+        <result property="orgName" column="ORG_NAME"/>
+        <result property="savedName" column="SAVED_NAME"/>
+        <result property="savePath" column="SAVE_PATH"/>
+
+    </resultMap>
+    
+    <resultMap id="meetingResultMap" type="com.work.workhub.member.reserve.model.dto.ResMeetingDTO">
+    	<id property="resNo" column="RES_NO"/>
+    	<result property="memberNo" column="MEMBER_NO"/>
+    	<result property="roomNo" column="ROOM_NO"/>
+    	<result property="startTime" column="START_TIME"/>
+    	<result property="endTime" column="END_TIME"/>
+    	<result property="meetPurpose" column="MEET_PURPOSE"/>
+    	<result property="delYn" column="DEL_YN"/>
+    	
+    	<association property="member" resultMap="loginMemberResultMap"/>
+    	<association property="room" resultMap="roomResultMap"/>
+    </resultMap>
+    
+    <resultMap id="loginMemberResultMap" type="com.work.workhub.member.member.dto.MemberDTO">
+		<id property="no" column="NO"/>
+		<result property="id" column="ID"/>
+		<result property="pwd" column="PWD"/>
+		<result property="depNo" column="DEP_NO"/>
+		<result property="positionNo" column="POSITION_NO"/>
+		<result property="groupNo" column="GROUP_NO"/>
+		<result property="name" column="NAME"/>
+		<result property="email" column="EMAIL"/>
+		<result property="phone" column="PHONE"/>
+		<result property="status" column="STATUS"/>
+		
+		<collection property="memberRoleList" resultMap="memberRoleResultMap"/>
+	</resultMap>
+	
+	<resultMap id="memberRoleResultMap" type="com.work.workhub.member.member.dto.MemberRoleDTO">
+		<id property="memberNo" column="REF_NO"/>
+		<id property="authNo" column="REF_AUTH_NO"/>
+		
+		<association property="authority" resultMap="authorityResultMap"/>
+	</resultMap>
+	
+	<resultMap id="authorityResultMap" type="com.work.workhub.member.member.dto.AuthorityDTO">
+		<id property="authNo" column="REF_AUTH_NO2"/>
+		<result property="authName" column="AUTH_NAME"/>
+	</resultMap>
+	
+	<select id="selectAllLocation" resultMap="roomResultMap">
+		SELECT
+				DISTINCT RM_LOCATION
+		  FROM MT_ROOM
+		 WHERE DEL_YN = 'N'
+	</select>
+	
+	<select id="selectRoomList" resultMap="roomResultMap">
+		SELECT
+				*
+		  FROM MT_ROOM 
+		 WHERE DEL_YN = 'N'
+		   AND ROOM_YN = 'Y'
+		   AND RM_LOCATION = '4층 회의실'
+		 ORDER BY ROOM_NO
+	</select>
+    
+    <select id="selectAllResMeeting" resultMap="meetingResultMap">
+    	SELECT
+    			*
+    	  FROM RES_MT A
+    	  JOIN MT_ROOM B ON (A.ROOM_NO = B.ROOM_NO)
+    	  WHERE A.DEL_YN = 'N'
+    	    AND A.END_TIME >= SYSDATE
+    	  ORDER BY A.START_TIME DESC   	
+    </select>
+
+	<!-- 회의실 예약하기 -->
+    <insert id="reserveRoom">
+    	INSERT INTO RES_MT
+    	VALUES
+    	(
+    		SEQ_MEETING_RES_NO.NEXTVAL,
+    		#{ memberNo },
+    		#{ roomNo },
+    		#{ startTime },
+    		#{ endTime },
+    		#{ meetPurpose },
+    		DEFAULT
+    	)
+    </insert>
+
+	<update id="modifyMeeting">
+		UPDATE RES_MT
+		SET
+			START_TIME = #{ startTime },
+			END_TIME = #{ endTime },
+			MEET_PURPOSE = #{ meetPurpose }
+		WHERE RES_NO = #{ resNo }
+	</update>
+	
+	<update id="updateMeetingStatus">
+		UPDATE RES_MT
+		SET
+		DEL_YN = 'Y'
+		WHERE RES_NO = #{ resNo }
+	</update>
+	
+</mapper>

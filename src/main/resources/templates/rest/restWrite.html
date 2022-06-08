@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>workGroupSelect</title>
+    <!-- fonts -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+   
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.css">
+
+    <link rel="stylesheet" href="/assets/vendors/iconly/bold.css">
+
+    <link rel="stylesheet" href="/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="shortcut icon" href="/assets/images/favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="/assets/css/report.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>        
+    <link rel="shortcut icon" th:href="@{/assets/images/images/favicon-workHub.ico}" type="image/x-icon">
+   
+</head>
+<body>
+   		
+		<div th:include="sidebar/sidebar" th:remove="tag"/></div>
+        
+        <!-- th:action="@{//}" 나중에 작성-->
+     <form method="post" action="/rest/write" enctype="multipart/form-data" class="dsad">
+    <div class="col-md-6 col-12 dfdda">
+        <div class="card">
+            <div class="card-header">
+                <h1 class="card-title ghfdds">연차 신청서</h1>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <form class="form form-horizontal">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>기안자</label>
+                                </div>
+                                <div class="col-md-8 form-group">
+                                    <input type="text" id="first-name" class="form-control rtyh"
+                                         placeholder="기안자" readonly>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="fgd">기안부서</label>
+                                </div>
+                                <div class="col-md-8 form-group">
+                                    <input type="text" id="email-id" class="form-control rtyh"
+                                         placeholder="기안부서" readonly>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="jhgfg">기안일</label>
+                                </div>
+                                <div class="col-md-8 form-group">
+                                    <input type="text" id="contact-info" class="form-control rtyh"
+                                         placeholder="기안일" readonly>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="jhgfg">문서번호</label>
+                                </div>
+                                <div class="col-md-8 form-group">
+                                    <input type="text" id="password" class="form-control rtyh"
+                                         placeholder="문서번호" readonly>
+                                </div>
+                                
+                                <br><br><br><br>
+                                <div class="col-md-4">
+                                    <label>휴가 종류</label>
+                                </div>
+                                <fieldset class="form-group">
+                                    <select class="form-select nhsj" id="basicSelect" name="restNo">
+                                        <option th:each="rc : ${rcList}" th:value="${rc.restNo}" th:utext="${rc.restName}"></option>            
+                                    </select>
+                                </fieldset>
+
+                                <div class="col-md-4 fgsdfsaw">
+                                    <label>기간</label>
+                                </div>
+                                <div class="col-md-8 form-group">
+                                    <input type="date" id="password" class="form-control gbhdf"
+                                        name="porestFir">
+                                </div>
+                                <h4 class="fsddds">~</h4>
+                                <div class="col-md-8 form-group">
+                                    <input type="date" id="password" class="form-control ffsf"
+                                        name="porestEnd">
+                                </div>
+                                
+                                <div class="col-md-4 dsf">
+                                    <label>선택일수</label>
+                                </div>
+                                <div class="col-md-8 form-group">
+                                    <input type="text" id="password" class="form-control dfssdf"
+                                        name="porestDay">
+                                </div>
+
+                                
+
+                                <div class="col-md-4 dsfdfd">
+                                    <label>휴가 사유</label>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group mb-3">
+                                        
+                                        <textarea class="form-control ghfg" id="exampleFormControlTextarea1" name="porestReason"
+                                            rows="3"></textarea>
+                                    </div>
+                                </div>
+								
+								<div class="col-md-4 dsf">
+                                    <label>사진 업로드</label>
+                                </div>
+                                <div class="col-md-8 form-group">
+                                    <input type="file" id="password" class="form-control dfssdfs"
+                                        name="singleFile">
+                                </div>
+                                
+
+                                
+                                
+
+                                <div class="col-sm-12 d-flex justify-content-end ghhg">
+                                    <button type="submit"
+                                        class="btn btn-primary me-1 mb-1 skdsojdcs">등록</button>
+                                    <a class="btn btn-light-secondary me-1 mb-1">취소</a>
+                                    <a class="btn btn-light-secondary me-1 mb-1">삭제</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   </form>
+         
+   		
+</body>
+</html>

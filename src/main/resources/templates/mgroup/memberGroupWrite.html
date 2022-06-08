@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>memberGroupWrite</title>
+    <!-- fonts -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="/assets/vendors/iconly/bold.css">
+    <link rel="stylesheet" href="/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="shortcut icon" href="/assets/images/favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="/assets/css/adminyj.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>    
+	<link rel="shortcut icon" th:href="@{/assets/images/images/favicon-workHub.ico}" type="image/x-icon">
+</head>
+<body>
+  
+        <div th:include="sidebar/sidebar-admin" th:remove="tag"></div> 
+
+        <!--사원 근무 그룹 작성 시작-->
+        
+        <form class="wwfw fffhetg" action="/mgroup/memberGroupWrite" method="post">
+             <h3 class="vfews">사원 근무그룹 등록</h3>
+            <h6 class="fsdf">사원 아이디</h6>
+            <input type="text" name="no">
+            <br><br>
+           <h6 class="fsdf">그룹명</h6>
+           <fieldset class="form-group ppawqq">
+            <select class="form-select" id="basicSelect" name="groupNo">
+                <option th:each="val : ${boxList}" th:value="${val.groupNo}" th:utext="${val.groupName}"></option>
+            </select>
+           </fieldset>
+           <br><br>
+    <div class="sdasd">
+    <input type="submit" class="btn btn-success rounded-pill" id="btnChk" value="저장"></button>
+    <a href="#" class="btn btn-light rounded-pill">삭제</a>
+    <a onclick="location.href='/mgroup/memberGroupSelect'" class="btn btn-light rounded-pill">취소</a></div>
+    </form>
+   
+        <!--근무 그룹 작성 끝-->
+    
+    
+    <script src="assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+
+    <script src="assets/vendors/apexcharts/apexcharts.js"></script>
+    <script src="assets/js/pages/dashboard.js"></script>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

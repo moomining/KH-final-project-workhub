@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WorkHub | 글쓰기</title>
+
+    <!-- fonts -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="/assets/css/bootstrap2.css">
+
+    <link rel="stylesheet" href="/assets/vendors/iconly/bold.css">
+
+    <link rel="stylesheet" href="/assets/vendors/summernote/summernote-lite.min.css">
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/assets/css/app2.css">
+    <link rel="stylesheet" href="/assets/css/com-surv.css">
+    <link rel="shortcut icon" th:href="@{/assets/images/images/favicon-workHub.ico}" type="image/x-icon">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+    	<div th:include="sidebar/sidebar-com" th:remove="tag"/>
+        <div id="main">
+            <header class="mb-3">
+                <a href="#" class="burger-btn d-block d-xl-none">
+                    <i class="bi bi-justify fs-3"></i>
+                </a>
+            </header>
+            <div class="page-heading">
+                <h3>게시글 수정</h3>
+            </div>
+            <section class="section">
+                <div class="card">
+                <form th:action="@{|/post/update/no/${ post.postNo }|}" method="post">
+                    <div class="card-header">
+                        <fieldset class="post-write-select">
+                            <select class="form-select btn-sm">
+                                <option>게시판</option>
+                            </select>
+                            <select class="form-select btn-sm" name="categoryNo" id="categoryNo" th:value="${ post.categoryNo}"></select>
+                        </fieldset>
+                    </div><hr>
+                    <div class="card-body">
+                        <div class="row write-body-head">
+                            <div class="col-md-2 write-title">
+                                <label>제목</label>
+                            </div>
+                            <div class="col-md-10 form-group">
+                                <input type="text" name="postTitle" class="form-control btn-sm" th:value="${ post.postTitle }">
+                            </div>
+                            <div class="col-md-2">
+                                <label>파일 첨부</label>
+                            </div>
+                            <div class="col-md-10 form-group">
+                                <input type="file" name="postImg" class="basic-filepond btn-sm">
+                                <!-- 추후 값 추가 -->
+                            </div>
+                        </div>
+                        <hr>
+                        <!-- 임시 저장 -->
+                        <div class="write-save">
+                            <button type="button" class="write-save-btn" data-bs-toggle="modal" data-bs-target="#inlineForm">
+                            임시 저장된 글 (0)
+                            </button>
+
+                            <!--login form Modal -->
+                            <div class="modal fade text-left" id="inlineForm" tabindex="-1"
+                                role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+                                    role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="myModalLabel33">임시 저장된 글 </h4>
+                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                <img src="/assets/images/post-surv/cancle.png" class="icon-title-cancle">
+                                            </button>
+                                        </div>
+                                        <form action="#">
+                                            <div class="modal-body">
+                                                <div class="modal-write">
+                                                    <p class="modal-title" href="#">임시 저장된 글의 제목입니다.</p>
+                                                    <img src="/assets/images/post-surv/cancle.png" class="icon-cancle">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>                            
+                        </div>
+                        <div class="write-textarea">
+                            <textarea id="summernote" name="postContent"></textarea>
+                        </div>
+                        <div class="col-sm-12 d-flex justify-content-center write-submit-btn">
+                            <input type="submit" value="글 수정" class="btn btn-primary me-1 mb-1">
+                            <input type="button" value="임시저장" class="btn btn-light-secondary me-1 mb-1">
+                        </div>
+                    </form>
+                    </div>
+                    <!-- category -->
+                    <script>
+						$(function(){
+							$.ajax({
+								url : "/post/category",
+								//동작하는 핸들러 펑션에 응답하는 첫번째 데이터가 매개변수로 넘어옴 (=array)
+								success : function(data){
+									const $categoryNo = $("#categoryNo");
+									
+									for(let index in data){
+										//<option>태그의 val에 code값 넣어서 value, text(이름) 가져옴
+										$categoryNo.prepend($("<option>").val(data[index].categoryNo).text(data[index].categoryName));
+									}
+								},
+								error : function(xhr){
+									console.log(xhr);
+								}
+							});
+						});
+					</script> 
+                </div>
+            </section>
+        </div>
+    </div>
+    <script src="/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="/assets/js/bootstrap.bundle.min2.js"></script>
+
+    <script src="/assets/vendors/apexcharts/apexcharts.js"></script>
+    <script src="/assets/js/pages/dashboard.js"></script>
+    <script src="/assets/vendors/jquery/jquery.min.js"></script>
+    <script src="/assets/vendors/summernote/summernote-lite.min.js"></script>
+    <script>
+        $('#summernote').summernote({
+            tabsize: 2,
+            height: 120,
+        });
+	</script>
+	<script>        
+        $(document).ready(function(){
+        	$("#summernote").summernote('code', "[(${ post.postContent })]");
+        });
+    </script>
+
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+    <script>
+    FilePond.create( document.querySelector('.basic-filepond'), { 
+        allowImagePreview: false,
+        allowMultiple: false,
+        allowFileEncode: false,
+        required: false
+    });
+    </script>
+    
+
+    <script src="/assets/js/main.js"></script>
+</body>
+
+</html>
