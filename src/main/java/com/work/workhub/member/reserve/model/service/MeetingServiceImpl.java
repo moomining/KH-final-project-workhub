@@ -37,7 +37,6 @@ public class MeetingServiceImpl implements MeetingService {
 			throw new Exception("회의실 예약 실패");
 		}
 		
-		
 		return result > 0 ? true : false;
 	}
 

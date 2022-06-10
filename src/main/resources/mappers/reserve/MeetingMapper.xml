@@ -96,16 +96,33 @@
 	<!-- 회의실 예약하기 -->
     <insert id="reserveRoom">
     	INSERT INTO RES_MT
-    	VALUES
     	(
-    		SEQ_MEETING_RES_NO.NEXTVAL,
+			RES_NO,
+            NO,
+            ROOM_NO,
+            START_TIME,
+            END_TIME,
+            MEET_PURPOSE,
+            DEL_YN
+    	)
+    	SELECT
+    	    SEQ_MEETING_RES_NO.NEXTVAL,
     		#{ memberNo },
     		#{ roomNo },
     		#{ startTime },
     		#{ endTime },
     		#{ meetPurpose },
-    		DEFAULT
-    	)
+    		'N'
+    	  FROM DUAL
+    	WHERE NOT EXISTS
+		(
+		  SELECT
+		  		 RES_NO
+		    FROM RES_MT
+		  <![CDATA[WHERE (#{ startTime } <= START_TIME AND START_TIME < #{ endTime })
+		     OR (#{ startTime } < END_TIME AND END_TIME <= #{ endTime })
+		  ]]>  
+		)
     </insert>
 
 	<update id="modifyMeeting">
