@@ -77,9 +77,9 @@
     	  FROM RES_MT A
     	  JOIN MT_ROOM B ON (A.ROOM_NO = B.ROOM_NO)
     	  WHERE A.DEL_YN = 'N'
-    	    AND (TO_CHAR(A.START_TIME,'YYYY-MM-DD') = SYSDATE
-			OR TO_CHAR(A.END_TIME,'YYYY-MM-DD') = SYSDATE)
-    	  ORDER BY A.START_TIME DESC   	
+    	    AND (TO_CHAR(A.START_TIME,'YYYY-MM-DD') = TO_CHAR(SYSDATE,'YYYY-MM-DD')
+			 OR TO_CHAR(A.END_TIME,'YYYY-MM-DD') = TO_CHAR(SYSDATE,'YYYY-MM-DD'))
+    	  ORDER BY A.START_TIME DESC, B.RM_LOCATION, B.ROOM_NAME   	
     </select>
     
     <select id="selectMeetingByDate" resultMap="meetingResultMap">

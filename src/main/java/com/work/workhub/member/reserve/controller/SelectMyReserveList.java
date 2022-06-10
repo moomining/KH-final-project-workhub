@@ -1,14 +1,8 @@
 package com.work.workhub.member.reserve.controller;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,13 +24,11 @@ public class SelectMyReserveList {
 	
 	private CarResService carResService;
 	private MeetingService meetingService;
-	private MessageSource messageSource;
 
 	@Autowired
-	public SelectMyReserveList(CarResService carResService, MessageSource messageSource, MeetingService meetingService) {
+	public SelectMyReserveList(CarResService carResService, MeetingService meetingService) {
 		this.carResService = carResService;
 		this.meetingService = meetingService;
-		this.messageSource = messageSource;
 	}
 	
 	@GetMapping("mylist")

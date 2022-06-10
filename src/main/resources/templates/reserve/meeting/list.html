@@ -21,7 +21,6 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
     <link rel="stylesheet" href="/assets/css/app-ar.css">
     <link rel="shortcut icon" th:href="@{/assets/images/images/favicon-workHub.ico}" type="image/x-icon">    
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-    <script src="/assets/js/toast-cal.js"></script>
 
 </head>
 
@@ -72,20 +71,16 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
                 <span><input type="date" class="res-date" id="booking_date" name="resDate"></span>
                 <span><button type="button" class="date-before" onclick="moveDate('next');">&gt;</button></span>
                 <span><button type="button" class="today-btn" onclick="setToday();">오늘</button></span>
-                <span><button type="submit">검색</button></span>
+                <span><button type="submit" class="search-btn">검색</button></span>
                 </form>
             </div>
 
             <!-- moveDate script -->
             <script>
-            /* 기본값 오늘 날짜 지정 */
-            document.getElementById('booking_date').valueAsDate = new Date();
-
             /* Date Format 지정 */    
             function formatDate(date) {
                     
                     var d = new Date(date),
-                    
                     month = '' + (d.getMonth() + 1) , 
                     day = '' + d.getDate(), 
                     year = d.getFullYear();
@@ -96,7 +91,20 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
                     return [year, month, day].join('-');
                     
             }
-			          
+			
+            /* 기본값 오늘 날짜 지정 */
+            //document.getElementById('booking_date').valueAsDate = new Date();
+			
+        	window.onload = function() {
+        		var today = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000);
+        		console.log("today.toISOString() >>>" + today.toISOString());
+        		today = today.toISOString().slice(0, 10);
+        		console.log("today >>>> " + today);
+        		var bir = document.getElementById("booking_date");
+        		bir.value = today;
+        	}
+            
+            
             // 오늘 버튼 이벤트
             function setToday() {
                 $('input#booking_date').val(formatDate(new Date()));
@@ -108,18 +116,15 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
                var yesterday = new Date($('#booking_date').val());
                var tomorrow = new Date($('#booking_date').val());
                
-               console.log(yesterday);
-               console.log(tomorrow);
-               
                switch (str) {
                case 'previous':
             	   	yesterday.setDate(yesterday.getDate() - 1);
-            	   	console.log(yesterday);
+            	   	console.log("yesterday : " +yesterday);
 	            	$('#booking_date').val(formatDate(yesterday));
                 break;
                case 'next':
             	   tomorrow.setDate(tomorrow.getDate() + 1);
-            	   console.log(tomorrow);
+            	   console.log("tmrw : " + tomorrow);
             	   $('#booking_date').val(formatDate(tomorrow));
                break;
             	}

@@ -21,7 +21,6 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
     <link rel="stylesheet" href="/assets/css/app-ar.css">
     <link rel="shortcut icon" th:href="@{/assets/images/images/favicon-workHub.ico}" type="image/x-icon">    
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-    <script src="/assets/js/toast-cal.js"></script>
 
 </head>
 
@@ -69,10 +68,10 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
                 <form method="get" th:action="@{/reserve/meeting/date}">
 				<span><button type="button" class="date-before" onclick="moveDate('previous');">&lt;</button></span>
-                <span><input type="date" class="res-date" id="booking_date" name="resDate"></span>
+                <span><input type="date" class="res-date" id="booking_date" name="resDate" th:value="${ resDate }"></span>
                 <span><button type="button" class="date-before" onclick="moveDate('next');">&gt;</button></span>
                 <span><button type="button" class="today-btn" onclick="setToday();">오늘</button></span>
-                <span><button type="submit">검색</button></span>
+                <span><button type="submit" class="search-btn">검색</button></span>
                 </form>
             </div>
 
@@ -529,8 +528,9 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 			const time = $(this).find('.time').val();
 			console.log(time);
 			
+			
 			let dateElement = document.getElementById('period1');
-			let date = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, -13);
+			let date = new Date(new Date($('#booking_date').val()).getTime() - new Date($('#booking_date').val()).getTimezoneOffset() * 60000).toISOString().slice(0, -13);
 			let timeDate = date + time;
 			console.log(timeDate);
 			/* 가져온 값을 input Element에 넣어준다. */

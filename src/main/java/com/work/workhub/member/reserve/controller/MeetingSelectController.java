@@ -4,6 +4,8 @@ package com.work.workhub.member.reserve.controller;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -46,9 +48,6 @@ public class MeetingSelectController {
 		 * meetingService.selectByLocationNo(locationNo);
 		 */
 		
-		/* 로그인 유저 불러오기 */
-		log.info("로그인 유저 {} : ", user);
-		
 		/* 미팅룸 장소, 미팅룸 리스트 불러오기 */
 		List<MeetingRoomDTO> locationList = meetingService.selectAllLocation();
 		List<MeetingRoomDTO> roomList = meetingService.selectRoomList();
@@ -69,15 +68,16 @@ public class MeetingSelectController {
 	}
 	
 	@PostMapping("list")
-	public String reserveRoom(@ModelAttribute ResMeetingDTO resRoom, RedirectAttributes rttr, Locale locale) throws Exception {
+	public String reserveRoom(@ModelAttribute ResMeetingDTO resRoom, RedirectAttributes rttr, Locale locale, HttpServletRequest rq) throws Exception {
 		log.info("등록 요청 : {} ", resRoom);
-		log.error("등록요청 : {}", resRoom);
 		
 		meetingService.reserveRoom(resRoom);
 		
 		rttr.addFlashAttribute("successMessage", messageSource.getMessage("registRoomReservation", null, locale));
 		
-		return "redirect:/reserve/meeting/list";
+		String referer = rq.getHeader("Referer");
+		
+		return "redirect:"+referer;
 	}
 	
 	@GetMapping("date")
@@ -87,6 +87,7 @@ public class MeetingSelectController {
 		
 		mv.addObject("locationList", locationList);
 		mv.addObject("roomList", roomList);
+		mv.addObject("resDate", resDate);
 		
 		log.info("resDate : {}", resDate);
 		

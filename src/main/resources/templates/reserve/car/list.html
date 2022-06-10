@@ -22,9 +22,6 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     
     <!-- datepicker 추가! -->
-<!--     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
 	
 </head>
 
@@ -66,80 +63,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
             <div class="content-ttl">
                 <h5>차량 예약</h5>
             </div>
-			<!-- isAuthenticated() : 인증(로그인) 되어 있는지 확인 -->
-			<th:block sec:authorize="isAuthenticated()">
-			<!-- 
-				principal : 로그인 된 User 객체의 정보를 담고 있다.
-				principal.username : 로그인 시 입력한 id 값
-				그 외의 정보가 필요할 경우 User 타입을 상속한 클래스를 만들어서 커스터마이징 할 수 있다.
-			 -->
-			<input type="hidden" th:value="${#authentication.principal.no}" name="no">
-			</th:block>
 			
-            <div class="centered" id="date-area">
-
-                <span><button type="button" class="date-before" onclick="moveDate('previous');">&lt;</button></span>
-                <span><input type="date" class="res-date" id="booking_date" name="res-date"></span>
-                <span><button type="button" class="date-before" onclick="moveDate('next');">&gt;</button></span>
-                <span><button type="button" class="today-btn" onclick="setToday();">오늘</button></span>
-                
-            </div>
-            
-            
-            <!-- moveDate script -->
-            <script>
-            /* 기본값 오늘 날짜 지정 */
-            document.getElementById('booking_date').valueAsDate = new Date();
-
-            /* Date Format 지정 */    
-            function formatDate(date) {
-                    
-                    var d = new Date(date),
-                    
-                    month = '' + (d.getMonth() + 1) , 
-                    day = '' + d.getDate(), 
-                    year = d.getFullYear();
-                    
-                    if (month.length < 2) month = '0' + month; 
-                    if (day.length < 2) day = '0' + day; 
-                    
-                    return [year, month, day].join('-');
-                    
-            }
-			          
-            // 오늘 버튼 이벤트
-            function setToday() {
-                $('input#booking_date').val(formatDate(new Date()));
-
-            }
-            
-            /* 이전 날짜, 이후 날짜 이동 +1Day */
-            function moveDate(str) {
-               var yesterday = new Date($('#booking_date').val());
-               var tomorrow = new Date($('#booking_date').val());
-               
-               console.log(yesterday);
-               console.log(tomorrow);
-               
-               switch (str) {
-               case 'previous':
-            	   	yesterday.setDate(yesterday.getDate() - 1);
-            	   	console.log(yesterday);
-	            	$('#booking_date').val(formatDate(yesterday));
-                break;
-               case 'next':
-            	   tomorrow.setDate(tomorrow.getDate() + 1);
-            	   console.log(tomorrow);
-            	   $('#booking_date').val(formatDate(tomorrow));
-               break;
-            	}
-             }
-            
-            
-            </script>
-            
-            
-            
             <!--  index 값으로 각각 가져오기 -->
             <div class="car-img">
             	<!-- 차 2개 표시 -->
