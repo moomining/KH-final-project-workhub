@@ -34,7 +34,7 @@ public class MeetingServiceImpl implements MeetingService {
 		int result = meetingMapper.reserveRoom(resRoom);
 		
 		if(result <= 0) {
-			throw new Exception("회의실 예약 실패");
+			throw new Exception("이미 예약된 시간입니다.");
 		}
 		
 		return result > 0 ? true : false;
