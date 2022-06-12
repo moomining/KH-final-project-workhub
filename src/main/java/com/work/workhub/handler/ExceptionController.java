@@ -5,23 +5,23 @@ import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 
-import org.slf4j.LoggerFactory;
-import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
-public class ExceptionHandler implements ErrorController {
-	private final org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
-
+@RequestMapping("error")
+public class ExceptionController{
+	
 	// 에러 페이지 정의
-	private final String ERROR_404_PAGE_PATH = "/error/404";
-	private final String ERROR_500_PAGE_PATH = "/error/500";
-	private final String ERROR_ETC_PAGE_PATH = "/error/error";
-
-	@RequestMapping(value = "/error")
+		private final String ERROR_404_PAGE_PATH = "/error/404";
+		private final String ERROR_500_PAGE_PATH = "/error/500";
+		private final String ERROR_ETC_PAGE_PATH = "/error/error";
+	
 	public String handleError(HttpServletRequest request, Model model) {
 
 		// 에러 코드를 획득한다.
@@ -35,7 +35,7 @@ public class ExceptionHandler implements ErrorController {
 			int statusCode = Integer.valueOf(status.toString());
 
 			// 로그로 상태값을 기록 및 출력
-			logger.info("httpStatus : " + statusCode);
+			log.info("httpStatus : " + statusCode);
 
 			// 404 error
 			if (statusCode == HttpStatus.NOT_FOUND.value()) {
@@ -49,7 +49,12 @@ public class ExceptionHandler implements ErrorController {
 			// 500 error
 			if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
 				// 서버에 대한 에러이기 때문에 사용자에게 정보를 제공하지 않는다.
+				// 에러 페이지에 표시할 정보
+				model.addAttribute("code", status.toString());
+				model.addAttribute("msg", httpStatus.getReasonPhrase());
+				model.addAttribute("timestamp", new Date());
 				
+				log.info("msg : {}", httpStatus.getReasonPhrase());
 				return ERROR_500_PAGE_PATH;
 			}
 		}
@@ -58,7 +63,4 @@ public class ExceptionHandler implements ErrorController {
 		return ERROR_ETC_PAGE_PATH;
 	}
 
-	public String getErrorPath() {
-		return "/error";
-	}
 }
