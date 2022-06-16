@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("report")
 public class FormCreateController {
 	
-	@GetMapping("form")
+	@GetMapping("intro")
 	public void registForm() {
 		
 	}
