@@ -37,12 +37,12 @@
                         <li class="sidebar-title">Menu</li>
 
                         <li class="sidebar-item">
-                            <a href="index.html" class='sidebar-link'>
+                            <a th:href="@{/myPage/myPage}" class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
                                 <span>홈</span>
                             </a>
                         </li>
-                        <li class="sidebar-item  has-sub active">
+                        <li class="sidebar-item  has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-stack"></i>
                                 <span>전자결재</span>
@@ -91,8 +91,8 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="sidebar-item">
-                            <a th:href="@{/report/create}" class='sidebar-link'>
+                        <li class="sidebar-item active">
+                            <a th:href="@{/report/intro}" class='sidebar-link'>
                                 <i class="bi bi-file-earmark-medical-fill"></i>
                                 <span>보고서</span>
                             </a>

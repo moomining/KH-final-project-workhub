@@ -37,7 +37,7 @@
                         <li class="sidebar-title">Menu</li>
 
                         <li class="sidebar-item">
-                            <a href="index.html" class='sidebar-link'>
+                            <a th:href="@{/myPage/myPage}" class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
                                 <span>홈</span>
                             </a>
@@ -90,6 +90,12 @@
                                     <a th:href="@{/reserve/mylist}">내 예약 조회</a>
                                 </li>
                             </ul>
+                        </li>
+                        <li class="sidebar-item">
+                            <a th:href="@{/report/intro}" class='sidebar-link'>
+                                <i class="bi bi-file-earmark-medical-fill"></i>
+                                <span>보고서</span>
+                            </a>
                         </li>
                         <li class="sidebar-item">
                             <a class='sidebar-link' onclick="location.href='/calendar/list'" style="cursor:pointer;">
