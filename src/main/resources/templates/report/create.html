@@ -65,7 +65,7 @@
         <div class="content-ttl report-ttl">
             <h5>작성하기</h5>
         </div>
-        <form>
+        <form method="post" th:action="@{/report/write}">
             <div class="rep-ttl">
                 <div><label>제목 </label></div>
                 <div><input type="text" name="report-title" id="report-title" maxlength="50"></div>
@@ -93,7 +93,7 @@
 
     </div>
 
-    <script src="assets/vendors/ckeditor/ckeditor.js"></script>
+    <script src="/assets/vendors/ckeditor/ckeditor.js"></script>
 
     <script>
         ClassicEditor

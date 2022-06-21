@@ -10,13 +10,16 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 @RequestMapping("report")
-public class FormCreateController {
+public class reportController {
 	
 	@GetMapping("intro")
-	public void registForm() {
+	public void reportIntro() {
 		
 	}
 	
-	
+	@GetMapping("create")
+	public void registReport() {
+		
+	}
 
 }
