@@ -1,14 +1,100 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8">
-<title>500 에러 페이지</title>
+    <meta charset="UTF-8">
+    <title>500 에러 페이지</title>
+
+    <!-- fonts -->
+    <link rel="stylesheet" as="style" crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/maru-buri.css" rel="stylesheet">
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="assets/css/bootstrap-ar.css">
+
+    <link rel="stylesheet" href="assets/vendors/iconly/bold.css">
+
+    <link rel="stylesheet" href="assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="assets/css/app-ar.css">
+    <link rel="shortcut icon" href="src/images/favicon-workHub.ico" type="image/x-icon">
+
+    <style>
+        body {
+            background-color: #f2f7ff;
+        }
+
+        .logo {
+            width : 600px;
+            margin: 30px auto;
+            text-align: center;
+        }
+		
+		.logo img{
+			height : 40px;
+			opacity : 0.8;
+		}
+        .errorHead {
+            width: 600px;
+            margin: 180px auto 20px;
+            font-size: 50px;
+            font-style: oblique;
+            text-align: center;
+            font-family: 'MaruBuriBold';
+            color: #25396f;
+        }
+
+        .errorDetail {
+            width: 600px;
+            margin: 10px auto;
+            font-size: 23px;
+            text-align: center;
+            font-weight: lighter;
+            color: #40485c;
+        }
+
+        .back-btn {
+            width: 600px;
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        .btn {
+            background-color: #435ebe;
+            border-radius: 3px;
+            border-style: none;
+            display: inline-block;
+            cursor: pointer;
+            color: #ffffff;
+            font-family: Verdana;
+            font-size: 17px;
+            padding: 13px 67px;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: #6683e3;
+        }
+
+        .btn:active {
+            position: relative;
+            top: 1px;
+        }
+    </style>
+
 </head>
+
 <body>
     <div class="errorPage">
-        <div class="errorHead">Error!</div>
+        <div class="logo"><img src="/assets/images/images/logo-workhub-edit.png" alt="Logo"></div>
+        <div class="errorHead">Error Occured</div>
+        <div class="errorDetail">선택한 시간대 예약이 존재합니다.</div>
         <p th:text="${'message: ' + msg}"></p>
         <p th:text="${'발생 시각 : ' + time}"></p>
+        <div class="back-btn">
+            <input type="button" onclick="history.back(-1)" class="btn" value="뒤로 가기"><a href="javascript:history.back(-1)"></a>
+        </div>
     </div>
 </body>
+
 </html>
