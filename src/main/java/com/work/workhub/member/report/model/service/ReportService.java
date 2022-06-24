@@ -5,6 +5,6 @@ import com.work.workhub.member.report.model.dto.ReportDTO;
 
 public interface ReportService {
 
-	public int registReport(ReportDTO report);
+	public boolean registReport(ReportDTO report) throws Exception;
 
 }

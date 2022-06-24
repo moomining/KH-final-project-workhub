@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
     <meta charset="UTF-8">
@@ -65,14 +66,18 @@
         <div class="content-ttl report-ttl">
             <h5>작성하기</h5>
         </div>
-        <form method="post" th:action="@{/report/write}">
+        <form method="post" th:action="@{/report/create}">
+        <div sec:authorize="isAuthenticated()">
+        	<input type="hidden" name="memberNo" th:value="${#authentication.principal.no}">
+        	<input type="hidden" name="depNo" th:value="${#authentication.principal.depNo}">
+        </div>
             <div class="rep-ttl">
                 <div><label>제목 </label></div>
-                <div><input type="text" name="report-title" id="report-title" maxlength="50"></div>
+                <div><input type="text" name="title" id="report-title" maxlength="50"></div>
             </div>
-            <div id="editor">
+            <textarea name="content" id="editor">
 
-            </div>
+            </textarea>
             <div class="attach-ttl">
                 파일 첨부
             </div>
