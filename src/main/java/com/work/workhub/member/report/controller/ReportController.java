@@ -2,6 +2,7 @@ package com.work.workhub.member.report.controller;
 
 import java.util.Locale;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,10 +20,16 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 @RequestMapping("report")
-public class reportController {
+public class ReportController {
 	
 	private ReportService reportService;
 	private MessageSource message;
+	
+	@Autowired
+	public ReportController(ReportService reportService, MessageSource message) {
+		this.reportService = reportService;
+		this.message = message;
+	}
 	
 	@GetMapping("intro")
 	public void reportIntro() {
@@ -35,8 +42,9 @@ public class reportController {
 	}
 
 	@PostMapping("create")
-	public String registReport(@ModelAttribute ReportDTO report, RedirectAttributes rttr, Locale locale, @RequestParam int memberNo) throws Exception {
+	public String registReport(@ModelAttribute ReportDTO report, RedirectAttributes rttr, Locale locale, @RequestParam int memberNo, @RequestParam int depNo) throws Exception {
 		log.info("memberNo : {}", memberNo);
+		log.info("depNo : {}", depNo);
 		
 		log.info("등록요청 : {}", report);
 		
@@ -44,6 +52,6 @@ public class reportController {
 		
 		rttr.addFlashAttribute("successMessage", message.getMessage("registReport", null, locale));
 		
-		return "redirect:/reserve/car/list";
+		return "redirect:/report/create";
 	}
 }

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.work.workhub.member.report.model.dao.ReportMapper">
+	<resultMap id="reportResultMap" type="com.work.workhub.member.report.model.dto.ReportDTO">
+
+		<id property="repNo" column="REP_NO"/>
+		<result property="memberNo" column="NO"/>
+		<result property="formNo" column="FORM_NO"/>
+		<result property="depNo" column="DEP_NO"/>
+		<result property="title" column="TITLE"/>
+		<result property="content" column="CONTENT"/>
+
+		<association property="member" resultMap="loginMemberResultMap"/>
+		<association property="repForm" resultMap="repFormResultMap"/>
+		<association property="dept" resultMap="deptResultMap"/>
+
+	</resultMap>
+
+	<resultMap id="repFormResultMap" type="com.work.workhub.member.report.model.dto.RepFormDTO">
+		<id property="formNo" column="FORM_NO"/>	
+		<result property="formName" column="FORM_NAME"/>
+		<result property="formCon" column="FORM_CON"/>
+	</resultMap>
+
+	<resultMap id="deptResultMap" type="com.work.workhub.member.member.dto.DepartmentDTO">
+
+	</resultMap>
+	<resultMap id="repAttachResultMap" type="com.work.workhub.member.report.model.dto.RepAttachDTO">
+		<id property="attachmentNo" column="ATTACHMENT_NO"/>
+		<result property="repNo" column="REP_NO"/>
+		<result property="orgName" column="ORG_NAME"/>
+		<result property="savedName" column="SAVED_NAME"/>
+		<result property="savePath" column="SAVE_PATH"/>
+	</resultMap>
+
+	<!-- member 관련 mapper -->
+	<resultMap id="loginMemberResultMap" type="com.work.workhub.member.member.dto.MemberDTO">
+		<id property="no" column="NO"/>
+		<result property="id" column="ID"/>
+		<result property="pwd" column="PWD"/>
+		<result property="depNo" column="DEP_NO"/>
+		<result property="positionNo" column="POSITION_NO"/>
+		<result property="groupNo" column="GROUP_NO"/>
+		<result property="name" column="NAME"/>
+		<result property="email" column="EMAIL"/>
+		<result property="phone" column="PHONE"/>
+		<result property="status" column="STATUS"/>
+
+		<collection property="memberRoleList" resultMap="memberRoleResultMap"/>
+	</resultMap>
+
+	<resultMap id="memberRoleResultMap" type="com.work.workhub.member.member.dto.MemberRoleDTO">
+		<id property="memberNo" column="REF_NO"/>
+		<id property="authNo" column="REF_AUTH_NO"/>
+
+		<association property="authority" resultMap="authorityResultMap"/>
+	</resultMap>
+
+	<resultMap id="authorityResultMap" type="com.work.workhub.member.member.dto.AuthorityDTO">
+		<id property="authNo" column="REF_AUTH_NO2"/>
+		<result property="authName" column="AUTH_NAME"/>
+	</resultMap>
+
+	<insert id="registReport">
+		INSERT INTO TBL_REPORT
+		VALUES
+		(
+			SEQ_REP_NO.NEXTVAL,
+			#{ memberNo },
+			1,
+			#{ depNo },
+			#{ title },
+			#{ content }
+		)
+	</insert>
+</mapper>
