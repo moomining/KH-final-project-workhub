@@ -11,4 +11,4 @@ Final Project 마무리 private repo
     3) 내 예약 조회 
 3. 보고서
     1) 보고서 등록
-    2) 내 보고서 
+    2) 내 보고서 조회 
