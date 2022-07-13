@@ -1,5 +1,7 @@
 package com.work.workhub.member.report.model.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,5 +29,10 @@ public class ReportServiceImpl implements ReportService{
 		}
 
 		return result > 0? true : false;
+	}
+
+	@Override
+	public List<ReportDTO> selectMyList() {
+		return reportMapper.selectMyList();
 	}
 }
