@@ -1,5 +1,7 @@
 package com.work.workhub.member.report.model.dto;
 
+import java.util.Date;
+
 import com.work.workhub.member.member.dto.DepartmentDTO;
 import com.work.workhub.member.member.dto.MemberDTO;
 
@@ -18,6 +20,7 @@ public class ReportDTO {
 	private int depNo;
 	private String title;
 	private String content;
+	private Date repDate;
 	
 	private MemberDTO member;
 	private RepFormDTO repForm;

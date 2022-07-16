@@ -54,8 +54,6 @@ public class ApprovalController {
 		mv.addObject("memberList", memberList);
 		mv.setViewName("approval/regist");
 
-		log.info("부서 목록 : {}", departmentList);
-		log.info("사원 목록 : {}", memberList);
 
 		return mv;
 	}

@@ -46,18 +46,18 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
         </div>
 
         <div class="page-heading border-bottom">
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item font-clr" role="presentation">
-                    <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab"
-                        aria-controls="home" aria-selected="true">보고 생성</a>
+            <ul class="nav nav-tabs" id="myTab">
+                <li class="nav-item font-clr">
+                    <a class="nav-link active" id="home-tab" th:href="@{ /report/create }">
+                        보고 생성</a>
                 </li>
-                <li class="nav-item font-clr" role="presentation">
-                    <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab"
-                        aria-controls="profile" aria-selected="false">내 보고 조회</a>
+                <li class="nav-item font-clr">
+                    <a class="nav-link" id="profile-tab" th:href="@{ /report/myreport }">
+                        내 보고 조회</a>
                 </li>
-                <li class="nav-item font-clr" role="presentation">
-                    <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab"
-                        aria-controls="profile" aria-selected="false">부서 보고 조회</a>
+                <li class="nav-item font-clr"  role="presentation">
+                    <a class="nav-link" id="profile-tab" th:href="@{ /report/dept }">
+                        부서 보고 조회</a>
                 </li>
 
             </ul>
@@ -66,7 +66,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
         <div class="content-ttl report-ttl">
             <h5>작성하기</h5>
         </div>
-        <form method="post" th:action="@{/report/create}">
+        <form method="post" th:action="@{/report/create}" enctype="multipart/form-data">
         <div sec:authorize="isAuthenticated()">
         	<input type="hidden" name="memberNo" th:value="${#authentication.principal.no}">
         	<input type="hidden" name="depNo" th:value="${#authentication.principal.depNo}">
@@ -84,7 +84,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
             <div class="attach">
                 <div class="input-attach">
-                    <input type="file" id="filebox" name="attach" multiple>
+                    <input type="file" id="filebox" name="multiFiles" multiple>
                 </div>
 
                 <div class="editor-btn">
