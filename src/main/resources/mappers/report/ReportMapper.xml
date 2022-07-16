@@ -81,6 +81,7 @@
 	<select id="selectMyList" resultMap="reportResultMap">
 		SELECT 
 				A.REP_DATE,
+				A.REP_NO,
 				B.DEP_NAME,
 				C.FORM_NAME,
 				A.TITLE,
@@ -89,7 +90,7 @@
 		  JOIN DEPARTMENT B ON (A.DEP_NO = B.DEP_NO)
 		  JOIN REP_FORM C ON (A.FORM_NO = C.FORM_NO)
 		  JOIN TBL_MEMBER D ON (A.NO = D.NO)
-		 WHERE A.NO = #{ userNo } 
+		 WHERE A.NO = #{ no } 
 	</select>
 	
 </mapper>

@@ -32,7 +32,9 @@ public class ReportServiceImpl implements ReportService{
 	}
 
 	@Override
-	public List<ReportDTO> selectMyList() {
-		return reportMapper.selectMyList();
+	public List<ReportDTO> selectMyList(int no) {
+		return reportMapper.selectMyList(no);
 	}
+
+
 }

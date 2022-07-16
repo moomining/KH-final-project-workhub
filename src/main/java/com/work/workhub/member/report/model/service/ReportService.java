@@ -9,6 +9,6 @@ public interface ReportService {
 
 	public boolean registReport(ReportDTO report) throws Exception;
 
-	public List<ReportDTO> selectMyList();
+	public List<ReportDTO> selectMyList(int no);
 
 }

@@ -92,7 +92,6 @@
           AND A.DEL_YN = 'N'
         ORDER BY A.START_TIME DESC
 	</select>
-	<!-- AND TO_CHAR(A.START_TIME, 'yyyy-MM-dd') = TO_CHAR(SYSDATE, 'yyyy-MM-dd') -->
 	
 	<select id="selectResCarList" resultMap="carResResultMap">
 		SELECT
