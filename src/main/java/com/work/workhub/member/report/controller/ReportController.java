@@ -58,73 +58,14 @@ public class ReportController {
 	}
 
 	@PostMapping("create")
-	public String registReport(@RequestParam(value="multiFiles", required=false) List<MultipartFile> multiFiles, Model model, @ModelAttribute ReportDTO report, RedirectAttributes rttr, Locale locale, 
-			@RequestParam int memberNo, @RequestParam int depNo) throws Exception {
+	public String registReport(Model model, @ModelAttribute ReportDTO report, RedirectAttributes rttr, Locale locale, 
+			@RequestParam int memberNo, @RequestParam int depNo, final MultipartFile[] files) throws Exception {
 		
 		
 		log.info("등록요청 : {}", report);
 		
 		
-		if (!multiFiles.isEmpty()) {
-			System.out.println("multiFiles : " + multiFiles);
-	
-			// file 저장 경로 설정
-			File mkdir = new File(uploadFilePath);
-			if (!mkdir.exists()) {
-				mkdir.mkdirs();
-			}
-			
-			List<Map<String, String>> files = new ArrayList<>();
-			
-			
-	
-			// file name change
-			for(int i = 0; i < multiFiles.size(); i++) {
-				String orgName = multiFiles.get(i).getOriginalFilename();
-				String ext = orgName.substring(orgName.lastIndexOf("."));
-				String savedName = UUID.randomUUID().toString().replace("-", "") + ext;
-	
-				//file에 관한 정보 추출 후 보관
-				Map<String, String> file = new HashMap<>();
-				file.put("orgName", orgName);
-				file.put("savedName", savedName);
-				file.put("uplaodFilePath", uploadFilePath);
-				
-				RepAttachDTO repAttach = new RepAttachDTO();
-				repAttach.setOrgName(orgName);
-				repAttach.setSavedName(savedName);
-				repAttach.setSavePath(uploadFilePath);
-				
-				files.add(file);
-				
-			}
-			
-	
-			// file Save
-			try {
-				
-				for(int i = 0; i < multiFiles.size(); i++) {
-					multiFiles.get(i).transferTo(new File(uploadFilePath + "\\" + files.get(i).get("savedName")));
-				}
-				
-				
-				model.addAttribute("message", "파일 업로드 성공!");
-	
-			} catch (IllegalStateException | IOException e) {
-				
-				for(int i = 0; i < multiFiles.size() ; i++) {
-					
-					new File(uploadFilePath + "\\" + files.get(i).get("savedName")).delete();
-				}
-				model.addAttribute("message", "파일 업로드 실패!");
-			}
-		
-		}
-		
-		
-		reportService.registReport(report);
-		
-		
+		reportService.registReport(report, files);
 		
 		
 		rttr.addFlashAttribute("successMessage", message.getMessage("registReport", null, locale));

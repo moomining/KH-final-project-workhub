@@ -64,7 +64,10 @@
 		<result property="authName" column="AUTH_NAME"/>
 	</resultMap>
 
-	<insert id="registReport">
+	<!--parameterType="com.work.workhub.member.report.model.dto.ReportDTO" useGeneratedKeys="true"
+	keyProperty="repNo"-->
+	<insert id="registReport" parameterType="com.work.workhub.member.report.model.dto.ReportDTO" useGeneratedKeys="true"
+	keyProperty="repNo">
 		INSERT INTO TBL_REPORT
 		VALUES
 		(
@@ -76,6 +79,21 @@
 			#{ content },
 			SYSDATE
 		)
+	</insert>
+	
+	<!-- 첨부파일 attach insert sql문 -->
+	<insert id="insertAttach" parameterType="list">
+		INSERT INTO REP_ATTACH 
+		VALUES
+		<foreach collection="list" item="item" separator=",">
+		(
+			  #{item.attachNo}
+			, #{item.repNo}
+			, #{item.orgName}
+			, #{item.savedName}
+			, #{item.savePath}
+		)
+		</foreach>
 	</insert>
 	
 	<select id="selectMyList" resultMap="reportResultMap">
