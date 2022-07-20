@@ -1,5 +1,6 @@
 package com.work.workhub.member.report.model.util;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,11 +12,15 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.work.workhub.member.report.exception.AttachFileException;
 import com.work.workhub.member.report.model.dto.RepAttachDTO;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Component
 public class FileUtils {
 	private String uploadFilePath;
@@ -25,12 +30,14 @@ public class FileUtils {
 		this.uploadFilePath = uploadFilePath;
 	}
 	
-	public List<RepAttachDTO> uploadFiles(MultipartFile[] files, int repNo) {
+	public List<RepAttachDTO> uploadFiles(@RequestParam(value="multiFiles", required=false) MultipartFile[] files, int repNo) {
 						
 			if(files[0].getSize() < 1) {
 				return Collections.emptyList();
 			}
 				
+			log.info("넘어온 file : {}", files[0]);
+			
 			
 			List<RepAttachDTO> attachList = new ArrayList<>();
 			
@@ -75,7 +82,7 @@ public class FileUtils {
 			
 	
 			
-		
+			
 			return attachList;
 	}
 	

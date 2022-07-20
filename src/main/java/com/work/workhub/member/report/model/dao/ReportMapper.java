@@ -14,5 +14,7 @@ public interface ReportMapper {
 	int insertAttach(List<RepAttachDTO> attachList);
 	
 	List<ReportDTO> selectMyList(int no);
+
+	List<ReportDTO> selectDeptList(int depNo);
 	
 }
