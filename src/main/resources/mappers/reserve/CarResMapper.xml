@@ -87,8 +87,7 @@
 		*
 		FROM RES_CAR A
 		JOIN COM_CAR B ON (A.CAR_NO = B.CAR_NO)
-		WHERE A.END_TIME > SYSDATE
-		<![CDATA[AND A.START_TIME < SYSDATE]]>         
+		WHERE A.END_TIME > SYSDATE       
           AND A.DEL_YN = 'N'
         ORDER BY A.START_TIME DESC
 	</select>

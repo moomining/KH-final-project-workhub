@@ -1,16 +1,11 @@
 package com.work.workhub.member.report.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.UUID;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -25,7 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.work.workhub.member.member.dto.UserImpl;
-import com.work.workhub.member.report.model.dto.RepAttachDTO;
 import com.work.workhub.member.report.model.dto.ReportDTO;
 import com.work.workhub.member.report.model.service.ReportService;
 
@@ -38,13 +32,11 @@ public class ReportController {
 	
 	private ReportService reportService;
 	private MessageSource message;
-	private String uploadFilePath;
 	
 	@Autowired
-	public ReportController(ReportService reportService, MessageSource message, @Value("${custom.path.upload-files}")String uploadFilePath) {
+	public ReportController(ReportService reportService, MessageSource message) {
 		this.reportService = reportService;
 		this.message = message;
-		this.uploadFilePath = uploadFilePath;
 	}
 	
 	@GetMapping("intro")
@@ -59,10 +51,10 @@ public class ReportController {
 
 	@PostMapping("create")
 	public String registReport(Model model, @ModelAttribute ReportDTO report, RedirectAttributes rttr, Locale locale, 
-			@RequestParam int memberNo, @RequestParam int depNo, final MultipartFile[] files) throws Exception {
-		
+			@RequestParam int memberNo, @RequestParam int depNo, @RequestParam(value="multiFiles", required=false) MultipartFile[] files) throws Exception {
 		
 		log.info("등록요청 : {}", report);
+		log.info("넘어온 file : {}", files[0]);
 		
 		
 		reportService.registReport(report, files);
@@ -89,4 +81,22 @@ public class ReportController {
 		
 		return mv;
 	}
+	
+	@GetMapping("dept")
+	public ModelAndView selectDeptReport(ModelAndView mv, @AuthenticationPrincipal UserImpl user) {
+		
+		log.info("로그인 유저 정보 : {}", user);
+		int depNo = user.getDepNo();
+
+		List<ReportDTO> deptReportList = reportService.selectDeptList(depNo);
+		
+		mv.addObject("deptReportList", deptReportList);
+		log.info("부서 보고서 정보 : {}", deptReportList);
+
+		
+		mv.setViewName("report/dept");
+		
+		return mv;
+	}
+	
 }

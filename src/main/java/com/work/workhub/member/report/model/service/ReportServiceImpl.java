@@ -61,6 +61,11 @@ public class ReportServiceImpl implements ReportService{
 		return reportMapper.selectMyList(no);
 	}
 
+	@Override
+	public List<ReportDTO> selectDeptList(int depNo) {
+		return reportMapper.selectDeptList(depNo);
+	}
+
 	
 
 

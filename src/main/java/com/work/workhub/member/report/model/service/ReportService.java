@@ -15,4 +15,6 @@ public interface ReportService {
 	
 	public List<ReportDTO> selectMyList(int no);
 
+	public List<ReportDTO> selectDeptList(int depNo);
+
 }

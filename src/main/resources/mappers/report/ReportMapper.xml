@@ -67,8 +67,17 @@
 	<!--parameterType="com.work.workhub.member.report.model.dto.ReportDTO" useGeneratedKeys="true"
 	keyProperty="repNo"-->
 	<insert id="registReport" parameterType="com.work.workhub.member.report.model.dto.ReportDTO" useGeneratedKeys="true"
-	keyProperty="repNo">
+	keyProperty="repNo" keyColumn="REP_NO">
 		INSERT INTO TBL_REPORT
+		(
+			REP_NO,
+			NO,
+			FORM_NO,
+			DEP_NO,
+			TITLE,
+			CONTENT,
+			REP_DATE
+		)
 		VALUES
 		(
 			SEQ_REP_NO.NEXTVAL,
@@ -109,6 +118,22 @@
 		  JOIN REP_FORM C ON (A.FORM_NO = C.FORM_NO)
 		  JOIN TBL_MEMBER D ON (A.NO = D.NO)
 		 WHERE A.NO = #{ no } 
+	</select>
+	
+	<select id="selectDeptList" resultMap="reportResultMap">
+		SELECT 
+				A.REP_DATE,
+				A.REP_NO,
+				A.DEP_NO,
+				B.DEP_NAME,
+				C.FORM_NAME,
+				A.TITLE,
+				D.NAME
+		  FROM TBL_REPORT A
+		  JOIN DEPARTMENT B ON (A.DEP_NO = B.DEP_NO)
+		  JOIN REP_FORM C ON (A.FORM_NO = C.FORM_NO)
+		  JOIN TBL_MEMBER D ON (A.NO = D.NO)
+		 WHERE A.DEP_NO = #{ depNo }
 	</select>
 	
 </mapper>
