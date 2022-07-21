@@ -21,8 +21,9 @@ public class ReportServiceImpl implements ReportService{
 	private FileUtils fileUtils;
 	
 	@Autowired
-	public ReportServiceImpl(ReportMapper reportMapper) {
+	public ReportServiceImpl(ReportMapper reportMapper, FileUtils fileUtils) {
 		this.reportMapper = reportMapper;
+		this.fileUtils = fileUtils;
 	}
 	
 	@Override

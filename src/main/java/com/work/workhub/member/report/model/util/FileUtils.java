@@ -30,7 +30,7 @@ public class FileUtils {
 		this.uploadFilePath = uploadFilePath;
 	}
 	
-	public List<RepAttachDTO> uploadFiles(@RequestParam(value="multiFiles", required=false) MultipartFile[] files, int repNo) {
+	public List<RepAttachDTO> uploadFiles(MultipartFile[] files, int repNo) {
 						
 			if(files[0].getSize() < 1) {
 				return Collections.emptyList();

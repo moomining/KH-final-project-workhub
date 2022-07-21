@@ -64,10 +64,7 @@
 		<result property="authName" column="AUTH_NAME"/>
 	</resultMap>
 
-	<!--parameterType="com.work.workhub.member.report.model.dto.ReportDTO" useGeneratedKeys="true"
-	keyProperty="repNo"-->
-	<insert id="registReport" parameterType="com.work.workhub.member.report.model.dto.ReportDTO" useGeneratedKeys="true"
-	keyProperty="repNo" keyColumn="REP_NO">
+	<insert id="registReport" parameterType="com.work.workhub.member.report.model.dto.ReportDTO">
 		INSERT INTO TBL_REPORT
 		(
 			REP_NO,
@@ -91,12 +88,22 @@
 	</insert>
 	
 	<!-- 첨부파일 attach insert sql문 -->
-	<insert id="insertAttach" parameterType="list">
+	<insert id="insertAttach" parameterType="list" useGeneratedKeys="false">
+		<selectKey keyProperty="repNo" resultType="int" order="AFTER">
+			SELECT SEQ_REP_NO.CURRVAL FROM DUAL
+		</selectKey>
 		INSERT INTO REP_ATTACH 
+		(
+			ATTACHMENT_NO,
+			REP_NO,
+			ORG_NAME,
+			SAVED_NAME,
+			SAVE_PATH
+		)
 		VALUES
 		<foreach collection="list" item="item" separator=",">
 		(
-			  #{item.attachNo}
+			  #{item.attachmentNo}
 			, #{item.repNo}
 			, #{item.orgName}
 			, #{item.savedName}
