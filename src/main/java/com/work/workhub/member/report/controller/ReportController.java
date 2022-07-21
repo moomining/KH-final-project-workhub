@@ -1,11 +1,12 @@
 package com.work.workhub.member.report.controller;
 
 
+
 import java.util.List;
 import java.util.Locale;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -62,7 +63,7 @@ public class ReportController {
 		
 		rttr.addFlashAttribute("successMessage", message.getMessage("registReport", null, locale));
 		
-		return "redirect:/report/mylist";
+		return "redirect:/report/myreport";
 	}
 	
 	@GetMapping("myreport")
