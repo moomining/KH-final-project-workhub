@@ -1,82 +1,88 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>예약 - Workhub</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>예약 - Workhub</title>
 
-    <!-- fonts -->
-    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"/>
-    
+<!-- fonts -->
+<link rel="stylesheet" as="style" crossorigin
+	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
 
-    <!-- bootstrap -->
-    <link rel="stylesheet" href="/assets/css/bootstrap-ar.css">
 
-    <link rel="stylesheet" href="/assets/vendors/iconly/bold.css">
+<!-- bootstrap -->
+<link rel="stylesheet" href="/assets/css/bootstrap-ar.css">
 
-    <link rel="stylesheet" href="/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
-    <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
-    <link rel="stylesheet" href="/assets/css/app-ar.css">
-    <link rel="shortcut icon" th:href="@{/assets/images/images/favicon-workHub.ico}" type="image/x-icon">    
-    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/assets/vendors/iconly/bold.css">
+
+<link rel="stylesheet"
+	href="/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+<link rel="stylesheet"
+	href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+<link rel="stylesheet" href="/assets/css/app-ar.css">
+<link rel="shortcut icon"
+	th:href="@{/assets/images/images/favicon-workHub.ico}"
+	type="image/x-icon">
+<script src="https://code.jquery.com/jquery-3.6.0.js"
+	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+	crossorigin="anonymous"></script>
 
 </head>
 
 <body>
-    <div th:include="sidebar/sidebar-reserve" th:remove="tag"></div>
-    <div id="main">
-        <header class="mb-3">
-            <a href="#" class="burger-btn d-block d-xl-none">
-                <i class="bi bi-justify fs-3"></i>
-            </a>
-        </header>
-        <!-- 상단 horizontal nav-->
-        <div class="page-heading">
-            <ul class="nav nav-tabs" id="myTab">
-                <li class="nav-item">
-                    <a class="nav-link active" id="home-tab" th:href="@{ /reserve/meeting/list }">
-                        <h5>회의실 예약</h5>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="profile-tab" th:href="@{ /reserve/car/list }">
-                        <h5>차량 예약</h5>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="contact-tab" th:href="@{ /reserve/mylist }">
-                        <h5>내 예약 조회</h5>
-                    </a>
-                </li>
-            </ul>
-        </div>
-		
+	<div th:include="sidebar/sidebar-reserve" th:remove="tag"></div>
+	<div id="main">
+		<header class="mb-3">
+			<a href="#" class="burger-btn d-block d-xl-none"> <i
+				class="bi bi-justify fs-3"></i>
+			</a>
+		</header>
+		<!-- 상단 horizontal nav-->
+		<div class="page-heading">
+			<ul class="nav nav-tabs" id="myTab">
+				<li class="nav-item"><a class="nav-link active" id="home-tab"
+					th:href="@{ /reserve/meeting/list }">
+						<h5>회의실 예약</h5>
+				</a></li>
+				<li class="nav-item"><a class="nav-link" id="profile-tab"
+					th:href="@{ /reserve/car/list }">
+						<h5>차량 예약</h5>
+				</a></li>
+				<li class="nav-item"><a class="nav-link" id="contact-tab"
+					th:href="@{ /reserve/mylist }">
+						<h5>내 예약 조회</h5>
+				</a></li>
+			</ul>
+		</div>
+
 		<!-- 회의실 위치 보여주는 Tab -->
-        <div class="page-heading border-bottom">
-            <ul class="nav nav-tabs" id="myTab" >
+		<div class="page-heading border-bottom">
+			<ul class="nav nav-tabs" id="myTab">
 				<li class="nav-item font-clr" th:each="location : ${ locationList }">
-					<a class="nav-link" id="home-tab" href="" th:text="${ location.rmLocation }"></a>
-					<!-- "@{ /reserve/meeting/list?rmLocation='4층 회의실' } -->
-				</li>          
-            </ul>
-        </div>
+					<a class="nav-link" id="home-tab" href=""
+					th:text="${ location.rmLocation }"></a> <!-- "@{ /reserve/meeting/list?rmLocation='4층 회의실' } -->
+				</li>
+			</ul>
+		</div>
 
-        <div class="res-head">
-            <div id="date-area" class="mt-date-area">
+		<div class="res-head">
+			<div id="date-area" class="mt-date-area">
 
-                <form method="get" th:action="@{/reserve/meeting/date}">
-				<span><button type="button" class="date-before" onclick="moveDate('previous');">&lt;</button></span>
-                <span><input type="date" class="res-date" id="booking_date" name="resDate"></span>
-                <span><button type="button" class="date-before" onclick="moveDate('next');">&gt;</button></span>
-                <span><button type="button" class="today-btn" onclick="setToday();">오늘</button></span>
-                <span><button type="submit" class="search-btn">검색</button></span>
-                </form>
-            </div>
+				<form method="get" th:action="@{/reserve/meeting/date}">
+					<span><button type="button" class="date-before"
+							onclick="moveDate('previous');">&lt;</button></span> <span><input
+						type="date" class="res-date" id="booking_date" name="resDate"></span>
+					<span><button type="button" class="date-before"
+							onclick="moveDate('next');">&gt;</button></span> <span><button
+							type="button" class="today-btn" onclick="setToday();">오늘</button></span>
+					<span><button type="submit" class="search-btn">검색</button></span>
+				</form>
+			</div>
 
-            <!-- moveDate script -->
-            <script>
+			<!-- moveDate script -->
+			<script>
             /* Date Format 지정 */    
             function formatDate(date) {
                     
@@ -133,391 +139,245 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
             
             </script>
 
-            <div id="cal_head_fixed_div_area">
-                
+			<div id="cal_head_fixed_div_area">
 
-                <!-- table 활용 template -->
-                <table class="res-tbl">
-                    <colgroup id="resource-list">
-                        <col width="100px">
-                    </colgroup>
-                    <tbody>
-                        <tr>
-                            <td style="border-bottom:none;">
-                                <table>
-                                    <thead class="booking_resource_img_top">
-                                        <tr>
-                                        </tr>
-                                        <tr class="rs-bg">
-                                        </tr>
 
-                                    </thead>
-                                </table>
-                            </td>
-                            <td style="border-bottom:none;" class="col-width-ctrl" th:each="room : ${ roomList }">
-                                <table class="mt-room-info">
-                                    <thead>
-                                        <tr>
-                                            <th th:text="${ room.roomName }">
-                                            	
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="mt-room-img">
-                                            <td>
-                                                <img th:src="@{/uploadFiles/} + ${ room.savedName }" alt="room-img">
-                                            </td>
-                                        </tr>
-                                        
-                                    </tbody>
-                                </table>
-                            </td>
-                            
+				<!-- table 활용 template -->
+				<table class="res-tbl">
+					<colgroup id="resource-list">
+						<col width="100px">
+					</colgroup>
+					<tbody>
+						<tr>
+							<td style="border-bottom: none;">
+								<table>
+									<thead class="booking_resource_img_top">
+										<tr>
+										</tr>
+										<tr class="rs-bg">
+										</tr>
 
-                        </tr>
-                    </tbody>
-                </table>
+									</thead>
+								</table>
+							</td>
+							<td style="border-bottom: none;" class="col-width-ctrl"
+								th:each="room : ${ roomList }">
+								<table class="mt-room-info">
+									<thead>
+										<tr>
+											<th th:text="${ room.roomName }"></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr class="mt-room-img">
+											<td><img th:src="@{/uploadFiles/} + ${ room.savedName }"
+												alt="room-img"></td>
+										</tr>
 
-            </div>
+									</tbody>
+								</table>
+							</td>
 
-        </div>
+
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+
+		</div>
 
 		<script>
 		
 		</script>
-        <div class="res-view">
-		<form>
-            <table class="res-tbl" id="booking_main_tbl">
-                <colgroup id="resource_list_colgroup">
-                    <col width="100px">
-                </colgroup>
+		<div class="res-view">
+			<form>
+				<table class="res-tbl" id="booking_main_tbl">
+					<colgroup id="resource_list_colgroup">
+						<col width="100px">
+					</colgroup>
 
-                <tbody>
-                	<!-- time 표시 열 (왼쪽) -->
-                    <td style="border-bottom:none;">
-                        <table class="table mb-0">
-                            <tbody class="tr-height-2x">
-                                <tr>
-                                    <th class="time-dscrp"> 오전 8시 </th>
-                                </tr>
-                                <tr>
-                                    <th class="time-dscrp"> 오전 9시 </th>
-                                </tr>
-                                <tr>
-                                    <th class="time-dscrp"> 오전 10시 </th>
-                                </tr>
-                                <tr>
-                                    <th class="time-dscrp"> 오전 11시 </th>
-                                </tr>
-                                <tr>
-                                    <th class="time-dscrp"> 오후 12시 </th>
-                                </tr>
-                                <tr>
-                                    <th class="time-dscrp"> 오후 1시 </th>
-                                </tr>
-                                <tr>
-                                    <th class="time-dscrp"> 오후 2시 </th>
-                                </tr>
-                                <tr>
-                                    <th class="time-dscrp"> 오후 3시 </th>
-                                </tr>
-                                <tr>
-                                    <th class="time-dscrp"> 오후 4시 </th>
-                                </tr>
-                                <tr>
-                                    <th class="time-dscrp"> 오후 5시 </th>
-                                </tr>
-                                <tr>
-                                    <th class="time-dscrp"> 오후 6시 </th>
-                                </tr>
-                                <tr>
-                                    <th class="time-dscrp"> 오후 7시 </th>
-                                </tr>
-                                <tr>
-                                    <th class="time-dscrp"> 오후 8시 </th>
-                                </tr>
-                                <tr>
-                                    <th class="time-dscrp"> 오후 9시 </th>
-                                </tr>
-                                <tr>
-                                    <th class="time-dscrp"> 오후 10시 </th>
-                                </tr>
-                                <tr>
-                                    <th class="time-dscrp"> 오후 11시 </th>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                    
+					<tbody>
+						<!-- time 표시 열 (왼쪽) -->
+						<td style="border-bottom: none;">
+							<table class="table mb-0 tbl-margin">
+								<tbody class="tr-height-2x">
+									<tr>
+										<th class="time-dscrp">오전 8시</th>
+									</tr>
+									<tr>
+										<th class="time-dscrp">오전 9시</th>
+									</tr>
+									<tr>
+										<th class="time-dscrp">오전 10시</th>
+									</tr>
+									<tr>
+										<th class="time-dscrp">오전 11시</th>
+									</tr>
+									<tr>
+										<th class="time-dscrp">오후 12시</th>
+									</tr>
+									<tr>
+										<th class="time-dscrp">오후 1시</th>
+									</tr>
+									<tr>
+										<th class="time-dscrp">오후 2시</th>
+									</tr>
+									<tr>
+										<th class="time-dscrp">오후 3시</th>
+									</tr>
+									<tr>
+										<th class="time-dscrp">오후 4시</th>
+									</tr>
+									<tr>
+										<th class="time-dscrp">오후 5시</th>
+									</tr>
+									<tr>
+										<th class="time-dscrp">오후 6시</th>
+									</tr>
+									<tr>
+										<th class="time-dscrp">오후 7시</th>
+									</tr>
+									<tr>
+										<th class="time-dscrp">오후 8시</th>
+									</tr>
+									<tr>
+										<th class="time-dscrp">오후 9시</th>
+									</tr>
+									<tr>
+										<th class="time-dscrp">오후 10시</th>
+									</tr>
+									<tr>
+										<th class="time-dscrp">오후 11시</th>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+
 
 
 						<!-- 시간 선택 table : hover시 변함 -->
-						<td style="border-bottom:none;" class="col-width-ctrl rmClick" th:each="room: ${ roomList }">
-                        <div class="table-responsive" th:if="${ room.delYn } == 'N'">
-                            <table class="table table-hover mb-0">
-                                <tbody class="tr-height">
-                                    <tr>
-                                        <td class="before time-td" data-bs-toggle="modal" data-bs-target="#inlineForm">
-                                        	<!-- roomName을 모달에 넣기 위해 넣어놓은 input 장치 -->
-                                        	<input class="hiddenRmName" type="hidden" th:value="${ room.roomName }">
-                                        	<input class="roomNoInput" type="hidden" th:value="${ room.roomNo }">
-                                        	
-                                            <input type="hidden" class="time" value="08:00">
-                                        </td>
-                                    </tr>
-                                    <tr class="tbl-dotted-line">
-                                        <td class="after time-td" data-bs-toggle="modal" data-bs-target="#inlineForm">
-                                        	<input type="hidden" class="time" value="08:30">
-                                        	
-                                        	<th:block th:if="${ not resMeetingList.?[roomNo == room.roomNo].isEmpty() }">
-                                        		<span th:each="resMeeting : ${ resMeetingList }">
-                                        		<input type="hidden" class="startTime" th:value="${ resMeeting.startTime }">
-                                        		<input type="hidden" class="endTime" th:value="${ resMeeting.endTime }">
-                                        		</span>
-                                        	</th:block>
-                                        	
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="before time-td" data-bs-toggle="modal" data-bs-target="#inlineForm">
-                                        	<input type="hidden" class="time" value="09:00">
-                                        </td>
-                                    </tr>
-                                    <tr class="tbl-dotted-line">
-                                        <td class="after time-td" data-bs-toggle="modal" data-bs-target="#inlineForm">
-                                        	<input type="hidden" class="time" value="09:30">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="before time-td" data-bs-toggle="modal" data-bs-target="#inlineForm">
-                                        	<input type="hidden" class="time" value="10:00">
-                                        </td>
-                                    </tr>
-                                    <tr class="tbl-dotted-line">
-                                        <td class="after time-td" data-bs-toggle="modal" data-bs-target="#inlineForm">
-                                        	<input type="hidden" class="time" value="10:30">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="before time-td" data-bs-toggle="modal" data-bs-target="#inlineForm">
-                                        <input type="hidden" class="time" value="11:00">
-                                        </td>
-                                    </tr>
-                                    <tr class="tbl-dotted-line">
-                                        <td class="after time-td" data-bs-toggle="modal" data-bs-target="#inlineForm">
-                                        <input type="hidden" class="time" value="11:30">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="before time-td" data-bs-toggle="modal" data-bs-target="#inlineForm">
-                                        <input type="hidden" class="time" value="12:00">
-                                        </td>
-                                    </tr>
-                                    <tr class="tbl-dotted-line">
-                                        <td class="after time-td" data-bs-toggle="modal" data-bs-target="#inlineForm">
-                                        <input type="hidden" class="time" value="12:30">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="before time-td" data-bs-toggle="modal" data-bs-target="#inlineForm">
-                                        <input type="hidden" class="time" value="13:00">
-                                        </td>
-                                    </tr>
-                                    <tr class="tbl-dotted-line">
-                                        <td class="after time-td" data-bs-toggle="modal" data-bs-target="#inlineForm">
-                                        <input type="hidden" class="time" value="13:30">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="before time-td" data-bs-toggle="modal" data-bs-target="#inlineForm">
-                                        <input type="hidden" class="time" value="14:00">
-                                        </td>
-                                    </tr>
-                                    <tr class="tbl-dotted-line">
-                                        <td class="after time-td" data-bs-toggle="modal" data-bs-target="#inlineForm">
-                                        <input type="hidden" class="time" value="14:30">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="before time-td" data-bs-toggle="modal" data-bs-target="#inlineForm">
-                                        <input type="hidden" class="time" value="15:00">
-                                        </td>
-                                    </tr>
-                                    <tr class="tbl-dotted-line">
-                                        <td class="after time-td" data-bs-toggle="modal" data-bs-target="#inlineForm">
-                                        <input type="hidden" class="time" value="15:30">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="before time-td" data-bs-toggle="modal" data-bs-target="#inlineForm">
-                                        <input type="hidden" class="time" value="16:00">
-                                        </td>
-                                    </tr>
-                                    <tr class="tbl-dotted-line">
-                                        <td class="after time-td" data-bs-toggle="modal" data-bs-target="#inlineForm">
-                                        <input type="hidden" class="time" value="16:30">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="before time-td" data-bs-toggle="modal" data-bs-target="#inlineForm">
-                                        <input type="hidden" class="time" value="17:00">
-                                        </td>
-                                    </tr>
-                                    <tr class="tbl-dotted-line">
-                                        <td class="after time-td" data-bs-toggle="modal" data-bs-target="#inlineForm">
-                                        <input type="hidden" class="time" value="17:30">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="before time-td" data-bs-toggle="modal" data-bs-target="#inlineForm">
-                                        <input type="hidden" class="time" value="18:00">
-                                        </td>
-                                    </tr>
-                                    <tr class="tbl-dotted-line">
-                                        <td class="after time-td" data-bs-toggle="modal" data-bs-target="#inlineForm">
-                                        <input type="hidden" class="time" value="18:30">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="before time-td" data-bs-toggle="modal" data-bs-target="#inlineForm">
-                                        <input type="hidden" class="time" value="19:00">
-                                        </td>
-                                    </tr>
-                                    <tr class="tbl-dotted-line">
-                                        <td class="after time-td" data-bs-toggle="modal" data-bs-target="#inlineForm">
-                                        <input type="hidden" class="time" value="19:30">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="before time-td" data-bs-toggle="modal" data-bs-target="#inlineForm">
-                                        <input type="hidden" class="time" value="20:00">
-                                        </td>
-                                    </tr>
-                                    <tr class="tbl-dotted-line">
-                                        <td class="after time-td" data-bs-toggle="modal" data-bs-target="#inlineForm">
-                                        <input type="hidden" class="time" value="20:30">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="before time-td" data-bs-toggle="modal" data-bs-target="#inlineForm">
-                                        <input type="hidden" class="time" value="21:00">
-                                        </td>
-                                    </tr>
-                                    <tr class="tbl-dotted-line">
-                                        <td class="after time-td" data-bs-toggle="modal" data-bs-target="#inlineForm">
-                                        <input type="hidden" class="time" value="21:30">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="before time-td" data-bs-toggle="modal" data-bs-target="#inlineForm">
-                                        <input type="hidden" class="time" value="22:00">
-                                        </td>
-                                    </tr>
-                                    <tr class="tbl-dotted-line">
-                                        <td class="after time-td" data-bs-toggle="modal" data-bs-target="#inlineForm">
-                                        <input type="hidden" class="time" value="22:30">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="before time-td" data-bs-toggle="modal" data-bs-target="#inlineForm">
-                                        <input type="hidden" class="time" value="23:00">
-                                        </td>
-                                    </tr>
-                                    <tr class="tbl-dotted-line">
-                                        <td class="after time-td" data-bs-toggle="modal" data-bs-target="#inlineForm">
-                                        <input type="hidden" class="time" value="23:30">
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </td>
-                </tbody>
-            </table>
-        </form>
-        </div>
+						<td style="border-bottom: none;" class="col-width-ctrl rmClick" th:each="room: ${ roomList }">
+							<div class="table-responsive" th:if="${ room.delYn } == 'N'">
+							<!-- roomName을 모달에 넣기 위해 넣어놓은 input 장치 -->
+							<input class="hiddenRmName" type="hidden" th:value="${ room.roomName }"> 
+							<input class="roomNoInput" type="hidden" th:value="${ room.roomNo }">
+								<table class="table table-hover mb-0">
+									<tbody class="tr-height">
+										<tr th:each="entry : ${ timeMap }">
+											<td class="before time-td" data-bs-toggle="modal" data-bs-target="#inlineForm">
+												<input type="hidden" class="time" th:value="${ entry.key }"> 
+												<input type="hidden" class="resDTOInfo" th:value="${ entry.value }">
+											</td>
+										</tr>
+									</tbody>
+								</table>										
+							</div>
+						</td>
+					</tbody>
+				</table>
+			</form>
+		</div>
 
 		<script>
+			//time 추출 script
 			const matchTime = $('.startTime').val().substr(11, 5);
 			console.log('matchTime : ',matchTime);
 			
 			console.log($('.startTime').val());
 			
 			$('.startTime').each(function (index, item) {
-			     console.log(item);})
+			     console.log(item);})  
 			
-			     
-			
+		</script>
+		
+		<script th:inline="javascript">
+			//데이터 뿌려주는 background-color 바꿔주는 script
+			if(true) {
+				
+			}
 		</script>
 
 
 		<!--회의실 예약 Modal -->
-        <div class="modal fade text-left" id="inlineForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg modal-resize"
-                role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel33">&nbsp;예약하기</h4>
-                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                            <i data-feather="x"></i>
-                        </button>
-                    </div>
-                   	
-                    <form class="form form-horizontal" method="post" th:action="@{/reserve/meeting/list}">
-                        <div class="form-body modal-body" sec:authorize="isAuthenticated()">
-                           <div class="row">
-                                <div class="col-md-4 modal-margin">
-                                    <label>회의실 이름</label>
-                                </div>
-                                <div class="col-md-8 form-group modal-margin">
-                                    <input type="text" class="form-control input-margin" name="roomName" id="rmName" readonly>
-                                    <input type="hidden" name="roomNo" id="roomNo">
-                                </div>
-                                <div class="col-md-4 modal-margin">
-                                    <label>예약기간</label>
-                                </div>
-                                <div class="col-md-8 form-group date-grid modal-margin">
-                                    <div>
-                                        <input type="datetime-local" class="form-control pe-font-size" name="startTime" id="period1">
-                                    </div>
-                                    <div>-</div>
-                                    <div>
-                                        <input type="datetime-local" class="form-control pe-font-size" name="endTime" id="period2">
-                                    </div>
-                                </div>
-                                <div class="col-md-4 modal-margin">
-                                    <label>예약자</label>
-                                </div>
-                                <div class="col-md-8 form-group modal-margin" sec:authorize="isAuthenticated()">
-                                    <input type="text" id="contact-info" class="form-control input-margin" name="name"
-                                        th:value="${#authentication.principal.name}" readonly>
-                                    <input type="hidden" name="memberNo" th:value="${#authentication.principal.no}">
-                                </div>
-                                <div class="col-md-4 modal-margin">
-                                    <label>목적</label>
-                                </div>
-                                <div class="col-md-8 form-group modal-margin">
-                                    <textarea rows="5" cols="49" style="resize:none;" name="meetPurpose" required></textarea>
-                                </div>
+		<div class="modal fade text-left" id="inlineForm" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+			<div
+				class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg modal-resize"
+				role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="myModalLabel33">&nbsp;예약하기</h4>
+						<button type="button" class="close" data-bs-dismiss="modal"
+							aria-label="Close">
+							<i data-feather="x"></i>
+						</button>
+					</div>
+
+					<form class="form form-horizontal" method="post"
+						th:action="@{/reserve/meeting/list}">
+						<div class="form-body modal-body"
+							sec:authorize="isAuthenticated()">
+							<div class="row">
+								<div class="col-md-4 modal-margin">
+									<label>회의실 이름</label>
+								</div>
+								<div class="col-md-8 form-group modal-margin">
+									<input type="text" class="form-control input-margin"
+										name="roomName" id="rmName" readonly> <input
+										type="hidden" name="roomNo" id="roomNo">
+								</div>
+								<div class="col-md-4 modal-margin">
+									<label>예약기간</label>
+								</div>
+								<div class="col-md-8 form-group date-grid modal-margin">
+									<div>
+										<input type="datetime-local" class="form-control pe-font-size"
+											name="startTime" id="period1">
+									</div>
+									<div>-</div>
+									<div>
+										<input type="datetime-local" class="form-control pe-font-size"
+											name="endTime" id="period2">
+									</div>
+								</div>
+								<div class="col-md-4 modal-margin">
+									<label>예약자</label>
+								</div>
+								<div class="col-md-8 form-group modal-margin"
+									sec:authorize="isAuthenticated()">
+									<input type="text" id="contact-info"
+										class="form-control input-margin" name="name"
+										th:value="${#authentication.principal.name}" readonly>
+									<input type="hidden" name="memberNo"
+										th:value="${#authentication.principal.no}">
+								</div>
+								<div class="col-md-4 modal-margin">
+									<label>목적</label>
+								</div>
+								<div class="col-md-8 form-group modal-margin">
+									<textarea rows="5" cols="49" style="resize: none;"
+										name="meetPurpose" required></textarea>
+								</div>
 
 
-                           	</div>
-                            <div class="modal-footer">
-                                <div class="col-sm-12 d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary me-1 mb-1 btn-size">예약하기</button>
-                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1 btn-size">초기화</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <script>
+							</div>
+							<div class="modal-footer">
+								<div class="col-sm-12 d-flex justify-content-end">
+									<button type="submit"
+										class="btn btn-primary me-1 mb-1 btn-size">예약하기</button>
+									<button type="reset"
+										class="btn btn-light-secondary me-1 mb-1 btn-size">초기화</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
     	
     	
     	/* tableBody의 input hidden으로 숨겨둔 roomName value 가져와 form roomName 적는 곳에 넣어주기 */
@@ -584,11 +444,13 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 	</script>
 
 
-	
-    <script src="/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <script src="/assets/js/bootstrap.bundle.min.js"></script>
 
-    <script src="/assets/js/main.js"></script>
+	<script
+		src="/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<script src="/assets/js/bootstrap.bundle.min.js"></script>
+
+	<script src="/assets/js/main.js"></script>
+
 </body>
 
 </html>
