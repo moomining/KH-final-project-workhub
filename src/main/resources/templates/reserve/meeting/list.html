@@ -264,7 +264,7 @@
 							<input class="roomNoInput" type="hidden" th:value="${ room.roomNo }">
 								<table class="table table-hover mb-0">
 									<tbody class="tr-height">
-										<tr th:each="entry : ${ timeMap }">
+										<tr th:each="entry : ${ timeMap }" id="timeMap">
 											<td class="before time-td" data-bs-toggle="modal" data-bs-target="#inlineForm">
 												<input type="hidden" class="time" th:value="${ entry.key }"> 
 												<input type="hidden" class="resDTOInfo" th:value="${ entry.value }">
@@ -293,8 +293,11 @@
 		
 		<script th:inline="javascript">
 			//데이터 뿌려주는 background-color 바꿔주는 script
-			if(true) {
-				
+			window.onload = function() {
+				var timeEle = document.querySelector("#timeMap");
+				if(timeEle != null) {
+					
+				}
 			}
 		</script>
 
