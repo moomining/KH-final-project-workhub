@@ -71,12 +71,10 @@
 			<div id="date-area" class="mt-date-area">
 
 				<form method="get" th:action="@{/reserve/meeting/date}">
-					<span><button type="button" class="date-before"
-							onclick="moveDate('previous');">&lt;</button></span> <span><input
-						type="date" class="res-date" id="booking_date" name="resDate"></span>
-					<span><button type="button" class="date-before"
-							onclick="moveDate('next');">&gt;</button></span> <span><button
-							type="button" class="today-btn" onclick="setToday();">오늘</button></span>
+					<span><button type="button" class="date-before"	onclick="moveDate('previous');">&lt;</button></span> 
+					<span><input type="date" class="res-date" id="booking_date" name="resDate"></span>
+					<span><button type="button" class="date-before"	onclick="moveDate('next');">&gt;</button></span> 
+					<span><button type="button" class="today-btn" onclick="setToday();">오늘</button></span>
 					<span><button type="submit" class="search-btn">검색</button></span>
 				</form>
 			</div>
@@ -99,7 +97,7 @@
             }
 			
             /* 기본값 오늘 날짜 지정 */
-            //document.getElementById('booking_date').valueAsDate = new Date();
+            document.getElementById('booking_date').valueAsDate = new Date();
 			
         	window.onload = function() {
         		var today = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000);
@@ -112,10 +110,10 @@
             
             
             // 오늘 버튼 이벤트
-            function setToday() {
+            /* function setToday() {
                 $('input#booking_date').val(formatDate(new Date()));
 
-            }
+            } */
             
             /* 이전 날짜, 이후 날짜 이동 +1Day */
             function moveDate(str) {
