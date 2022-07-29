@@ -91,6 +91,18 @@
 			OR TO_CHAR(A.END_TIME,'YYYY-MM-DD') = #{ resDate })
     	  ORDER BY A.START_TIME DESC   	
     </select>
+    
+    <!-- 내 예약 정보 조회 -->
+    <select id="selectMyResMeeting" resultMap="meetingResultMap">
+    	SELECT
+    			*
+    	  FROM RES_MT A
+    	  JOIN MT_ROOM B ON (A.ROOM_NO = B.ROOM_NO)
+    	  WHERE A.DEL_YN = 'N'
+    	    AND A.END_TIME > SYSDATE
+    	    AND A.NO = #{ no }
+    	  ORDER BY A.START_TIME DESC, B.RM_LOCATION, B.ROOM_NAME
+    </select>
 
 	<!-- 회의실 예약하기 -->
     <insert id="reserveRoom">

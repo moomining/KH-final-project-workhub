@@ -89,6 +89,11 @@ public class CarResServiceImpl implements CarResService{
 		return carResMapper.selectReservableCar();
 	}
 
+	@Override
+	public List<ResCarDTO> selectMyResCarList(int no) {
+		return carResMapper.selectMyResCarList(no);
+	}
+
 	
 	
 	

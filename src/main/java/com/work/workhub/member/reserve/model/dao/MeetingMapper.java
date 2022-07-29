@@ -24,6 +24,8 @@ public interface MeetingMapper {
 
 	int updateMeetingStatus(ResMeetingDTO meeting);
 
+	List<ResMeetingDTO> selectMyResMeeting(int no);
+
 	
 
 

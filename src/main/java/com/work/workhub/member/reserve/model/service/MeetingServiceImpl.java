@@ -75,6 +75,11 @@ public class MeetingServiceImpl implements MeetingService {
 		return result > 0 ? true : false;
 	}
 
+	@Override
+	public List<ResMeetingDTO> selectMyResMeeting(int no) {
+		return meetingMapper.selectMyResMeeting(no);
+	}
+
 	
 
 

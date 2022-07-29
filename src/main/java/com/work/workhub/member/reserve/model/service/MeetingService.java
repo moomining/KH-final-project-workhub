@@ -22,6 +22,8 @@ public interface MeetingService {
 
 	List<ResMeetingDTO> dateSearch(String resDate);
 
+	List<ResMeetingDTO> selectMyResMeeting(int no);
+
 
 	
 	

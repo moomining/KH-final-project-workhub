@@ -35,14 +35,15 @@ public class SelectMyReserveList {
 	public ModelAndView selectMyReserveList(ModelAndView mv, @AuthenticationPrincipal UserImpl user) {
 		
 		log.info("로그인 유저 정보 : {}", user);
+		int no = user.getNo();
 
-		List<ResCarDTO> resCarList = carResService.selectAllResCarList();
+		List<ResCarDTO> resCarList = carResService.selectMyResCarList(no);
 		
 		mv.addObject("resCarList", resCarList);
 		log.info("resCarList : {}", resCarList);
 		
 		
-		List<ResMeetingDTO> resMeetingList = meetingService.selectAllResMeeting();
+		List<ResMeetingDTO> resMeetingList = meetingService.selectMyResMeeting(no);
 		
 		mv.addObject("resMeetingList", resMeetingList);
 		
