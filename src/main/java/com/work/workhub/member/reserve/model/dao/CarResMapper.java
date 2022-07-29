@@ -28,5 +28,7 @@ public interface CarResMapper {
 
 	List<CarDTO> selectReservableCar();
 
+	List<ResCarDTO> selectMyResCarList(int no);
+
 
 }

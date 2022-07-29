@@ -180,5 +180,17 @@
 	
 	</update>
 	
-		
+	<!-- 내 예약 조회 쿼리문 -->
+	<select id="selectMyResCarList" resultMap="carResResultMap">
+		SELECT
+		*
+		FROM RES_CAR A
+		JOIN COM_CAR B ON (A.CAR_NO = B.CAR_NO)
+		WHERE A.END_TIME > SYSDATE       
+          AND A.DEL_YN = 'N'
+          AND A.NO = #{ no }
+        ORDER BY A.START_TIME DESC
+	
+	</select>
+	
 </mapper>

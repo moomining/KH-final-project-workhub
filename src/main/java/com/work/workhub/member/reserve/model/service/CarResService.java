@@ -25,6 +25,8 @@ public interface CarResService {
 
 	List<CarDTO> selectReservableCar();
 
+	List<ResCarDTO> selectMyResCarList(int no);
+
 	
 	
 
