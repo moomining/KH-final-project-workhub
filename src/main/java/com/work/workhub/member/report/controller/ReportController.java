@@ -99,4 +99,20 @@ public class ReportController {
 		return mv;
 	}
 	
+	@GetMapping("modify")
+	public ModelAndView modifyReport(ModelAndView mv, @AuthenticationPrincipal UserImpl user) {
+		
+		log.info("로그인 유저 정보 : {}", user);
+		int no = user.getNo();
+
+		List<ReportDTO> myReportList = reportService.selectMyList(no);
+		
+		mv.addObject("myReportList", myReportList);
+		log.info("내 보고서 정보 : {}", myReportList);
+
+		
+		mv.setViewName("report/modify");
+		
+		return mv;
+	}
 }
