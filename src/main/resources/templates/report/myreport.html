@@ -92,7 +92,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
                         <td th:text="${ report.title }"></td>
                         <td th:text="${ report.member.name }"></td>
                         <td>
-                        	<form>
+                        	<form method="get" th:action="@{/report/modify}">
                         		<input type="hidden" name="repNo" th:value="${ report.repNo }">
                         		<button type="submit" class="bg-transparent-btn edit-btn-color">수정</button>
                         	</form>
