@@ -110,10 +110,10 @@
             
             
             // 오늘 버튼 이벤트
-            /* function setToday() {
+            function setToday() {
                 $('input#booking_date').val(formatDate(new Date()));
 
-            } */
+            }
             
             /* 이전 날짜, 이후 날짜 이동 +1Day */
             function moveDate(str) {
@@ -261,8 +261,8 @@
 							<input class="hiddenRmName" type="hidden" th:value="${ room.roomName }"> 
 							<input class="roomNoInput" type="hidden" th:value="${ room.roomNo }">
 								<table class="table table-hover mb-0">
-									<tbody class="tr-height">
-										<tr th:each="entry : ${ timeMap }" id="timeMap">
+									<tbody class="tr-height" id="timeMap">
+										<tr th:each="entry : ${ timeMap }">
 											<td class="before time-td" data-bs-toggle="modal" data-bs-target="#inlineForm">
 												<input type="hidden" class="time" th:value="${ entry.key }"> 
 												<input type="hidden" class="resDTOInfo" th:value="${ entry.value }">
@@ -294,7 +294,7 @@
 			var onload = function() {
                 var timeMapElement = document.querySelector("#timeMap");
 
-                if(timeMapElement?.chidlren?.lenth) {
+                if(timeMapElement?.chidlren?.length) {
                     console.log("자식요소가 존재");
                 } else {
                     console.log("자식요소가 미존재");
@@ -306,17 +306,16 @@
             }, []);
 
             return (
-                <table>
+                <table class="table table-hover mb-0">
                     <tbody id="timeMap">
                         {[...Array(4)].map(() => (
                         	
-                            <tr>
-                                <td className="before time-td time-td-bg"
+                            <tr style="background-color : gray">
+                                <td class="before time-td time-td-bg"
                                     data-bs-toggle="modal"
-                                    data-bs-target="#inlineForm" style="background-color : gray">
-                                    <input type="hidden" className="time"/>
-                                    <input type="hidden" className="resDTOInfo"/>
-                                    <input type="text" defaultValue={"aaaa"}/>
+                                    data-bs-target="#inlineForm">
+                                    <input type="hidden" class="time"/> 
+									<input type="hidden" class="resDTOInfo"/>
                                 </td>
                             </tr>
 
@@ -425,7 +424,7 @@
 			
 		})
     	
-		console.log('테이블에서 받아둔 시간 value form period에 넣어주기 위함')
+		
 		/* table에서 받아둔 시간 value를 이용해 form period1 에 넣어주기 */
 		$('.time-td').click(function(){
 			const time = $(this).find('.time').val();
