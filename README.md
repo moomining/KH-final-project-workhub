@@ -12,3 +12,4 @@ Final Project 마무리 private repo
 3. 보고서
     1) 보고서 등록
     2) 내 보고서 조회 
+    3) 부서 보고서 조회
