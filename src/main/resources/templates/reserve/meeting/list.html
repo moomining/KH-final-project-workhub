@@ -287,42 +287,19 @@
 			$('.startTime').each(function (index, item) {
 			     console.log(item);})  
 			
-		</script>
-		
-		<script>
+			     
 			//데이터 뿌려주는 background-color 바꿔주는 script
-			var onload = function() {
-                var timeMapElement = document.querySelector("#timeMap");
-
+			$(document).ready( function() {
+                var timeMapElement = document.querySelector('#timeMap');
+				console.log(timeMapElment.children[3]);
                 if(timeMapElement?.chidlren?.length) {
                     console.log("자식요소가 존재");
                 } else {
                     console.log("자식요소가 미존재");
                 }
-            };
-
-            useEffect(() => {
-                onload();
-            }, []);
-
-            return (
-                <table class="table table-hover mb-0">
-                    <tbody id="timeMap">
-                        {[...Array(4)].map(() => (
-                        	
-                            <tr style="background-color : gray">
-                                <td class="before time-td time-td-bg"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#inlineForm">
-                                    <input type="hidden" class="time"/> 
-									<input type="hidden" class="resDTOInfo"/>
-                                </td>
-                            </tr>
-
-                        ))}
-                    </tbody>
-                </table>
-            );
+            });
+            
+            
 		</script>
 
 
