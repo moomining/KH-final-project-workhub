@@ -1,5 +1,4 @@
 # WorkHub💼
-Final Project 마무리 private repo
 
 [ 구현 항목 ]
 1. 자산 관리
